@@ -45,6 +45,12 @@
         android:layout_height="wrap_content"
         android:text="@string/crime_solved_label"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/the_suspect_is_text"/>
+
     <Button
         android:id="@+id/crimeSuspectButton"
         android:layout_width="match_parent"
