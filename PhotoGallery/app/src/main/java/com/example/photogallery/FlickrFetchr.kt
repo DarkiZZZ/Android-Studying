@@ -1,8 +1,6 @@
 package com.example.photogallery
 
-import android.provider.ContactsContract
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.photogallery.api.FlickrApi
 import com.example.photogallery.api.FlickrResponse
@@ -11,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "FlickrFetchr"
 
@@ -22,7 +20,7 @@ class FlickrFetchr {
     init {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.flickr.com/")
-            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         flickrApi = retrofit.create(FlickrApi::class.java)
