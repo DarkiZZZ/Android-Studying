@@ -28,11 +28,17 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
 
         val alertDialogListener = DialogInterface.OnClickListener { dialog, which ->
             when(which){
-                DialogInterface.BUTTON_POSITIVE -> Toast.makeText(this, "You have pressed -Yes-",
+                DialogInterface.BUTTON_POSITIVE -> Toast.makeText(this,
+                    "You have pressed -Yes-",
                     Toast.LENGTH_SHORT).show()
-                DialogInterface.BUTTON_NEGATIVE -> Toast.makeText(this, "You have pressed -No-",
+
+                DialogInterface.BUTTON_NEGATIVE -> Toast.makeText(this,
+                    "You have pressed -No-",
                     Toast.LENGTH_SHORT).show()
-                DialogInterface.BUTTON_NEUTRAL -> Toast.makeText(this, "Ignored", Toast.LENGTH_SHORT).show()
+
+                DialogInterface.BUTTON_NEUTRAL -> Toast.makeText(this,
+                    "Ignored",
+                    Toast.LENGTH_SHORT).show()
             }
         }
 
