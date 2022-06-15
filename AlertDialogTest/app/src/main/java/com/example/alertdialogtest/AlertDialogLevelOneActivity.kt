@@ -32,7 +32,7 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
         }
 
         val dialog: AlertDialog = AlertDialog.Builder(this)
-            .setCancelable(false)
+            .setCancelable(true)
             .setIcon(R.mipmap.ic_launcher_round)
             .setTitle(R.string.alert_dialog_default_button)
             .setMessage(R.string.default_alert_dialog_message)
