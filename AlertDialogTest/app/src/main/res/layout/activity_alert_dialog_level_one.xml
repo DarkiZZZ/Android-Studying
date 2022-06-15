@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/multipleChoiceConfirmAlertDialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Current Volume: 100%"
+        android:text="@string/current_volume_default"
         android:textSize="25sp"/>
 
     <TextView
