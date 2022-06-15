@@ -12,4 +12,10 @@
     <string name="volume_description">Volume: %1$d%%</string>
     <string name="current_volume">"Current volume: ${volume}%%"</string>
     <string name="current_volume_default">Current Volume: 100%</string>
+    
+    <string-array name="colors">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
 </resources>
