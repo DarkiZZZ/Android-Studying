@@ -1,6 +1,7 @@
 package com.example.alertdialogtest
 
 import android.content.DialogInterface
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,6 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import com.example.alertdialogtest.databinding.ActivityAlertDialogLevelOneBinding
 import com.example.alertdialogtest.entities.AvailableVolumeValues
 import kotlin.properties.Delegates.notNull
+
+private const val KEY_COLOR = "keyColor"
+private const val KEY_VOLUME = "keyVolume"
 
 class AlertDialogLevelOneActivity : AppCompatActivity() {
 
@@ -19,6 +23,10 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alert_dialog_level_one)
 
+        volume = savedInstanceState?.getInt(KEY_VOLUME) ?: 50
+        color = savedInstanceState?.getInt(KEY_COLOR) ?: Color.RED
+
+        updateUi()
     }
 
     private fun updateUi(){
@@ -90,6 +98,33 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
                 val index: Int = (dialog as AlertDialog).listView.checkedItemPosition
                 volume = volumeItems.values[index]
             }
+            .create()
+        dialog.show()
+    }
+
+    private fun showMultipleChoiceAlertDialog(){
+        val colorItems = resources.getStringArray(R.array.colors)
+        val colorComponents: MutableList<Int> = mutableListOf(
+            Color.red(this.color),
+            Color.green(this.color),
+            Color.blue(this.color)
+        )
+        val checkBoxes: BooleanArray = colorComponents
+            .map { it > 0 }
+            .toBooleanArray()
+
+        val dialog: AlertDialog = AlertDialog.Builder(this)
+            .setTitle("Volume Setup")
+            .setMultiChoiceItems(colorItems, checkBoxes){_, which, isChecked ->
+                colorComponents[which] = if(isChecked) 255 else 0
+                this.color = Color.rgb(
+                    colorComponents[0],
+                    colorComponents[1],
+                    colorComponents[2]
+                )
+                updateUi()
+            }
+            .setPositiveButton("Close", null)
             .create()
         dialog.show()
     }
