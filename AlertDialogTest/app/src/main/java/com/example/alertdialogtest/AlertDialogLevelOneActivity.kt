@@ -74,5 +74,23 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
             }
             .create()
         dialog.show()
+
+    }
+
+    private fun showSingleChoiceWithConfirmationAlertDialog(){
+        val volumeItems: AvailableVolumeValues = AvailableVolumeValues.createVolumeValues(volume)
+        val volumeTextItems: Array<String> = volumeItems.values
+            .map { getString(R.string.volume_description, it) }
+            .toTypedArray()
+
+        val dialog: AlertDialog = AlertDialog.Builder(this)
+            .setTitle("Volume setup")
+            .setSingleChoiceItems(volumeTextItems, volumeItems.currentIndex, null)
+            .setPositiveButton("Confirm"){dialog, _ ->
+                val index: Int = (dialog as AlertDialog).listView.checkedItemPosition
+                volume = volumeItems.values[index]
+            }
+            .create()
+        dialog.show()
     }
 }
