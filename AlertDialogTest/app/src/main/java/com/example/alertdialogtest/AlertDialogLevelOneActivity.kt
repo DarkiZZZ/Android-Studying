@@ -21,7 +21,8 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
     }
 
     private fun updateUi(){
-
+        binding.textViewCurrentVolume.text = "Current volume: ${volume}%"
+        binding.colorView.setBackgroundColor(color)
     }
 
     private fun showAlertDialog(){
