@@ -6,16 +6,21 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.alertdialogtest.databinding.ActivityAlertDialogLevelOneBinding
+import com.example.alertdialogtest.entities.AvailableVolumeValues
+import kotlin.properties.Delegates.notNull
 
 class AlertDialogLevelOneActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAlertDialogLevelOneBinding
+    private var volume by notNull<Int>()
+    private var color by notNull<Int>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alert_dialog_level_one)
     }
 
-    fun updateUi(){
+    private fun updateUi(){
 
     }
 
@@ -40,7 +45,24 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
             .setNegativeButton("No", alertDialogListener)
             .setNeutralButton("Ignore", alertDialogListener)
             .setOnCancelListener{
-                Toast.makeText(this, "Dialog dismissed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Dialog cancelled", Toast.LENGTH_SHORT).show()
+            }
+            .create()
+        dialog.show()
+    }
+
+    private fun showSingleChoiceAlertDialog(){
+        val volumeItems: AvailableVolumeValues = AvailableVolumeValues.createVolumeValues(volume)
+        val volumeTextItems: Array<String> = volumeItems.values
+            .map { getString(R.string.volume_description, it) }
+            .toTypedArray()
+
+        val dialog: AlertDialog = AlertDialog.Builder(this)
+            .setTitle("Volume setup")
+            .setSingleChoiceItems(volumeTextItems, volumeItems.currentIndex){ dialog, which ->
+                volume = volumeItems.values[which]
+                updateUi()
+                dialog.dismiss()
             }
             .create()
         dialog.show()
