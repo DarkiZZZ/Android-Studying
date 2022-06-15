@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AlertDialogTest</string>
+    <string name="first_activity_title">Alert Dialog Level 1</string>
+    <string name="alert_dialog_default_button">Alert Dialog (default)</string>
+    <string name="alert_dialog_single_choice_button">Alert Dialog (single choice)</string>
+    <string name="alert_dialog_single_choice_confirm">Alert Dialog (single choice with confirmation)</string>
+    <string name="alert_dialog_multiple_choice">Alert Dialog (multiple choice)</string>
+    <string name="alert_dialog_multiple_choice_confirm">Alert Dialog (multiple choice with confirmation)</string>
+    <string name="current_color_text_view">Current color:</string>
+    <string name="switch_to_second_activity_button">Switch to second activity</string>
 </resources>
