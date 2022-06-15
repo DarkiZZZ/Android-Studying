@@ -10,4 +10,5 @@
     <string name="switch_to_second_activity_button">Switch to second activity</string>
     <string name="default_alert_dialog_message">"Text message"</string>
     <string name="volume_description">Volume: %1$d%%</string>
+    <string name="current_volume">"Current volume: ${volume}%%"</string>
 </resources>

@@ -18,10 +18,11 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alert_dialog_level_one)
+
     }
 
     private fun updateUi(){
-        binding.textViewCurrentVolume.text = "Current volume: ${volume}%"
+        binding.textViewCurrentVolume.text = getString(R.string.current_volume)
         binding.colorView.setBackgroundColor(color)
     }
 
