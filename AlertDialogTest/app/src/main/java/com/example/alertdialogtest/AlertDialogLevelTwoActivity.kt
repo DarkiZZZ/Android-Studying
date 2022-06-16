@@ -3,7 +3,7 @@ package com.example.alertdialogtest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import com.example.alertdialogtest.databinding.ActivityAlertDialogLevelOneBinding
+import com.example.alertdialogtest.databinding.ActivityAlertDialogLevelTwoBinding
 import com.example.alertdialogtest.databinding.PartVolumeBinding
 import com.example.alertdialogtest.entities.AvailableVolumeValues
 import kotlin.properties.Delegates
@@ -13,16 +13,24 @@ private const val KEY_VOLUME = "keyVolume2"
 
 class AlertDialogLevelTwoActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAlertDialogLevelOneBinding
+    private lateinit var binding: ActivityAlertDialogLevelTwoBinding
     private var volume by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_alert_dialog_level_two)
+        binding = ActivityAlertDialogLevelTwoBinding.inflate(layoutInflater)
+            .also{setContentView(it.root)}
+
+        volume = savedInstanceState?.getInt(KEY_VOLUME) ?: 50
+        binding.alertDialogCustomViewButton.setOnClickListener { showCustomAlertDialog() }
+        binding.alertDialogSingleChoiceCustomButton.setOnClickListener {
+            showCustomSingleChoiceAlertDialog()
+        }
+        updateUi()
     }
 
     private fun updateUi(){
-
+        binding.textViewCurrentVolume.text = "Current volume: ${volume}%"
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -67,6 +75,5 @@ class AlertDialogLevelTwoActivity : AppCompatActivity() {
             }
             .create()
         dialog.show()
-
     }
 }
