@@ -21,7 +21,8 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_alert_dialog_level_one)
+        binding = ActivityAlertDialogLevelOneBinding.inflate(layoutInflater)
+            .also{setContentView(it.root)}
 
         volume = savedInstanceState?.getInt(KEY_VOLUME) ?: 50
         color = savedInstanceState?.getInt(KEY_COLOR) ?: Color.RED
