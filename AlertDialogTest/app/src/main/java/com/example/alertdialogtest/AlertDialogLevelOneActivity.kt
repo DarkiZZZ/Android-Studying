@@ -26,6 +26,21 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
         volume = savedInstanceState?.getInt(KEY_VOLUME) ?: 50
         color = savedInstanceState?.getInt(KEY_COLOR) ?: Color.RED
 
+        binding.defaultAlertDialog.setOnClickListener{
+            showAlertDialog()
+        }
+        binding.singleChoiceAlertDialog.setOnClickListener{
+            showSingleChoiceAlertDialog()
+        }
+        binding.singleConfirmChoiceAlertDialog.setOnClickListener {
+            showSingleChoiceWithConfirmationAlertDialog()
+        }
+        binding.multipleChoiceAlertDialog.setOnClickListener {
+            showMultipleChoiceAlertDialog()
+        }
+        binding.multipleChoiceConfirmAlertDialog.setOnClickListener {
+            showMultipleChoiceWithConfirmationAlertDialog()
+        }
         updateUi()
     }
 
@@ -125,6 +140,37 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
                 updateUi()
             }
             .setPositiveButton("Close", null)
+            .create()
+        dialog.show()
+    }
+
+    private fun showMultipleChoiceWithConfirmationAlertDialog(){
+        val colorItems = resources.getStringArray(R.array.colors)
+        val colorComponents: MutableList<Int> = mutableListOf(
+            Color.red(this.color),
+            Color.green(this.color),
+            Color.blue(this.color)
+        )
+        val checkBoxes: BooleanArray = colorComponents
+            .map { it > 0 }
+            .toBooleanArray()
+
+        var color: Int = this.color
+        val dialog: AlertDialog = AlertDialog.Builder(this)
+            .setTitle("Volume Setup")
+            .setMultiChoiceItems(colorItems, checkBoxes){_, which, isChecked ->
+                colorComponents[which] = if(isChecked) 255 else 0
+                color = Color.rgb(
+                    colorComponents[0],
+                    colorComponents[1],
+                    colorComponents[2]
+                )
+                updateUi()
+            }
+            .setPositiveButton("Confirm"){_, _ ->
+                this.color = color
+                updateUi()
+            }
             .create()
         dialog.show()
     }
