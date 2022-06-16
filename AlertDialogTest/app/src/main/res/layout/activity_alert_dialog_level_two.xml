@@ -6,4 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".AlertDialogLevelTwoActivity">
 
+    <TextView
+        android:id="@+id/activityOneTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/alert_dialog_level_two_title"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/alertDialogCustomViewButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alert_dialog_custom_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activityOneTitle"
+        android:layout_margin="15dp"/>
+
+    <Button
+        android:id="@+id/alertDialogSingleChoiceCustomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alert_dialog_single_choice_custom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alertDialogCustomViewButton"
+        android:layout_margin="15dp"/>
+
+    <Button
+        android:id="@+id/alertDialogInputAndValidationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alert_dialog_input_and_validation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alertDialogSingleChoiceCustomButton"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/textViewCurrentVolume"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/alertDialogInputAndValidationButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/current_volume_default"
+        android:textSize="25sp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,11 @@
     <string name="volume_description">Volume: %1$d%%</string>
     <string name="current_volume">"Current volume: ${volume}%%"</string>
     <string name="current_volume_default">Current Volume: 100%</string>
-    
+    <string name="alert_dialog_level_two_title">Alert Dialog level 2</string>
+    <string name="alert_dialog_custom_view">Alert Dialog (custom view)</string>
+    <string name="alert_dialog_single_choice_custom">Alert Dialog (single choice, custom)</string>
+    <string name="alert_dialog_input_and_validation">Alert Dialog(input and validation)</string>
+
     <string-array name="colors">
         <item>Red</item>
         <item>Green</item>
