@@ -46,7 +46,7 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
     }
 
     private fun updateUi(){
-        binding.textViewCurrentVolume.text = getString(R.string.current_volume)
+        binding.textViewCurrentVolume.text = "Current volume: ${volume}%"
         binding.colorView.setBackgroundColor(color)
     }
 
@@ -113,6 +113,7 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
             .setPositiveButton("Confirm"){dialog, _ ->
                 val index: Int = (dialog as AlertDialog).listView.checkedItemPosition
                 volume = volumeItems.values[index]
+                updateUi()
             }
             .create()
         dialog.show()
