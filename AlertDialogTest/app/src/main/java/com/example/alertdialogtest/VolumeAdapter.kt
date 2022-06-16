@@ -22,7 +22,7 @@ class VolumeAdapter(private val values: List<Int>): BaseAdapter() {
         return true
     }
 
-    override fun getItem(position: Int): Any {
+    override fun getItem(position: Int): Int {
         return values[position]
     }
 
