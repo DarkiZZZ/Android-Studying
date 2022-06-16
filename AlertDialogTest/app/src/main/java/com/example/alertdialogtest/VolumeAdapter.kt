@@ -1,4 +1,37 @@
 package com.example.alertdialogtest
 
-class VolumeAdapter {
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import com.example.alertdialogtest.databinding.ItemVolumeSingleChoiceBinding
+
+class VolumeAdapter(private val values: List<Int>): BaseAdapter() {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val context: Context = parent!!.context
+        val binding = convertView?.tag as ItemVolumeSingleChoiceBinding? ?:
+        ItemVolumeSingleChoiceBinding.inflate(LayoutInflater.from(context))
+            .also {
+                it.root.tag = it
+            }
+        return binding.root
+    }
+
+    override fun hasStableIds(): Boolean {
+        return true
+    }
+
+    override fun getItem(position: Int): Any {
+        return values[position]
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getCount(): Int {
+        return values.size
+    }
+
 }
