@@ -45,6 +45,17 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
         updateUi()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_VOLUME, volume)
+        outState.putInt(KEY_COLOR, color)
+    }
+
     private fun updateUi(){
         binding.textViewCurrentVolume.text = "Current volume: ${volume}%"
         binding.colorView.setBackgroundColor(color)
