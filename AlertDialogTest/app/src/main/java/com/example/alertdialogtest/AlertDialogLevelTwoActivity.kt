@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.example.alertdialogtest.databinding.ActivityAlertDialogLevelOneBinding
 import com.example.alertdialogtest.databinding.PartVolumeBinding
+import com.example.alertdialogtest.entities.AvailableVolumeValues
 import kotlin.properties.Delegates
 
 
@@ -48,5 +49,24 @@ class AlertDialogLevelTwoActivity : AppCompatActivity() {
             }
             .create()
         dialog.show()
+    }
+
+    private fun showCustomSingleChoiceAlertDialog(){
+        val volumeItems: AvailableVolumeValues = AvailableVolumeValues.createVolumeValues(volume)
+        val adapter = VolumeAdapter(volumeItems.values)
+
+        var volume: Int = this.volume
+        var dialog: AlertDialog = AlertDialog.Builder(this)
+            .setTitle("Volume setup")
+            .setSingleChoiceItems(adapter, volumeItems.currentIndex){_, which ->
+                volume = adapter.getItem(which)
+            }
+            .setPositiveButton("Confirm"){_, _ ->
+                this.volume = volume
+                updateUi()
+            }
+            .create()
+        dialog.show()
+
     }
 }
