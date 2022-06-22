@@ -64,7 +64,7 @@ class AlertDialogLevelTwoActivity : AppCompatActivity() {
         val adapter = VolumeAdapter(volumeItems.values)
 
         var volume: Int = this.volume
-        var dialog: AlertDialog = AlertDialog.Builder(this)
+        val dialog: AlertDialog = AlertDialog.Builder(this)
             .setTitle("Volume setup")
             .setSingleChoiceItems(adapter, volumeItems.currentIndex){_, which ->
                 volume = adapter.getItem(which)
@@ -76,4 +76,6 @@ class AlertDialogLevelTwoActivity : AppCompatActivity() {
             .create()
         dialog.show()
     }
+
+
 }

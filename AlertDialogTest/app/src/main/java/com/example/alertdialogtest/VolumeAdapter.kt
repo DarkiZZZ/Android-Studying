@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.alertdialogtest.databinding.ItemVolumeSingleChoiceBinding
 
-class VolumeAdapter(private val values: List<Int>): BaseAdapter() {
+class VolumeAdapter(private val values: List<Int>
+    ): BaseAdapter() {
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val context: Context = parent!!.context
         val binding = convertView?.tag as ItemVolumeSingleChoiceBinding? ?:
@@ -15,6 +17,10 @@ class VolumeAdapter(private val values: List<Int>): BaseAdapter() {
             .also {
                 it.root.tag = it
             }
+
+        val volume = getItem(position)
+        binding.volumeValueTextView.text = context.getString(R.string.volume_description, volume)
+        binding.volumeValueProgressBar.progress = volume
         return binding.root
     }
 
