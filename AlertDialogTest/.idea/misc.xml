@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout/activity_alert_dialog_level_two.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/item_volume_single_choice.xml" value="0.33" />
         <entry key="app/src/main/res/layout/part_volume.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/part_volume_input.xml" value="0.35625" />
       </map>
     </option>
   </component>
