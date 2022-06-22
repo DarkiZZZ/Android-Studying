@@ -1,6 +1,7 @@
 package com.example.alertdialogtest
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,7 +43,15 @@ class AlertDialogLevelOneActivity : AppCompatActivity() {
         binding.multipleChoiceConfirmAlertDialog.setOnClickListener {
             showMultipleChoiceWithConfirmationAlertDialog()
         }
+        binding.switchToSecondActivity.setOnClickListener {
+            changeLevelToSecond()
+        }
         updateUi()
+    }
+
+    private fun changeLevelToSecond(){
+        val intent = Intent(this@AlertDialogLevelOneActivity, AlertDialogLevelTwoActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {
