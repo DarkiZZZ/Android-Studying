@@ -14,6 +14,12 @@
         android:theme="@style/Theme.HandlerTestApp"
         tools:targetApi="31">
         <activity
+            android:name=".HandlerLevelTwoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HandlerLevelOneActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
