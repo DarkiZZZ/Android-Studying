@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Dialog Fragment Test</string>
+    <string name="first_activity_title">Alert Dialog Level 1</string>
+    <string name="alert_dialog_default_button">Alert Dialog (default)</string>
+    <string name="alert_dialog_single_choice_button">Alert Dialog (single choice)</string>
+    <string name="alert_dialog_single_choice_confirm">Alert Dialog (single choice with confirmation)</string>
+    <string name="alert_dialog_multiple_choice">Alert Dialog (multiple choice)</string>
+    <string name="alert_dialog_multiple_choice_confirm">Alert Dialog (multiple choice with confirmation)</string>
+    <string name="current_color_text_view">Current color:</string>
+    <string name="switch_to_second_activity_button">Switch to second activity</string>
+    <string name="default_alert_dialog_message">"Text message"</string>
+    <string name="volume_description">Volume: %1$d%%</string>
+    <string name="current_volume">"Current volume: ${volume}%%"</string>
+    <string name="current_volume_default">Current Volume: 100%</string>
+    <string name="alert_dialog_level_two_title">Alert Dialog level 2</string>
+    <string name="alert_dialog_custom_view">Alert Dialog (custom view)</string>
+    <string name="alert_dialog_single_choice_custom">Alert Dialog (single choice, custom)</string>
+    <string name="alert_dialog_input_and_validation">Alert Dialog(input and validation)</string>
+    <string name="level_text_view">Level:</string>
+    <string name="enter_volume">Enter volume</string>
+
 </resources>
