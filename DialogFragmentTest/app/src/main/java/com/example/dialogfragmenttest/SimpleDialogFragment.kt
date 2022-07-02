@@ -26,6 +26,14 @@ class SimpleDialogFragment : DialogFragment() {
             .create()
     }
 
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+    }
+
     companion object{
         @JvmStatic val TAG = SimpleDialogFragment::class.java.simpleName
         @JvmStatic val REQUEST_KEY = "$TAG: defaultRequestKey"
