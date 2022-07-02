@@ -24,7 +24,7 @@ class HandlerLevelOneActivity : AppCompatActivity() {
             setContentView(it.root)
         }
         binding.root.forEach {
-            if (it is Button) it.setOnClickListener { universalButtonListener }
+            if (it is Button) it.setOnClickListener(universalButtonListener)
         }
     }
 

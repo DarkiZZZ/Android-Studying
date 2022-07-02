@@ -112,23 +112,32 @@
         android:id="@+id/testButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cancelActionButton"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="@color/teal_700"
         android:text="@string/test_button"
-        android:textStyle="italic"
-        android:textSize="15sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/teal_700"/>
+        android:textSize="15sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cancelActionButton" />
 
     <FrameLayout
-        android:id="@+id/colorView"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_margin="8dp"
+        android:layout_marginTop="40dp"
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.809"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/testButton"
-        android:layout_margin="8dp"/>
+        app:layout_constraintTop_toBottomOf="@id/cancelActionButton">
+
+        <View
+            android:id="@+id/colorView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
