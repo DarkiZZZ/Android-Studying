@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Handler Test App</string>
+    <string name="handler_basic_functions_button">Handler (basic functions)</string>
+    <string name="handler_complex_functions_button">Handler (complex functions)</string>
 </resources>
