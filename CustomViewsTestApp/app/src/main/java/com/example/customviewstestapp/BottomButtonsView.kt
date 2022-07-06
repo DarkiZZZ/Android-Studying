@@ -77,7 +77,7 @@ class BottomButtonsView(
             applyButton.backgroundTintList = ColorStateList.valueOf(positiveButtonBackgroundColor)
 
             val negativeButtonBackgroundColor =
-                typedArray.getColor(R.styleable.BottomButtonsView_NegativeButtonTextColor, Color.WHITE)
+                typedArray.getColor(R.styleable.BottomButtonsView_NegativeButtonTextColor, Color.RED)
             cancelButton.backgroundTintList = ColorStateList.valueOf(negativeButtonBackgroundColor)
 
             this@BottomButtonsView.isProgressMode =
