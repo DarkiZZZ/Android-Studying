@@ -3,6 +3,8 @@ package com.example.customviewstestapp
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -107,5 +109,50 @@ class BottomButtonsView(
 
     fun setCancelButtonText(text: String?){
         binding.cancelButton.text = text ?:"Cancel"
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        val superState = super.onSaveInstanceState()!!
+        val savedState = SavedState(superState)
+        savedState.applyButtonText = binding.applyButton.text.toString()
+        savedState.cancelButtonText = binding.cancelButton.text.toString()
+        return savedState
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val savedState = state as SavedState
+        super.onRestoreInstanceState(savedState.superState)
+        binding.applyButton.text = savedState.applyButtonText
+        binding.cancelButton.text = savedState.cancelButtonText
+    }
+
+    class SavedState: BaseSavedState{
+        var applyButtonText: String? = null
+        var cancelButtonText: String? = null
+
+        constructor(superState: Parcelable) : super(superState)
+        constructor(parcel: Parcel) : super(parcel){
+            applyButtonText = parcel.readString()
+            cancelButtonText = parcel.readString()
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeString(applyButtonText)
+            out.writeString(applyButtonText)
+        }
+
+        companion object{
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                    override fun createFromParcel(source: Parcel): SavedState {
+                        return SavedState(source)
+                    }
+
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return Array(size) { null }
+                }
+            }
+        }
     }
 }
