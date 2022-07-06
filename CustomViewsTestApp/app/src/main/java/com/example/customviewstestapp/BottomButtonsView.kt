@@ -15,7 +15,7 @@ class BottomButtonsView(
         defStyleRes: Int
     ): ConstraintLayout(context,  attrs, defStyleAttr, defStyleRes) {
 
-    private lateinit var binding: PartButtonsBinding
+    private var binding: PartButtonsBinding
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             this(context, attrs, defStyleAttr, 0)
