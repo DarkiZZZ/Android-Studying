@@ -11,9 +11,9 @@ class TicTacToeView(
     defStyleRes: Int) : View(context, attributeSet, defStyleAttr, defStyleRes) {
 
     constructor(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) :
-            this(context, attributeSet, defStyleAttr, 0)
+            this(context, attributeSet, defStyleAttr, R.style.DefaultTicTacToeStyle)
     constructor(context: Context, attributeSet: AttributeSet?) :
-            this(context, attributeSet, 0)
+            this(context, attributeSet, R.attr.TicTacToeStyle)
     constructor(context: Context) :
             this(context, null)
 
