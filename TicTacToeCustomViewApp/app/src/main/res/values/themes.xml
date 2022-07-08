@@ -12,5 +12,18 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        
+        <item name="TicTacToeStyle">@style/GlobalTicTacToeStyle</item>
+    </style>
+    
+    <style name="DefaultTicTacToeStyle">
+        <item name="crossColor">#008800</item>
+        <item name="zeroColor">#000000</item>
+        <item name="gridColor">#C7C7C7</item>
+    </style>
+
+    <style name="GlobalTicTacToeStyle" parent="DefaultTicTacToeStyle">
+        <item name="crossColor">#880000</item>
+        <item name="zeroColor">#000088</item>
     </style>
 </resources>
