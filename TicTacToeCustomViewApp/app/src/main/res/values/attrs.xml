@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <declare-styleable name="TicTacToeView">
+        <attr name="crossColor" format="color"/>
+        <attr name="zeroColor" format="color"/>
+        <attr name="gridColor" format="color"/>
+    </declare-styleable>
+
+    <attr name="TicTacToeStyle" format="reference"/>
+</resources>
