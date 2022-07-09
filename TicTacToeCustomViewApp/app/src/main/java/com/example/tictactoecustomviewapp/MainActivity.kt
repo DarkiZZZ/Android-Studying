@@ -33,11 +33,17 @@ class MainActivity : AppCompatActivity() {
             )
             for (row in 0..binding.customView.ticTacToeField!!.rows){
                 for (column in 0..binding.customView.ticTacToeField!!.columns){
-                    if(Random.nextBoolean()){
-                        binding.customView.ticTacToeField!!.setCell(row, column, Cell.CROSS)
-                    }
-                    else{
-                        binding.customView.ticTacToeField!!.setCell(row, column, Cell.ZERO)
+                    val currentField = (0..2).random()
+                    when (currentField) {
+                        0 -> {
+                            binding.customView.ticTacToeField!!.setCell(row, column, Cell.CROSS)
+                        }
+                        1 -> {
+                            binding.customView.ticTacToeField!!.setCell(row, column, Cell.ZERO)
+                        }
+                        2 -> {
+                            binding.customView.ticTacToeField!!.setCell(row, column, Cell.EMPTY)
+                        }
                     }
                 }
             }
