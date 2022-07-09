@@ -186,8 +186,26 @@ class TicTacToeView(
         if (fieldRect.width() <= 0) return
         if (fieldRect.height() <= 0) return
 
-        drawCells(canvas)
         drawGrid(canvas)
+        drawCurrentCell(canvas)
+        drawCells(canvas)
+
+
+    }
+
+    private fun drawCurrentCell(canvas: Canvas) {
+        val field = this.ticTacToeField ?: return
+        if (currentRow < 0 && currentColumn < 0 && currentRow >= field.rows
+            && currentColumn >= field.columns) return
+
+        val cell = getCellRect(currentRow, currentColumn)
+        canvas.drawRect(
+            cell.left - cellPadding,
+            cell.top - cellPadding,
+            cell.right + cellPadding,
+            cell.bottom + cellPadding,
+            currentCellPaint
+        )
     }
 
     private fun drawGrid(canvas: Canvas){
