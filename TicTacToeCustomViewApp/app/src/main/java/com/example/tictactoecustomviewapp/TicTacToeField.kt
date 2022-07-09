@@ -8,7 +8,7 @@ enum class Cell{
 
 typealias OnFieldChangeListener = (field: TicTacToeField) -> Unit
 
-class TicTacToeField(private val rows: Int, private val columns: Int) {
+class TicTacToeField(val rows: Int, val columns: Int) {
 
     private val cells = Array(rows){Array(columns) {Cell.EMPTY} }
     val listeners = mutableSetOf<OnFieldChangeListener>()
