@@ -36,6 +36,7 @@ class TicTacToeView(
     private var fieldRect = RectF(0f, 0f, 0f, 0f)
     private var cellSize: Float = 0f
     private var cellPadding: Float = 0f
+    private var cellRect = RectF()
 
     private lateinit var crossPaint: Paint
     private lateinit var zeroPaint: Paint
@@ -57,6 +58,8 @@ class TicTacToeView(
         initPaints()
         if(isInEditMode){
             ticTacToeField = TicTacToeField(12, 10)
+            ticTacToeField?.setCell(4, 4, Cell.CROSS)
+            //ticTacToeField?.setCell(3, 4, Cell.ZERO)
         }
     }
 
@@ -190,23 +193,41 @@ class TicTacToeView(
 
     private fun drawCells(canvas: Canvas){
         val field = this.ticTacToeField ?: return
+
         for(row in 0 until field.rows){
             for (column in 0 until field.columns){
                 val cell = field.getCell(row, column)
-                when(cell){
-                    Cell.CROSS -> drawCross(row, column, canvas)
-                    Cell.ZERO -> drawZero(row, column, canvas)
-                    Cell.EMPTY -> return
+                if (cell == Cell.CROSS) {
+                    drawCross(row, column, canvas)
+                }
+                else if (cell == Cell.ZERO) {
+                    drawZero(row, column, canvas)
                 }
             }
         }
     }
 
     private fun drawZero(row: Int, column: Int, canvas: Canvas) {
+        val cellRect = getCellRect(row, column)
+        canvas.drawCircle(
+            cellRect.centerX(),
+            cellRect.centerY(),
+        cellRect.width() / 2,
+            zeroPaint)
+    }
 
+    private fun getCellRect(row: Int, column: Int): RectF {
+        cellRect.left = fieldRect.left + column * cellSize + cellPadding
+        cellRect.top = fieldRect.top + row * cellSize + cellPadding
+        cellRect.right = cellRect.left + cellSize - cellPadding * 2
+        cellRect.bottom = cellRect.top + cellSize - cellPadding * 2
+        return cellRect
     }
 
     private fun drawCross(row: Int, column: Int, canvas: Canvas) {
+        val cellRect = getCellRect(row, column)
+        canvas.drawLine(cellRect.left, cellRect.top, cellRect.right, cellRect.bottom, crossPaint)
+        canvas.drawLine(cellRect.right, cellRect.top, cellRect.left, cellRect.bottom, crossPaint)
 
     }
 
