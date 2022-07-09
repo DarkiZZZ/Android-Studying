@@ -7,7 +7,9 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
+import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.properties.Delegates
@@ -42,9 +44,14 @@ class TicTacToeView(
     private var cellPadding: Float = 0f
     private var cellRect = RectF()
 
+
+    private var currentRow: Int = -1
+    private var currentColumn: Int = -1
+
     private lateinit var crossPaint: Paint
     private lateinit var zeroPaint: Paint
     private lateinit var gridPaint: Paint
+    private lateinit var currentCellPaint: Paint
 
     constructor(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) :
             this(context, attributeSet, defStyleAttr, R.style.DefaultTicTacToeStyle)
@@ -65,6 +72,8 @@ class TicTacToeView(
             ticTacToeField?.setCell(4, 4, Cell.CROSS)
             ticTacToeField?.setCell(3, 4, Cell.ZERO)
         }
+        isFocusable = true
+        isClickable = true
     }
 
     private fun initializeAttributeSet(attributeSet: AttributeSet?,
@@ -101,6 +110,10 @@ class TicTacToeView(
         gridPaint.style = Paint.Style.STROKE
         gridPaint.strokeWidth =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, resources.displayMetrics)
+
+        currentCellPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        currentCellPaint.color = Color.rgb(230, 230, 230)
+        currentCellPaint.style = Paint.Style.FILL
     }
 
     private val listener: OnFieldChangeListener = {
@@ -233,6 +246,60 @@ class TicTacToeView(
         canvas.drawLine(cellRect.left, cellRect.top, cellRect.right, cellRect.bottom, crossPaint)
         canvas.drawLine(cellRect.right, cellRect.top, cellRect.left, cellRect.bottom, crossPaint)
 
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when(event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                updateCurrentCell(event)
+                return true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                updateCurrentCell(event)
+                return true
+            }
+            MotionEvent.ACTION_UP -> {
+                return performClick()
+            }
+        }
+        return false
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        val field = this.ticTacToeField ?: return false
+        val row = currentRow
+        val column = currentColumn
+        if (row >= 0 && column >= 0 && row < field.rows && column < field.columns) {
+            actionListener?.invoke(row, column, field)
+            return true
+        }
+        return false
+    }
+
+    private fun updateCurrentCell(event: MotionEvent) {
+        val field = this.ticTacToeField ?: return
+        val row = getRow(event)
+        val column = getColumn(event)
+        if (row >= 0 && column >= 0 && row < field.rows && column < field.columns) {
+            if (currentRow != row || currentColumn != column) {
+                currentRow = row
+                currentColumn = column
+                invalidate()
+            }
+        } else {
+            currentRow = -1
+            currentColumn = -1
+            invalidate()
+        }
+    }
+
+    private fun getRow(event: MotionEvent): Int {
+        return floor((event.y - fieldRect.top) / cellSize).toInt()
+    }
+
+    private fun getColumn(event: MotionEvent): Int {
+        return floor((event.x - fieldRect.left) / cellSize).toInt()
     }
 
     companion object{
