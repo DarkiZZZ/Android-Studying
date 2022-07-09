@@ -7,6 +7,7 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
+    var isCurrentPlayer = true
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +16,16 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root) }
 
         binding.customView.ticTacToeField = TicTacToeField(10 ,10 )
+
+        binding.customView.actionListener = { row, column, field ->
+            if(isCurrentPlayer){
+                field.setCell(row, column, Cell.CROSS)
+            }
+            else{
+                field.setCell(row, column, Cell.ZERO)
+            }
+            isCurrentPlayer = !isCurrentPlayer
+        }
         binding.buttonRandomField.setOnClickListener {
             binding.customView.ticTacToeField = TicTacToeField(
                 Random.nextInt(3, 10),
