@@ -1,7 +1,9 @@
 package com.example.tictactoecustomviewapp
 
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -34,6 +36,10 @@ class TicTacToeView(
     private var fieldRect = RectF(0f, 0f, 0f, 0f)
     private var cellSize: Float = 0f
     private var cellPadding: Float = 0f
+
+    private lateinit var crossPaint: Paint
+    private lateinit var zeroPaint: Paint
+    private lateinit var gridPaint: Paint
 
     constructor(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) :
             this(context, attributeSet, defStyleAttr, R.style.DefaultTicTacToeStyle)
@@ -127,6 +133,11 @@ class TicTacToeView(
         fieldRect.top = paddingTop + (safeHeight - fieldHeight) / 2
         fieldRect.right = fieldRect.left + fieldWidth
         fieldRect.bottom = fieldRect.top + fieldHeight
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
     }
 
     companion object{
