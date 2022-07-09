@@ -56,7 +56,7 @@ class TicTacToeView(
         }
         initPaints()
         if(isInEditMode){
-            ticTacToeField = TicTacToeField(8, 6)
+            ticTacToeField = TicTacToeField(12, 10)
         }
     }
 
@@ -102,7 +102,7 @@ class TicTacToeView(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val minWidth = suggestedMinimumWidth + paddingLeft + paddingRight
-        val minHeight = suggestedMinimumHeight + paddingStart + paddingEnd
+        val minHeight = suggestedMinimumHeight + paddingTop + paddingBottom
 
         val cellSizeInPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DESIRED_CELL_SIZE,
             resources.displayMetrics).toInt()
@@ -110,7 +110,7 @@ class TicTacToeView(
         val columns = ticTacToeField?.columns ?: 0
 
         val desiredWidth = max(minWidth, columns * cellSizeInPixels + paddingLeft + paddingRight)
-        val desiredHeight = max(minHeight, rows * cellSizeInPixels + paddingStart + paddingEnd)
+        val desiredHeight = max(minHeight, rows * cellSizeInPixels + paddingTop + paddingBottom)
 
         setMeasuredDimension(
             resolveSize(desiredWidth, widthMeasureSpec),
@@ -142,7 +142,7 @@ class TicTacToeView(
     private fun updateViewSize(){
         val field = this.ticTacToeField ?: return
         val safeWidth = width - paddingLeft - paddingRight
-        val safeHeight = height - paddingStart - paddingEnd
+        val safeHeight = height - paddingTop - paddingBottom
 
         val cellWidth = safeWidth / field.columns.toFloat()
         val cellHeight = safeHeight / field.rows.toFloat()
@@ -161,29 +161,59 @@ class TicTacToeView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (ticTacToeField == null ||
-            cellSize == 0f ||
-            fieldRect.width() <= 0 ||
-            fieldRect.height() <= 0)
-        {
-            return
-        }
+        if (ticTacToeField == null) return
+        if (cellSize == 0f) return
+        if (fieldRect.width() <= 0) return
+        if (fieldRect.height() <= 0) return
+
         drawCells(canvas)
         drawGrid(canvas)
     }
 
     private fun drawGrid(canvas: Canvas){
+        val field = this.ticTacToeField ?: return
 
+        val xStart = fieldRect.left
+        val xEnd = fieldRect.right
+        for (line in 0..field.rows){
+            val y = fieldRect.top + cellSize * line
+            canvas.drawLine(xStart, y, xEnd, y, gridPaint )
+        }
+
+        val yStart = fieldRect.top
+        val yEnd = fieldRect.bottom
+        for (line in 0..field.columns){
+            val x = fieldRect.left + cellSize * line
+            canvas.drawLine(x, yStart, x, yEnd, gridPaint )
+        }
     }
 
     private fun drawCells(canvas: Canvas){
+        val field = this.ticTacToeField ?: return
+        for(row in 0 until field.rows){
+            for (column in 0 until field.columns){
+                val cell = field.getCell(row, column)
+                when(cell){
+                    Cell.CROSS -> drawCross(row, column, canvas)
+                    Cell.ZERO -> drawZero(row, column, canvas)
+                    Cell.EMPTY -> return
+                }
+            }
+        }
+    }
+
+    private fun drawZero(row: Int, column: Int, canvas: Canvas) {
+
+    }
+
+    private fun drawCross(row: Int, column: Int, canvas: Canvas) {
 
     }
 
     companion object{
         private const val CROSS_DEFAULT_COLOR = Color.BLUE
         private const val ZERO_DEFAULT_COLOR = Color.RED
-        private const val GRID_DEFAULT_COLOR = Color.GRAY
+        private const val GRID_DEFAULT_COLOR = Color.BLACK
         private const val DESIRED_CELL_SIZE = 50f
     }
 }
