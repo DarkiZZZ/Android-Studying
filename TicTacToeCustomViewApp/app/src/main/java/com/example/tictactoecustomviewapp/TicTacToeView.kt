@@ -12,6 +12,8 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.properties.Delegates
 
+typealias OnCellActionListener = (row: Int, column: Int, field: TicTacToeField) -> Unit
+
 class TicTacToeView(
     context: Context,
     attributeSet: AttributeSet?,
@@ -28,6 +30,8 @@ class TicTacToeView(
             requestLayout()
             invalidate()
         }
+
+    var actionListener: OnCellActionListener? = null
 
     private var crossColor by Delegates.notNull<Int>()
     private var zeroColor by Delegates.notNull<Int>()
