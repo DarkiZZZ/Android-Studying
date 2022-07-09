@@ -196,7 +196,6 @@ class TicTacToeView(
         drawCurrentCell(canvas)
         drawCells(canvas)
 
-
     }
 
     private fun drawCurrentCell(canvas: Canvas) {
