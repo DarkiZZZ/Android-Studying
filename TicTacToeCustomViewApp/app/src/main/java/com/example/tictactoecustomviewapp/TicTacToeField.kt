@@ -22,7 +22,7 @@ class TicTacToeField(val rows: Int, val columns: Int) {
         if (row < 0 || column < 0 || row >= rows || column >= columns) return
         if (cells[row][column] != cell){
             cells[row][column] = cell
-            listeners.forEach{it.invoke(this)}
+            listeners.forEach{it?.invoke(this)}
         }
     }
 }
