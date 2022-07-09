@@ -59,7 +59,7 @@ class TicTacToeView(
         if(isInEditMode){
             ticTacToeField = TicTacToeField(12, 10)
             ticTacToeField?.setCell(4, 4, Cell.CROSS)
-            //ticTacToeField?.setCell(3, 4, Cell.ZERO)
+            ticTacToeField?.setCell(3, 4, Cell.ZERO)
         }
     }
 
