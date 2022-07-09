@@ -55,6 +55,9 @@ class TicTacToeView(
             initializeDefaultColors()
         }
         initPaints()
+        if(isInEditMode){
+            ticTacToeField = TicTacToeField(8, 6)
+        }
     }
 
     private fun initializeAttributeSet(attributeSet: AttributeSet?,
@@ -158,11 +161,13 @@ class TicTacToeView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (ticTacToeField == null) return
-        if (cellSize == 0f) return
-        if (fieldRect.width() <= 0) return
-        if (fieldRect.height() <= 0) return
-
+        if (ticTacToeField == null ||
+            cellSize == 0f ||
+            fieldRect.width() <= 0 ||
+            fieldRect.height() <= 0)
+        {
+            return
+        }
         drawCells(canvas)
         drawGrid(canvas)
     }
