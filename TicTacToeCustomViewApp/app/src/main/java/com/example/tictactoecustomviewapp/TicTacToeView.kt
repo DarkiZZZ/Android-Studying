@@ -156,8 +156,22 @@ class TicTacToeView(
         fieldRect.bottom = fieldRect.top + fieldHeight
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        if (ticTacToeField == null) return
+        if (cellSize == 0f) return
+        if (fieldRect.width() <= 0) return
+        if (fieldRect.height() <= 0) return
+
+        drawCells(canvas)
+        drawGrid(canvas)
+    }
+
+    private fun drawGrid(canvas: Canvas){
+
+    }
+
+    private fun drawCells(canvas: Canvas){
 
     }
 
