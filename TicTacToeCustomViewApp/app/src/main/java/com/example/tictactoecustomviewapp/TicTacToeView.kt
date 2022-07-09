@@ -12,6 +12,16 @@ class TicTacToeView(
     defStyleAttr: Int,
     defStyleRes: Int) : View(context, attributeSet, defStyleAttr, defStyleRes) {
 
+
+    var ticTacToeField: TicTacToeField? = null
+        set(value) {
+            field?.listeners?.remove { listener }
+            field = value
+            value?.listeners?.add { listener  }
+            requestLayout()
+            invalidate()
+        }
+
     private var crossColor: Int by Delegates.notNull<Int>()
     private var zeroColor: Int by Delegates.notNull<Int>()
     private var gridColor: Int by Delegates.notNull<Int>()
@@ -26,6 +36,8 @@ class TicTacToeView(
     init {
         if (attributeSet != null){
             initializeAttributeSet(attributeSet, defStyleAttr, defStyleRes)
+        } else{
+            initializeDefaultColors()
         }
     }
 
@@ -45,10 +57,24 @@ class TicTacToeView(
         typedArray.recycle()
     }
 
+    private val listener: OnFieldChangeListener = {
+
+    }
+
     private fun initializeDefaultColors(){
         crossColor = CROSS_DEFAULT_COLOR
         zeroColor = ZERO_DEFAULT_COLOR
         gridColor = GRID_DEFAULT_COLOR
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        ticTacToeField?.listeners?.add { listener }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        ticTacToeField?.listeners?.remove { listener }
     }
 
     companion object{
