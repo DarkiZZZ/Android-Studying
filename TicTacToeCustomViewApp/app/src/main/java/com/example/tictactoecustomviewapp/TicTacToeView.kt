@@ -54,6 +54,7 @@ class TicTacToeView(
         } else{
             initializeDefaultColors()
         }
+        initPaints()
     }
 
     private fun initializeAttributeSet(attributeSet: AttributeSet?,
@@ -70,6 +71,26 @@ class TicTacToeView(
 
 
         typedArray.recycle()
+    }
+
+    private fun initPaints() {
+        crossPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        crossPaint.color = crossColor
+        crossPaint.style = Paint.Style.STROKE
+        crossPaint.strokeWidth =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, resources.displayMetrics)
+
+        zeroPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        zeroPaint.color = zeroColor
+        zeroPaint.style = Paint.Style.STROKE
+        zeroPaint.strokeWidth =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, resources.displayMetrics)
+
+        gridPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        gridPaint.color = gridColor
+        gridPaint.style = Paint.Style.STROKE
+        gridPaint.strokeWidth =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, resources.displayMetrics)
     }
 
     private val listener: OnFieldChangeListener = {
