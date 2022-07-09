@@ -27,9 +27,9 @@ class TicTacToeView(
             invalidate()
         }
 
-    private var crossColor: Int by Delegates.notNull<Int>()
-    private var zeroColor: Int by Delegates.notNull<Int>()
-    private var gridColor: Int by Delegates.notNull<Int>()
+    private var crossColor by Delegates.notNull<Int>()
+    private var zeroColor by Delegates.notNull<Int>()
+    private var gridColor by Delegates.notNull<Int>()
 
     private var fieldRect = RectF(0f, 0f, 0f, 0f)
     private var cellSize: Float = 0f
@@ -106,6 +106,7 @@ class TicTacToeView(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        updateViewSize()
     }
 
     private fun updateViewSize(){
