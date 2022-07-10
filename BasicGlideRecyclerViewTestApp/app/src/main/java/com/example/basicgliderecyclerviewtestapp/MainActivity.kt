@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.basicgliderecyclerviewtestapp.databinding.ActivityMainBinding
+import com.example.basicgliderecyclerviewtestapp.model.User
 import com.example.basicgliderecyclerviewtestapp.model.UserService
 import com.example.basicgliderecyclerviewtestapp.model.UsersListener
 
@@ -20,7 +21,20 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
-        adapter = UserAdapter()
+        adapter = UserAdapter(object  : UserActionListener{
+            override fun onUserDetails(user: User) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onUserDelete(user: User) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onUserRelocate(user: User, relocation: Int) {
+                TODO("Not yet implemented")
+            }
+        })
+
         val layoutManager =  LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
