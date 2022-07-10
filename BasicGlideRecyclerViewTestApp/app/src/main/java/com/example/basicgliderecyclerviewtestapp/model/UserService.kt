@@ -9,12 +9,12 @@ class UserService {
     init {
         val faker = Faker.instance()
         IMAGES_URL_LIST.shuffle()
-        val createdUsers = (1..100).map { User(
+        users = (1..100).map { User(
             id = it.toLong(),
             name = faker.name().fullName(),
             company = faker.company().name(),
             photo = IMAGES_URL_LIST[it % IMAGES_URL_LIST.size]
-        ) }
+        ) }.toMutableList()
     }
 
     fun getUser(): List<User>{
