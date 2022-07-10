@@ -59,6 +59,7 @@ class UserService {
     }
 
     companion object{
+        // todo
         private val IMAGES_URL_LIST = mutableListOf<String>()
     }
 }
