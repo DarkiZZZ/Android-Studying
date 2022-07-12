@@ -7,13 +7,11 @@ import com.example.basicgliderecyclerviewtestapp.databinding.ActivityMainBinding
 import com.example.basicgliderecyclerviewtestapp.model.User
 import com.example.basicgliderecyclerviewtestapp.model.UserService
 import com.example.basicgliderecyclerviewtestapp.model.UsersListener
+import com.example.basicgliderecyclerviewtestapp.screens.UserListFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: UserAdapter
-    private val userService: UserService
-        get() = (applicationContext as UserApp).usersService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,33 +19,13 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
-        adapter = UserAdapter(object  : UserActionListener{
-            override fun onUserDetails(user: User) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onUserDelete(user: User) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onUserRelocate(user: User, relocation: Int) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        val layoutManager =  LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = adapter
-
-        userService.addListener { usersListener }
+        if(savedInstanceState == null){
+            supportFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.fragmentContainer, UserListFragment())
+                .commit()
+        }
     }
 
-    private val usersListener: UsersListener = {
-        adapter.users = it
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        userService.removeListener(usersListener)
-    }
 }
