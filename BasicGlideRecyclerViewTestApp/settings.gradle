@@ -3,7 +3,6 @@ pluginManagement {
         google()
         mavenLocal()
         mavenCentral()
-        jcenter()
         gradlePluginPortal()
     }
 }
@@ -12,7 +11,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
 }
 rootProject.name = "BasicGlide&RecyclerView Test App"
