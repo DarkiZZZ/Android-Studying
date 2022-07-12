@@ -192,9 +192,9 @@ class TicTacToeView(
         if (fieldRect.width() <= 0) return
         if (fieldRect.height() <= 0) return
 
-        drawGrid(canvas)
-        drawCurrentCell(canvas)
         drawCells(canvas)
+        drawCurrentCell(canvas)
+        drawGrid(canvas)
 
     }
 
