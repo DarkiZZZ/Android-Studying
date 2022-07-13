@@ -6,3 +6,8 @@ data class User(
     val name: String,
     val company: String
 )
+
+data class UserDetails(
+    val user: User,
+    val details: String
+)
