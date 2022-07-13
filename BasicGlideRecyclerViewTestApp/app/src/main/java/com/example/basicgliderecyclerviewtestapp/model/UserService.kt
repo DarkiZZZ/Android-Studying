@@ -1,5 +1,6 @@
 package com.example.basicgliderecyclerviewtestapp.model
 
+import com.example.basicgliderecyclerviewtestapp.UserNotFoundException
 import com.github.javafaker.Faker
 import java.util.*
 
@@ -23,6 +24,14 @@ class UserService {
 
     fun getUser(): List<User>{
         return users
+    }
+
+    fun getUserDetailsById(id: Long): UserDetails{
+        val user: User = users.firstOrNull { it.id == id } ?: throw UserNotFoundException()
+        return UserDetails(
+            user,
+            details = Faker.instance().lorem().paragraphs(3).joinToString("\n")
+        )
     }
 
     fun deleteUser(user: User){
