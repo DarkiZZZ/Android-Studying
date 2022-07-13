@@ -12,12 +12,14 @@ class UserListViewModel(private val userService: UserService) : ViewModel() {
     private val viewModelUsers = MutableLiveData<List<User>>()
     var users: LiveData<List<User>> = viewModelUsers
 
-    init {
-        loadUsers()
-    }
     private val listener: UsersListener = {
         viewModelUsers.value = it
     }
+
+    init {
+        loadUsers()
+    }
+
     fun loadUsers(){
         userService.addListener { listener }
     }
