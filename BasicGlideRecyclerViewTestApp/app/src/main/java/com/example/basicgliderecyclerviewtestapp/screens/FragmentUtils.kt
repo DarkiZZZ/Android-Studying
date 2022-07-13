@@ -7,10 +7,14 @@ import com.example.basicgliderecyclerviewtestapp.UserApp
 
 class ViewModelFactory(private val userApp: UserApp) : ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val viewModel: UserListViewModel = when(modelClass){
+        val viewModel: Any = when(modelClass){
 
             UserListViewModel::class.java -> {
                 UserListViewModel(userApp.usersService)
+            }
+
+            UserDetailsViewModel::class.java -> {
+                UserDetailsViewModel(userApp.usersService)
             }
 
             else -> throw IllegalStateException("Unknown viewModel class")
