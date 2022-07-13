@@ -47,6 +47,8 @@ class UserDetailsFragment : Fragment() {
 
         binding.deleteUserButton.setOnClickListener {
             viewModel.deleteUser()
+            navigator().showToast(R.string.user_has_been_deleted)
+            navigator().goBack()
         }
         return binding.root
     }

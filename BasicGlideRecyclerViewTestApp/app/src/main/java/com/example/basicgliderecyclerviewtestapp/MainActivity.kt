@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), Navigator{
 
     override fun showDetails(user: User) {
         supportFragmentManager.beginTransaction()
+            .addToBackStack(null)
             .replace(R.id.fragmentContainer, UserDetailsFragment.newInstance(user.id))
             .commit()
     }

@@ -26,3 +26,4 @@ class ViewModelFactory(private val userApp: UserApp) : ViewModelProvider.Factory
 }
 
 fun Fragment.factory()  = ViewModelFactory(requireContext().applicationContext as UserApp)
+fun Fragment.navigator() = requireActivity() as Navigator

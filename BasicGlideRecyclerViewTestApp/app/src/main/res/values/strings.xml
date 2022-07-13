@@ -7,4 +7,5 @@
     <string name="failed_to_load_users">Failed to load users</string>
     <string name="try_again_button">Try Again</string>
     <string name="no_users_found">No users found</string>
+    <string name="user_has_been_deleted">User has been deleted</string>
 </resources>
