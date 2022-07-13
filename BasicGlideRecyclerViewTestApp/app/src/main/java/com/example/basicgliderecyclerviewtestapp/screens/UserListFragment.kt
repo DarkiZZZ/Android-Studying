@@ -19,7 +19,7 @@ class UserListFragment : Fragment() {
     private lateinit var binding: FragmentUserListBinding
     private lateinit var adapter: UserAdapter
 
-    private val viewModel: UserListViewModel by viewModels()
+    private val viewModel: UserListViewModel by viewModels{ factory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
