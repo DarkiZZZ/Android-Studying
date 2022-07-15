@@ -6,12 +6,23 @@ import androidx.lifecycle.ViewModel
 import com.example.basicgliderecyclerviewtestapp.model.User
 import com.example.basicgliderecyclerviewtestapp.model.UserService
 import com.example.basicgliderecyclerviewtestapp.model.UsersListener
+import com.example.basicgliderecyclerviewtestapp.tasks.EmptyResult
+
+data class UserListItem(
+    val user: User,
+    val isInProgress: Boolean
+)
 
 class UserListViewModel(private val userService: UserService) : ViewModel() {
 
-    private val viewModelUsers = MutableLiveData<List<User>>()
-    var users: LiveData<List<User>> = viewModelUsers
+    private val viewModelUsers = MutableLiveData<List<UserListItem>>()
+    var users: LiveData<List<UserListItem>> = viewModelUsers
 
+    private val userIdsInProgress = mutableSetOf<Long>()
+    private var usersResult: Result<List<User>> = EmptyResult()
+        set(value) {
+            field = value
+    }
     private val listener: UsersListener = {
         viewModelUsers.value = it
     }
