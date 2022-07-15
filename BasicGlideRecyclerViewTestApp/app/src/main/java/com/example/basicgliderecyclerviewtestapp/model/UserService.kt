@@ -1,8 +1,11 @@
 package com.example.basicgliderecyclerviewtestapp.model
 
 import com.example.basicgliderecyclerviewtestapp.UserNotFoundException
+import com.example.basicgliderecyclerviewtestapp.tasks.SimpleUserTask
+import com.example.basicgliderecyclerviewtestapp.tasks.UserTask
 import com.github.javafaker.Faker
 import java.util.*
+import java.util.concurrent.Callable
 
 typealias UsersListener = (users: List<User>) -> Unit
 
@@ -10,8 +13,11 @@ class UserService {
 
     private var users = mutableListOf<User>()
     private val listeners = mutableSetOf<UsersListener>()
+    private var loaded = false
 
-    init {
+
+    fun loadUsers(): UserTask<Unit> = SimpleUserTask(Callable {
+        Thread.sleep(2000) // <-- Imitation of hard work
         val faker = Faker.instance()
         IMAGES_URL_LIST.shuffle()
         users = (1..100).map { User(
@@ -20,43 +26,44 @@ class UserService {
             company = faker.company().name(),
             photo = IMAGES_URL_LIST[it % IMAGES_URL_LIST.size]
         ) }.toMutableList()
-    }
+        loaded = true
+        notifyChanges()
+    })
 
-    fun getUser(): List<User>{
-        return users
-    }
-
-    fun getUserDetailsById(id: Long): UserDetails{
+    fun getUserDetailsById(id: Long): UserTask<UserDetails> = SimpleUserTask(Callable {
+        Thread.sleep(2000)
         val user: User = users.firstOrNull { it.id == id } ?: throw UserNotFoundException()
-        return UserDetails(
+        return@Callable UserDetails(
             user,
             details = Faker.instance().lorem().paragraphs(3).joinToString("\n")
         )
-    }
+    })
 
-    fun deleteUser(user: User){
+    fun deleteUser(user: User) : UserTask<Unit> = SimpleUserTask(Callable {
+        Thread.sleep(2000)
         val deleteIndex = users.indexOfFirst { it.id == user.id }
         if (deleteIndex != -1){
             users.removeAt(deleteIndex)
         }
         notifyChanges()
-    }
+    })
 
 
     // relocation shows what direction you need to
-    // relocate user: 1(up), -1(down), 0(stay)
-    fun relocateUser(user: User, relocation: Int){
+    // relocate user: variable "relocation" must be : 1(up), -1(down), 0(stay)
+    fun relocateUser(user: User, relocation: Int) : UserTask<Unit> = SimpleUserTask(Callable {
+        Thread.sleep(2000)
         val oldIndex = users.indexOfFirst { it.id == user.id }
+        if (oldIndex == -1) return@Callable
         val newIndex = oldIndex + relocation
-        if (newIndex < 0 || newIndex >= users.size){
-            Collections.swap(users, oldIndex, newIndex)
-        }
+        if (newIndex < 0 || newIndex >= users.size) return@Callable
+        Collections.swap(users, oldIndex, newIndex)
         notifyChanges()
-    }
+    })
 
     fun addListener(listener: UsersListener){
         listeners.add(listener)
-        listener.invoke(users)
+        if (loaded)  listener.invoke(users)
     }
 
     fun removeListener(listener: UsersListener){
@@ -64,6 +71,7 @@ class UserService {
     }
 
     private fun notifyChanges(){
+        if (!loaded) return
         listeners.forEach { it.invoke(users) }
     }
 
