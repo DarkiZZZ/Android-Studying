@@ -1,6 +1,13 @@
 package com.example.basicgliderecyclerviewtestapp.tasks
 
-sealed class UserResult<T>
+sealed class UserResult<T>{
+
+    fun <R> map(mapper: (T) -> R): UserResult<R> {
+        if(this is SuccessResult) return SuccessResult(mapper(data))
+        return this as UserResult<R>
+    }
+
+}
 
 class SuccessResult<T>(
     val data: T,
