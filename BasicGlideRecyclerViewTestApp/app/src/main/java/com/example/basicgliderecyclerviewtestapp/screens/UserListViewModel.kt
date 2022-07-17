@@ -13,7 +13,7 @@ data class UserListItem(
     val isInProgress: Boolean
 )
 
-class UserListViewModel(private val userService: UserService) : ViewModel() {
+class UserListViewModel(private val userService: UserService) : BaseViewModel() {
 
     private val viewModelUsers = MutableLiveData<UserResult<List<UserListItem>>>()
     var users: LiveData<UserResult<List<UserListItem>>> = viewModelUsers
@@ -51,6 +51,7 @@ class UserListViewModel(private val userService: UserService) : ViewModel() {
             .onError {
                 usersResult = ErrorResult(it)
             }
+            .autoCancel()
     }
      private fun addProgressTo(user: User){
          userIdsInProgress.add(user.id)
@@ -71,6 +72,7 @@ class UserListViewModel(private val userService: UserService) : ViewModel() {
         userService.relocateUser(user, relocation)
             .onSuccess { removeProgressFrom(user) }
             .onError { removeProgressFrom(user) }
+            .autoCancel()
     }
 
     fun deleteUser(user: User){
@@ -79,6 +81,7 @@ class UserListViewModel(private val userService: UserService) : ViewModel() {
         userService.deleteUser(user)
             .onSuccess { removeProgressFrom(user) }
             .onError { removeProgressFrom(user) }
+            .autoCancel()
     }
 
     override fun onCleared() {
