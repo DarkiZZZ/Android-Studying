@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.basicgliderecyclerviewtestapp.R
 import com.example.basicgliderecyclerviewtestapp.databinding.FragmentUserDetailsBinding
+import com.example.basicgliderecyclerviewtestapp.tasks.SuccessResult
 
 class UserDetailsFragment : Fragment() {
 
@@ -29,26 +30,46 @@ class UserDetailsFragment : Fragment() {
     ): View? {
         binding = FragmentUserDetailsBinding.inflate(layoutInflater, container, false)
 
-        viewModel.userDetails.observe(viewLifecycleOwner, Observer {
-            binding.userNameTextView.text = it.user.name
-            if (it.user.photo.isNotBlank()){
-                Glide.with(this)
-                    .load(it.user.photo)
-                    .circleCrop()
-                    .into(binding.userPhotoImageView)
+        viewModel.actionShowToast.observe(viewLifecycleOwner, Observer {
+            it.getValue()?.let { messageRes -> navigator().showToast(messageRes) }
+        })
+        viewModel.actionGoBack.observe(viewLifecycleOwner, Observer {
+            it.getValue()?.let { navigator().goBack() }
+        })
+
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            binding.contentContainer.visibility = if (it.showContent){
+                val userDetails = (it.userDetailsResult as SuccessResult).data
+                binding.userNameTextView.text = userDetails.user.name
+                if (userDetails.user.photo.isNotBlank()){
+                    Glide.with(this)
+                        .load(userDetails.user.photo)
+                        .circleCrop()
+                        .into(binding.userPhotoImageView)
+                }
+                else{
+                    Glide.with(this)
+                        .load(R.drawable.ic_user_photo)
+                        .into(binding.userPhotoImageView)
+                }
+                binding.userDetailsTextView.text = userDetails.details
+                View.VISIBLE
+            } else{
+                View.GONE
+            }
+
+            binding.progressBar.visibility = if (it.showProgress)  {
+                View.VISIBLE
             }
             else{
-                Glide.with(this)
-                    .load(R.drawable.ic_user_photo)
-                    .into(binding.userPhotoImageView)
+                View.GONE
             }
-            binding.userDetailsTextView.text = it.details
+            binding.deleteUserButton.isEnabled = it.enableDeleteButton
         })
+
 
         binding.deleteUserButton.setOnClickListener {
             viewModel.deleteUser()
-            navigator().showToast(R.string.user_has_been_deleted)
-            navigator().goBack()
         }
         return binding.root
     }

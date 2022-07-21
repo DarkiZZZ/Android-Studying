@@ -12,6 +12,10 @@ import com.example.basicgliderecyclerviewtestapp.UserActionListener
 import com.example.basicgliderecyclerviewtestapp.UserAdapter
 import com.example.basicgliderecyclerviewtestapp.databinding.FragmentUserListBinding
 import com.example.basicgliderecyclerviewtestapp.model.User
+import com.example.basicgliderecyclerviewtestapp.tasks.EmptyResult
+import com.example.basicgliderecyclerviewtestapp.tasks.ErrorResult
+import com.example.basicgliderecyclerviewtestapp.tasks.PendingResult
+import com.example.basicgliderecyclerviewtestapp.tasks.SuccessResult
 
 
 class UserListFragment : Fragment() {
@@ -27,23 +31,32 @@ class UserListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentUserListBinding.inflate(layoutInflater, container, false)
-        adapter = UserAdapter(object : UserActionListener {
-            override fun onUserRelocate(user: User, relocation: Int) {
-                viewModel.relocateUser(user, relocation)
-            }
-
-            override fun onUserDelete(user: User) {
-                viewModel.deleteUser(user)
-            }
-
-            override fun onUserDetails(user: User) {
-                navigator().showDetails(user)
-            }
-
-        })
+        adapter = UserAdapter(viewModel)
 
         viewModel.users.observe(viewLifecycleOwner, Observer {
-            adapter.users = it
+            hideAllUi()
+            when(it){
+                is SuccessResult -> {
+                    binding.recyclerView.visibility = View.VISIBLE
+                    adapter.users = it.data
+                }
+                is ErrorResult -> {
+                    binding.tryAgainContainer.visibility = View.VISIBLE
+                }
+                is PendingResult -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is EmptyResult -> {
+                    binding.noUsersTextView.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        viewModel.actionShowDetails.observe(viewLifecycleOwner, Observer {
+            it.getValue()?.let { user -> navigator().showDetails(user) }
+        })
+        viewModel.actionShowToast.observe(viewLifecycleOwner, Observer {
+            it.getValue()?.let { messageRes -> navigator().showToast(messageRes) }
         })
 
         val layoutManager = LinearLayoutManager(requireContext())
@@ -51,5 +64,12 @@ class UserListFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         return binding.root
+    }
+
+    private fun hideAllUi(){
+        binding.recyclerView.visibility = View.GONE
+        binding.recyclerView.visibility = View.GONE
+        binding.tryAgainContainer.visibility = View.GONE
+        binding.noUsersTextView.visibility = View.GONE
     }
 }

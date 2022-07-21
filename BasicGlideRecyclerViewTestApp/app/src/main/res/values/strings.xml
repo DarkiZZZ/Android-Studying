@@ -8,4 +8,7 @@
     <string name="try_again_button">Try Again</string>
     <string name="no_users_found">No users found</string>
     <string name="user_has_been_deleted">User has been deleted</string>
+    <string name="cant_load_user_details">Cannot load user details</string>
+    <string name="cant_delete_user">Cannot delete user</string>
+    <string name="cant_move_user">Cannot able to move user</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.basicgliderecyclerviewtestapp.databinding.ItemUserBinding
 import com.example.basicgliderecyclerviewtestapp.model.User
+import com.example.basicgliderecyclerviewtestapp.screens.UserListItem
 
 interface UserActionListener{
     fun onUserRelocate(user: User, relocation: Int)
@@ -20,7 +21,7 @@ interface UserActionListener{
 class UserAdapter(private val actionListener : UserActionListener)
     : RecyclerView.Adapter<UserAdapter.UserViewHolder>(), View.OnClickListener {
 
-    var users : List<User> = emptyList()
+    var users : List<UserListItem> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -33,16 +34,29 @@ class UserAdapter(private val actionListener : UserActionListener)
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemUserBinding.inflate(inflater, parent, false)
 
-        binding.root.setOnClickListener(this)
+
         binding.popupMenuImageView.setOnClickListener(this)
         return UserViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val user = users[position]
+        val userListItem = users[position]
+        val user = userListItem.user
         with(holder.binding){
             holder.itemView.tag = user
             popupMenuImageView.tag = user
+
+            if (userListItem.isInProgress){
+                popupMenuImageView.visibility = View.INVISIBLE
+                itemProgressBar.visibility = View.VISIBLE
+                holder.binding.root.setOnClickListener(null)
+            }
+            else{
+                popupMenuImageView.visibility = View.VISIBLE
+                itemProgressBar.visibility = View.GONE
+                holder.binding.root.setOnClickListener(this@UserAdapter)
+            }
+
             userNameTextView.text = user.name
             userCompanyTextView.text = user.company
             if (user.photo.isNotBlank()){
@@ -76,7 +90,7 @@ class UserAdapter(private val actionListener : UserActionListener)
         val popupMenu = PopupMenu(view.context, view)
         val context = view.context
         val user = view.tag as User
-        val position = users.indexOfFirst { it.id == user.id }
+        val position = users.indexOfFirst { it.user.id == user.id }
 
         popupMenu.menu.add(0, ID_MOVE_UP, Menu.NONE, context.getString(R.string.move_up)).apply {
             isEnabled = position > 0
