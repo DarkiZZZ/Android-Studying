@@ -9,50 +9,39 @@ import java.util.concurrent.Future
 private val executorService = Executors.newCachedThreadPool()
 private val handler = Handler(Looper.getMainLooper())
 
+/**
+ * Executing code of [callable] in a separate thread.
+ * Callable results are delivered to callbacks assigned via [onSuccess] and [onError]
+ */
 class SimpleUserTask<T>(
-    private val callable: Callable<T>) : UserTask<T> {
+    private val callable: Callable<T>
+) : UserTask<T> {
 
     private val future: Future<*>
     private var result: UserResult<T> = PendingResult()
 
     init {
-        future = executorService.submit{
+        future = executorService.submit {
             result = try {
                 SuccessResult(callable.call())
-            }
-            catch (e: Throwable){
+            } catch (e: Throwable) {
                 ErrorResult(e)
             }
+            notifyListeners()
         }
     }
 
     private var valueCallback: CallBack<T>? = null
     private var errorCallback: CallBack<Throwable>? = null
 
-
-    override fun onSuccess(callBack: CallBack<T>): UserTask<T> {
-       valueCallback = callBack
+    override fun onSuccess(callback: CallBack<T>): UserTask<T> {
+        this.valueCallback = callback
         notifyListeners()
         return this
     }
 
-    private fun notifyListeners() {
-        handler.post{
-            val result = this.result
-            val callBack = this.valueCallback
-            val errorCallback = this.errorCallback
-            if (result is SuccessResult && callBack != null) {
-                callBack(result.data)
-                clear()
-            } else if (result is ErrorResult && errorCallback != null){
-                errorCallback.invoke(result.error)
-                clear()
-            }
-        }
-    }
-
-    override fun onError(callBack: CallBack<Throwable>): UserTask<T> {
-        errorCallback = callBack
+    override fun onError(callback: CallBack<Throwable>): UserTask<T> {
+        this.errorCallback = callback
         notifyListeners()
         return this
     }
@@ -69,8 +58,24 @@ class SimpleUserTask<T>(
         else throw (result as ErrorResult).error
     }
 
-    private fun clear(){
+    private fun notifyListeners() {
+        handler.post {
+            val result = this.result
+            val callback = this.valueCallback
+            val errorCallback = this.errorCallback
+            if (result is SuccessResult && callback != null) {
+                callback(result.data)
+                clear()
+            } else if (result is ErrorResult && errorCallback != null) {
+                errorCallback.invoke(result.error)
+                clear()
+            }
+        }
+    }
+
+    private fun clear() {
         valueCallback = null
         errorCallback = null
     }
 }
+

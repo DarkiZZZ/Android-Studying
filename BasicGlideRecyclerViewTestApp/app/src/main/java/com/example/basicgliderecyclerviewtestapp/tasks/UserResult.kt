@@ -1,18 +1,18 @@
-@file:Suppress("UNCHECKED_CAST")
 
 package com.example.basicgliderecyclerviewtestapp.tasks
 
 sealed class UserResult<T>{
 
+    @Suppress("UNCHECKED_CAST")
     fun <R> map(mapper: (T) -> R): UserResult<R> {
-        if(this is SuccessResult) return SuccessResult(mapper(data))
+        if (this is SuccessResult) return SuccessResult(mapper(data))
         return this as UserResult<R>
     }
 
 }
 
 class SuccessResult<T>(
-    val data: T,
+    val data: T
 ) : UserResult<T>()
 
 class ErrorResult<T>(
