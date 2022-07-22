@@ -61,11 +61,11 @@ class UserListViewModel(private val userService: UserService)
 
     }
 
-    override fun onUserRelocate(user: User, relocation: Int) {
+    override fun onUserMove(user: User, moveBy: Int) {
         if (isInProgress(user)) return
         addProgressTo(user)
         with(userService) {
-            moveUser(user, relocation)
+            moveUser(user, moveBy)
                 .onSuccess {
                     removeProgressFrom(user)
                 }
