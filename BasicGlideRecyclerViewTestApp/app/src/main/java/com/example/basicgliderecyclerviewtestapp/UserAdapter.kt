@@ -18,6 +18,7 @@ interface UserActionListener{
 
     fun onUserDetails(user: User)
 }
+
 class UserAdapter(private val actionListener : UserActionListener)
     : RecyclerView.Adapter<UserAdapter.UserViewHolder>(), View.OnClickListener {
 
@@ -34,14 +35,15 @@ class UserAdapter(private val actionListener : UserActionListener)
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemUserBinding.inflate(inflater, parent, false)
 
-
         binding.popupMenuImageView.setOnClickListener(this)
+
         return UserViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val userListItem = users[position]
         val user = userListItem.user
+
         with(holder.binding){
             holder.itemView.tag = user
             popupMenuImageView.tag = user
@@ -68,12 +70,14 @@ class UserAdapter(private val actionListener : UserActionListener)
                     .into(userPhotoImageView)
             }
             else{
+                Glide.with(userPhotoImageView.context).clear(userPhotoImageView)
                 userPhotoImageView.setImageResource(R.drawable.ic_user_photo)
             }
         }
     }
 
     override fun getItemCount(): Int = users.size
+
     override fun onClick(view: View) {
         val user = view.tag as User
         when(view.id){

@@ -1,5 +1,5 @@
 package com.example.basicgliderecyclerviewtestapp
 
-class UserNotFoundException : Throwable() {
+class UserNotFoundException : Exception() {
 
 }

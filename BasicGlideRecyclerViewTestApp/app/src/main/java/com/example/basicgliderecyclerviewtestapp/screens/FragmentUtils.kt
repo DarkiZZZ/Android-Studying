@@ -3,6 +3,7 @@ package com.example.basicgliderecyclerviewtestapp.screens
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.basicgliderecyclerviewtestapp.Navigator
 import com.example.basicgliderecyclerviewtestapp.UserApp
 
 class ViewModelFactory(private val userApp: UserApp) : ViewModelProvider.Factory{
@@ -26,4 +27,5 @@ class ViewModelFactory(private val userApp: UserApp) : ViewModelProvider.Factory
 }
 
 fun Fragment.factory()  = ViewModelFactory(requireContext().applicationContext as UserApp)
+
 fun Fragment.navigator() = requireActivity() as Navigator

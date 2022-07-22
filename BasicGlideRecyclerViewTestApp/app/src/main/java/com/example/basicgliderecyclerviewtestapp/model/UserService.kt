@@ -16,7 +16,7 @@ class UserService {
     private var loaded = false
 
 
-    fun loadUsers(): UserTask<Unit> = SimpleUserTask(Callable {
+    fun loadUsers(): UserTask<Unit> = SimpleUserTask<Unit>(Callable {
         Thread.sleep(2000) // <-- Imitation of hard work
         val faker = Faker.instance()
         IMAGES_URL_LIST.shuffle()
@@ -44,8 +44,9 @@ class UserService {
         val deleteIndex = users.indexOfFirst { it.id == user.id }
         if (deleteIndex != -1){
             users.removeAt(deleteIndex)
+            notifyChanges()
         }
-        notifyChanges()
+
     })
 
 
@@ -63,7 +64,9 @@ class UserService {
 
     fun addListener(listener: UsersListener){
         listeners.add(listener)
-        if (loaded)  listener.invoke(users)
+        if (loaded){
+            listener.invoke(users)
+        }
     }
 
     fun removeListener(listener: UsersListener){

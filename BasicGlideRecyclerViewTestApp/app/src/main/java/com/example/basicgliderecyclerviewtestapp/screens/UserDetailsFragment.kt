@@ -53,6 +53,7 @@ class UserDetailsFragment : Fragment() {
                         .into(binding.userPhotoImageView)
                 }
                 binding.userDetailsTextView.text = userDetails.details
+
                 View.VISIBLE
             } else{
                 View.GONE

@@ -1,4 +1,4 @@
-package com.example.basicgliderecyclerviewtestapp.screens
+package com.example.basicgliderecyclerviewtestapp
 
 import com.example.basicgliderecyclerviewtestapp.model.User
 

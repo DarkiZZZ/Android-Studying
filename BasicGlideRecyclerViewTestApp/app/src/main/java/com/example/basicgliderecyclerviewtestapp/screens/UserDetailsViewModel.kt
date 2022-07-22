@@ -35,9 +35,10 @@ class UserDetailsViewModel(private val userService: UserService) : BaseViewModel
     }
 
     fun loadUsers(userId: Long){
-        if (currentState.userDetailsResult is SuccessResult) return
+        if (currentState.userDetailsResult !is EmptyResult) return
 
         viewModelState.value = currentState.copy(userDetailsResult = PendingResult())
+
         userService.getUserDetailsById(userId)
             .onSuccess {
                 viewModelState.value = currentState.copy(userDetailsResult = SuccessResult(it))

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.example.basicgliderecyclerviewtestapp.tasks
 
 sealed class UserResult<T>{

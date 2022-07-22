@@ -2,11 +2,9 @@ package com.example.basicgliderecyclerviewtestapp.screens
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.basicgliderecyclerviewtestapp.R
 import com.example.basicgliderecyclerviewtestapp.UserActionListener
 import com.example.basicgliderecyclerviewtestapp.model.User
-import com.example.basicgliderecyclerviewtestapp.model.UserDetails
 import com.example.basicgliderecyclerviewtestapp.model.UserService
 import com.example.basicgliderecyclerviewtestapp.model.UsersListener
 import com.example.basicgliderecyclerviewtestapp.tasks.*
@@ -19,43 +17,41 @@ data class UserListItem(
 class UserListViewModel(private val userService: UserService)
     : BaseViewModel(), UserActionListener {
 
-    private val viewModelUsers = MutableLiveData<UserResult<List<UserListItem>>>()
-    var users: LiveData<UserResult<List<UserListItem>>> = viewModelUsers
+    private val _users = MutableLiveData<UserResult<List<UserListItem>>>()
+    val users: LiveData<UserResult<List<UserListItem>>> = _users
 
-    private val viewModelActionShowToast = MutableLiveData<Event<Int>>()
-    val actionShowToast: LiveData<Event<Int>> = viewModelActionShowToast
+    private val _actionShowDetails = MutableLiveData<Event<User>>()
+    val actionShowDetails: LiveData<Event<User>> = _actionShowDetails
 
-    private val viewModelActionShowDetails = MutableLiveData<Event<User>>()
-    val actionShowDetails : LiveData<Event<User>> = viewModelActionShowDetails
+    private val _actionShowToast = MutableLiveData<Event<Int>>()
+    val actionShowToast: LiveData<Event<Int>> = _actionShowToast
 
     private val userIdsInProgress = mutableSetOf<Long>()
     private var usersResult: UserResult<List<User>> = EmptyResult()
         set(value) {
             field = value
             notifyUpdates()
-    }
-
-    private fun notifyUpdates() {
-        viewModelUsers.postValue(  usersResult.map { viewModelUsers ->
-            viewModelUsers.map { viewModelUser ->
-                UserListItem(viewModelUser, isInProgress(viewModelUser)) }
-        })
-    }
+        }
 
     private val listener: UsersListener = {
-        usersResult = if (it.isEmpty()){
+        usersResult = if (it.isEmpty()) {
             EmptyResult()
-        } else{
+        } else {
             SuccessResult(it)
         }
     }
 
     init {
-        userService.addListener { listener }
+        userService.addListener(listener)
         loadUsers()
     }
 
-    fun loadUsers(){
+    override fun onCleared() {
+        super.onCleared()
+        userService.removeListener(listener)
+    }
+
+    fun loadUsers() {
         usersResult = PendingResult()
         userService.loadUsers()
             .onError {
@@ -63,52 +59,59 @@ class UserListViewModel(private val userService: UserService)
             }
             .autoCancel()
     }
-     private fun addProgressTo(user: User){
-         userIdsInProgress.add(user.id)
-     }
 
-    private fun removeProgressFrom(user: User){
-
-        userIdsInProgress.remove(user.id)
-    }
-
-    private fun isInProgress(user: User) : Boolean{
-        return userIdsInProgress.contains(user.id)
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        userService.removeListener(listener)
-    }
-
-
-    override fun onUserRelocate(user: User, relocation: Int) {
+    override fun onUserRelocate(user: User, moveBy: Int) {
         if (isInProgress(user)) return
         addProgressTo(user)
-        userService.relocateUser(user, relocation)
-            .onSuccess { removeProgressFrom(user) }
-            .onError {
-                removeProgressFrom(user)
-                viewModelActionShowToast.value = Event(R.string.cant_move_user)
-            }
-            .autoCancel()
+        with(userService) {
+            relocateUser(user, moveBy)
+                .onSuccess {
+                    removeProgressFrom(user)
+                }
+                .onError {
+                    removeProgressFrom(user)
+                    _actionShowToast.value = Event(R.string.cant_move_user)
+                }
+                .autoCancel()
+        }
     }
 
     override fun onUserDelete(user: User) {
         if (isInProgress(user)) return
         addProgressTo(user)
         userService.deleteUser(user)
-            .onSuccess { removeProgressFrom(user) }
+            .onSuccess {
+                removeProgressFrom(user)
+            }
             .onError {
                 removeProgressFrom(user)
-                viewModelActionShowToast.value = Event(R.string.cant_delete_user)
+                _actionShowToast.value = Event(R.string.cant_delete_user)
             }
             .autoCancel()
     }
 
     override fun onUserDetails(user: User) {
-        viewModelActionShowDetails.value = Event(user)
+        _actionShowDetails.value = Event(user)
     }
 
+    private fun addProgressTo(user: User) {
+        userIdsInProgress.add(user.id)
+        notifyUpdates()
+    }
+
+    private fun removeProgressFrom(user: User) {
+        userIdsInProgress.remove(user.id)
+        notifyUpdates()
+    }
+
+    private fun isInProgress(user: User): Boolean {
+        return userIdsInProgress.contains(user.id)
+    }
+
+    private fun notifyUpdates() {
+        _users.postValue(  usersResult.map { viewModelUsers ->
+            viewModelUsers.map { viewModelUser ->
+                UserListItem(viewModelUser, isInProgress(viewModelUser)) }
+        })
+    }
 }

@@ -8,10 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.basicgliderecyclerviewtestapp.UserActionListener
 import com.example.basicgliderecyclerviewtestapp.UserAdapter
 import com.example.basicgliderecyclerviewtestapp.databinding.FragmentUserListBinding
-import com.example.basicgliderecyclerviewtestapp.model.User
 import com.example.basicgliderecyclerviewtestapp.tasks.EmptyResult
 import com.example.basicgliderecyclerviewtestapp.tasks.ErrorResult
 import com.example.basicgliderecyclerviewtestapp.tasks.PendingResult
@@ -68,7 +66,7 @@ class UserListFragment : Fragment() {
 
     private fun hideAllUi(){
         binding.recyclerView.visibility = View.GONE
-        binding.recyclerView.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         binding.tryAgainContainer.visibility = View.GONE
         binding.noUsersTextView.visibility = View.GONE
     }
