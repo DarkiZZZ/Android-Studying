@@ -16,7 +16,7 @@ import com.example.basicgliderecyclerviewtestapp.tasks.SuccessResult
 class UserDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentUserDetailsBinding
-    private val viewModel: UserDetailsViewModel by viewModels{ factory() }
+    private val viewModel: UserDetailsViewModel by viewModels { factory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +38,15 @@ class UserDetailsFragment : Fragment() {
         })
 
         viewModel.state.observe(viewLifecycleOwner, Observer {
-            binding.contentContainer.visibility = if (it.showContent){
+            binding.contentContainer.visibility = if (it.showContent) {
                 val userDetails = (it.userDetailsResult as SuccessResult).data
                 binding.userNameTextView.text = userDetails.user.name
-                if (userDetails.user.photo.isNotBlank()){
+                if (userDetails.user.photo.isNotBlank()) {
                     Glide.with(this)
                         .load(userDetails.user.photo)
                         .circleCrop()
                         .into(binding.userPhotoImageView)
-                }
-                else{
+                } else {
                     Glide.with(this)
                         .load(R.drawable.ic_user_photo)
                         .into(binding.userPhotoImageView)
@@ -55,33 +54,30 @@ class UserDetailsFragment : Fragment() {
                 binding.userDetailsTextView.text = userDetails.details
 
                 View.VISIBLE
-            } else{
+            } else {
                 View.GONE
             }
 
-            binding.progressBar.visibility = if (it.showProgress)  {
-                View.VISIBLE
-            }
-            else{
-                View.GONE
-            }
+            binding.progressBar.visibility = if (it.showProgress) View.VISIBLE else View.GONE
             binding.deleteUserButton.isEnabled = it.enableDeleteButton
         })
-
 
         binding.deleteUserButton.setOnClickListener {
             viewModel.deleteUser()
         }
+
         return binding.root
     }
 
-    companion object{
+    companion object {
+
         private const val ARG_USER_ID = "ARG_USER_ID"
 
-        fun newInstance(userId: Long): UserDetailsFragment{
+        fun newInstance(userId: Long): UserDetailsFragment {
             val fragment = UserDetailsFragment()
             fragment.arguments = bundleOf(ARG_USER_ID to userId)
             return fragment
         }
+
     }
 }

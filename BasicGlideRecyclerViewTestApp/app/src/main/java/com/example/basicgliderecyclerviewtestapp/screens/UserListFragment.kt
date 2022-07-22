@@ -21,19 +21,19 @@ class UserListFragment : Fragment() {
     private lateinit var binding: FragmentUserListBinding
     private lateinit var adapter: UserAdapter
 
-    private val viewModel: UserListViewModel by viewModels{ factory() }
+    private val viewModel: UserListViewModel by viewModels { factory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentUserListBinding.inflate(layoutInflater, container, false)
+        binding = FragmentUserListBinding.inflate(inflater, container, false)
         adapter = UserAdapter(viewModel)
 
         viewModel.users.observe(viewLifecycleOwner, Observer {
-            hideAllUi()
-            when(it){
+            hideAll()
+            when (it) {
                 is SuccessResult -> {
                     binding.recyclerView.visibility = View.VISIBLE
                     adapter.users = it.data
@@ -64,7 +64,7 @@ class UserListFragment : Fragment() {
         return binding.root
     }
 
-    private fun hideAllUi(){
+    private fun hideAll() {
         binding.recyclerView.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
         binding.tryAgainContainer.visibility = View.GONE
