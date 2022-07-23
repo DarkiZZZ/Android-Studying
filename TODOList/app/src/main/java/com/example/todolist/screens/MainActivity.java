@@ -1,7 +1,8 @@
-package com.example.todolist;
+package com.example.todolist.screens;
 
 import android.os.Bundle;
 
+import com.example.todolist.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;

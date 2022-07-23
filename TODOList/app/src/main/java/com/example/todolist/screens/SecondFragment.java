@@ -1,4 +1,4 @@
-package com.example.todolist;
+package com.example.todolist.screens;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.todolist.R;
 import com.example.todolist.databinding.FragmentSecondBinding;
 
 public class SecondFragment extends Fragment {
