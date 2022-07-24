@@ -7,16 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".screens.MainActivity">
 
-    <include layout="@layout/fragment_notes_list" />
-
-    <ImageView
-        android:id="@+id/addNoteButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/ic_baseline_add_circle_24"
-        android:contentDescription="@string/button_description" />
-
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
