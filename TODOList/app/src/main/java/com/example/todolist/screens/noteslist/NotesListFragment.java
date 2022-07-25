@@ -25,6 +25,7 @@ import com.example.todolist.model.Note;
 import com.example.todolist.screens.details.NotesDetailsFragment;
 
 import java.util.List;
+import java.util.Objects;
 
 public class NotesListFragment extends Fragment {
 
@@ -53,7 +54,12 @@ public class NotesListFragment extends Fragment {
         binding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotesDetailsFragment.startFragment(new NotesListFragment(), null);
+                NotesDetailsFragment fragment = new NotesDetailsFragment();
+                FragmentManager fragmentManager = fragment.getFragmentManager();
+                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
+                fragmentTransaction.add(R.id.fragmentContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

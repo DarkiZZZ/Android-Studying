@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.todolist.App;
 import com.example.todolist.R;
@@ -20,21 +19,8 @@ import com.example.todolist.screens.noteslist.NotesListFragment;
 public class NotesDetailsFragment extends Fragment {
 
     private FragmentNotesDetailsBinding binding;
-    private static final String EXTRA_NOTE = "NotesDetailsFragment.EXTRA_NOTE";
+    public static final String EXTRA_NOTE = "NotesDetailsFragment.EXTRA_NOTE";
     private Note note;
-
-    public static void startFragment(Fragment fragment, Note note){
-        if (note != null){
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(EXTRA_NOTE, note);
-            fragment.setArguments(bundle);
-        }
-        FragmentManager fragmentManager = fragment.getFragmentManager();
-        //todo
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment);
-        fragmentTransaction.commit();
-    }
 
 
     @Override

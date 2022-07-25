@@ -1,12 +1,15 @@
 package com.example.todolist.screens.noteslist;
 
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +22,7 @@ import com.example.todolist.model.Note;
 import com.example.todolist.screens.details.NotesDetailsFragment;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
 
@@ -106,7 +110,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             super(itemView);
 
             itemView.setOnClickListener(v -> {
-                NotesDetailsFragment.startFragment(new NotesDetailsFragment(), note);
+                NotesDetailsFragment fragment = new NotesDetailsFragment();
+                if (note != null){
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(NotesDetailsFragment.EXTRA_NOTE, note);
+                    fragment.setArguments(bundle);
+                }
+                FragmentManager fragmentManager = fragment.getFragmentManager();
+                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
+                fragmentTransaction.add(R.id.fragmentContainer, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             });
 
             binding.deleteButton.setOnClickListener(v -> App.getInstance().getNoteDao().delete(note));
