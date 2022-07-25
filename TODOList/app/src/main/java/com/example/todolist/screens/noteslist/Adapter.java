@@ -1,34 +1,43 @@
 package com.example.todolist.screens.noteslist;
 
 import android.graphics.Paint;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
 import com.example.todolist.App;
+import com.example.todolist.R;
 import com.example.todolist.databinding.ListNoteItemBinding;
 import com.example.todolist.model.Note;
+import com.example.todolist.screens.details.NotesDetailsFragment;
+
+import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
+
 
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_note_item, parent,  false);
+        return new NoteViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
-
+        holder.bind(sortedList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return sortedList.size();
     }
 
 
@@ -80,6 +89,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
         });
     }
 
+    public void setItems(List<Note> notes){
+        sortedList.replaceAll(notes);
+    }
+
 
     static class NoteViewHolder extends RecyclerView.ViewHolder{
 
@@ -92,29 +105,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //todo Переключение на NotesDetailsFragment
-                }
+            itemView.setOnClickListener(v -> {
+                NotesDetailsFragment.startFragment(new NotesDetailsFragment(), note);
             });
 
-            binding.deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    App.getInstance().getNoteDao().delete(note);
-                }
-            });
+            binding.deleteButton.setOnClickListener(v -> App.getInstance().getNoteDao().delete(note));
 
-            binding.isDoneCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (!isSilentUpdate){
-                        note.isDone = isChecked;
-                        App.getInstance().getNoteDao().update(note);
-                    }
-                    updateStrokeOut();
+            binding.isDoneCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (!isSilentUpdate){
+                    note.isDone = isChecked;
+                    App.getInstance().getNoteDao().update(note);
                 }
+                updateStrokeOut();
             });
         }
 
