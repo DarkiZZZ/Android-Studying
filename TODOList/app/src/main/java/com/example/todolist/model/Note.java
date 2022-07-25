@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Note implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    private int uId;
+    public int uId;
 
     @ColumnInfo(name = "text")
     public String text;
