@@ -31,7 +31,7 @@ class UserService {
     })
 
     fun getById(id: Long): UserTask<UserDetails> = SimpleUserTask<UserDetails>(Callable {
-        Thread.sleep(2000)
+        Thread.sleep(800)
         val user = users.firstOrNull { it.id == id } ?: throw UserNotFoundException()
         return@Callable UserDetails(
             user = user,
@@ -40,7 +40,7 @@ class UserService {
     })
 
     fun deleteUser(user: User): UserTask<Unit> = SimpleUserTask<Unit>(Callable {
-        Thread.sleep(2000)
+        Thread.sleep(250)
         val indexToDelete = users.indexOfFirst { it.id == user.id }
         if (indexToDelete != -1) {
             users.removeAt(indexToDelete)
@@ -49,7 +49,7 @@ class UserService {
     })
 
     fun moveUser(user: User, moveBy: Int): UserTask<Unit> = SimpleUserTask<Unit>(Callable {
-        Thread.sleep(2000)
+        Thread.sleep(250)
         val oldIndex = users.indexOfFirst { it.id == user.id }
         if (oldIndex == -1) return@Callable
         val newIndex = oldIndex + moveBy
