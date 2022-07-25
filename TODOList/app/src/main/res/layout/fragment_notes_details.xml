@@ -21,6 +21,7 @@
 
 
         <ImageView
+            android:id="@+id/backToListButton"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="match_parent"
             android:src="@drawable/ic_baseline_close_24"
