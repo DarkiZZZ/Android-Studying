@@ -5,14 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.basicgliderecyclerviewtestapp.R
 import com.example.basicgliderecyclerviewtestapp.UserActionListener
 import com.example.basicgliderecyclerviewtestapp.model.User
+import com.example.basicgliderecyclerviewtestapp.model.UserListItem
 import com.example.basicgliderecyclerviewtestapp.model.UserService
 import com.example.basicgliderecyclerviewtestapp.model.UsersListener
 import com.example.basicgliderecyclerviewtestapp.tasks.*
 
-data class UserListItem(
-    val user: User,
-    val isInProgress: Boolean
-)
+
 
 class UserListViewModel(private val userService: UserService)
     : BaseViewModel(), UserActionListener {

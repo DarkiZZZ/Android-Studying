@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.basicgliderecyclerviewtestapp.databinding.ItemUserBinding
 import com.example.basicgliderecyclerviewtestapp.model.User
-import com.example.basicgliderecyclerviewtestapp.screens.UserListItem
+import com.example.basicgliderecyclerviewtestapp.model.UserListItem
 
 interface UserActionListener {
 
