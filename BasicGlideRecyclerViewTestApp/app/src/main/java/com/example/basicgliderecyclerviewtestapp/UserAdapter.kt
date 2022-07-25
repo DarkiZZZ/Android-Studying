@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.basicgliderecyclerviewtestapp.databinding.ItemUserBinding
@@ -21,14 +22,38 @@ interface UserActionListener {
 
 }
 
+class UserDiffCallback(
+    private val oldList: List<UserListItem>,
+    private val newList: List<UserListItem>
+): DiffUtil.Callback(){
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldUser = oldList[oldItemPosition]
+        val newUser = newList[newItemPosition]
+        return oldUser.user.id == newUser.user.id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldUser = oldList[oldItemPosition]
+        val newUser = newList[newItemPosition]
+        return oldUser.user == newUser.user
+    }
+
+}
+
 class UserAdapter(
     private val actionListener: UserActionListener
 ) : RecyclerView.Adapter<UserAdapter.UsersViewHolder>(), View.OnClickListener {
 
     var users: List<UserListItem> = emptyList()
         set(newValue) {
+            val diffCallBack = UserDiffCallback(field, newValue)
+            val diffResult = DiffUtil.calculateDiff(diffCallBack)
             field = newValue
-            notifyDataSetChanged()
+            diffResult.dispatchUpdatesTo(this)
         }
 
     override fun onClick(v: View) {
