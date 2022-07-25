@@ -16,6 +16,12 @@
         <entry key="..\:/Users/user/Documents/GitHub/Android-Studying/ToolsShop/app/src/main/res/layout/activity_drill_detail.xml" value="0.3482789855072464" />
         <entry key="..\:/Users/user/Documents/GitHub/Android-Studying/ToolsShop/app/src/main/res/layout/activity_main.xml" value="0.3482789855072464" />
         <entry key="..\:/Users/user/Documents/GitHub/Android-Studying/ToolsShop/app/src/main/res/layout/listview_item.xml" value="0.3482789855072464" />
+        <entry key="app/src/main/res/layout/activity_angle_grinder_category.xml" value="0.17291666666666666" />
+        <entry key="app/src/main/res/layout/activity_angle_grinder_detail.xml" value="0.17291666666666666" />
+        <entry key="app/src/main/res/layout/activity_drill_detail.xml" value="0.17291666666666666" />
+        <entry key="app/src/main/res/layout/activity_perforator_category.xml" value="0.17291666666666666" />
+        <entry key="app/src/main/res/layout/activity_perforator_detail.xml" value="0.17291666666666666" />
+        <entry key="app/src/main/res/layout/listview_item.xml" value="0.17291666666666666" />
       </map>
     </option>
   </component>
