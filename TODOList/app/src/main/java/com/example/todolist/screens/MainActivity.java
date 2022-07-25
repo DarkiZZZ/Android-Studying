@@ -3,6 +3,7 @@ package com.example.todolist.screens;
 import android.os.Bundle;
 
 import com.example.todolist.R;
+import com.example.todolist.screens.noteslist.NotesListFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,11 +31,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.addNoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        if (savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainer, new NotesListFragment())
+                    .commit();
+        }
     }
 }
