@@ -2,16 +2,16 @@ package com.example.activityresultapitestapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.activityresultapitestapp.databinding.ActivityMainBinding
+import com.example.activityresultapitestapp.databinding.ActivityEditTextBinding
 
-class MainActivity : AppCompatActivity() {
+class EditTextActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityEditTextBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityEditTextBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 }
