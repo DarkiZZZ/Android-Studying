@@ -2,7 +2,6 @@ package com.example.activityresultapitestapp
 
 import android.content.Context
 import android.content.Intent
-import android.icu.util.Output
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
@@ -11,6 +10,10 @@ import com.example.activityresultapitestapp.databinding.ActivityEditTextBinding
 class EditTextActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditTextBinding
+    private val resultIntent: Intent
+        get() = Intent().apply {
+            putExtra(EXTRA_OUTPUT_MESSAGE, binding.valueEditText.text.toString())
+        }
 
     data class Output(
         val message: String,
@@ -40,6 +43,26 @@ class EditTextActivity : AppCompatActivity() {
 
         binding = ActivityEditTextBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.cancelButton.setOnClickListener { onBackPressed() }
+        binding.saveButton.setOnClickListener { onSavePressed() }
+
+        binding.valueEditText.setText(intent.getStringExtra(EXTRA_INPUT_MESSAGE))
+    }
+
+    override fun onBackPressed() {
+        setResult(RESULT_CANCELED, resultIntent)
+        super.onBackPressed()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    private fun onSavePressed() {
+        setResult(RESULT_OK, resultIntent)
+        finish()
     }
 
     companion object{
