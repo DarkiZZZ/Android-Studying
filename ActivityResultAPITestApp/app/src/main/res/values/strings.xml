@@ -3,4 +3,7 @@
     <string name="test_text">Test text</string>
     <string name="edit_text_button">Edit text</string>
     <string name="request_permission_button">Request permission</string>
+    <string name="enter_value">Enter value</string>
+    <string name="save_button">save</string>
+    <string name="cancel_button">Cancel</string>
 </resources>
