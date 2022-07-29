@@ -1,4 +1,8 @@
 package com.example.viewmodelnavigation.screens.base
 
-class BaseFragment {
+import androidx.fragment.app.Fragment
+
+abstract class BaseFragment : Fragment() {
+
+    abstract val viewModel : BaseViewModel
 }

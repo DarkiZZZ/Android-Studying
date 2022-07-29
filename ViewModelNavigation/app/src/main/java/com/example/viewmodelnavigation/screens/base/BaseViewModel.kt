@@ -1,4 +1,10 @@
 package com.example.viewmodelnavigation.screens.base
 
-class BaseViewModel {
+import androidx.lifecycle.ViewModel
+
+open class BaseViewModel : ViewModel(){
+
+    open fun onResult(result: Any){
+
+    }
 }

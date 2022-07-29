@@ -1,4 +1,6 @@
 package com.example.viewmodelnavigation.screens.base
 
-interface BaseScreen {
+import java.io.Serializable
+
+interface BaseScreen : Serializable {
 }
