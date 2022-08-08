@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
+import androidx.appcompat.widget.CustomPopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -118,18 +118,22 @@ class UserAdapter(
     }
 
     private fun showPopupMenu(view: View) {
-        val popupMenu = PopupMenu(view.context, view)
+        val popupMenu = CustomPopupMenu(view.context, view)
         val context = view.context
         val user = view.tag as User
         val position = users.indexOfFirst { it.user.id == user.id }
 
         popupMenu.menu.add(0, ID_MOVE_UP, Menu.NONE, context.getString(R.string.move_up)).apply {
             isEnabled = position > 0
+            setIcon(R.drawable.ic_up)
         }
         popupMenu.menu.add(0, ID_MOVE_DOWN, Menu.NONE, context.getString(R.string.move_down)).apply {
             isEnabled = position < users.size - 1
+            setIcon(R.drawable.ic_down)
         }
-        popupMenu.menu.add(0, ID_REMOVE, Menu.NONE, context.getString(R.string.remove))
+        popupMenu.menu.add(0, ID_REMOVE, Menu.NONE, context.getString(R.string.remove)).apply {
+            setIcon(R.drawable.ic_delete)
+        }
 
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
