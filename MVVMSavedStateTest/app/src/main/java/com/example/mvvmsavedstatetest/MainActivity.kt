@@ -10,9 +10,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentContainerBinding.inflate(layoutInflater).also {
-            setContentView(binding.root)
-        }
+        binding = FragmentContainerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fragmentContainer, MainFragment())
