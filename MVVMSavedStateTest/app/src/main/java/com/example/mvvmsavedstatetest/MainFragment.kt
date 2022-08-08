@@ -20,11 +20,11 @@ class MainFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(layoutInflater, container,false)
-
-        viewModel.squares.observe(viewLifecycleOwner){
+        viewModel.squares.observe(viewLifecycleOwner) {
             renderSquares(it)
         }
+        binding = FragmentMainBinding.inflate(layoutInflater, container,false)
+
         binding.generateColorImageView.setOnClickListener { viewModel.generateSquares() }
 
         return binding.root
