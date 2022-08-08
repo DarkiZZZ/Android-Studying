@@ -14,8 +14,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragmentContainer, MainFragment())
-            .commit()
+        if(savedInstanceState == null){
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainer, MainFragment())
+                .commit()
+        }
     }
 }
