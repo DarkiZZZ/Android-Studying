@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.example.viewmodelnavigation.databinding.FragmentHomeBinding
 import com.example.viewmodelnavigation.screens.base.BaseFragment
 import com.example.viewmodelnavigation.screens.base.BaseScreen
-import com.example.viewmodelnavigation.screens.base.BaseViewModel
 import com.example.viewmodelnavigation.screens.base.screenViewModel
 
 class HomeFragment : BaseFragment(){
