@@ -5,24 +5,29 @@ import android.graphics.Color
 class InMemoryColorsRepository: ColorsRepository {
 
 
-    override var currentColor: NamedColor
-        get() = TODO("Not yet implemented")
-        set(value) {}
+    override var currentColor: NamedColor = AVAILABLE_COLORS[0]
+        set(value) {
+            if(field != value){
+                field = value
+                listeners.forEach { it(value) }
+            }
+        }
 
-    override fun getAvailableColors(): List<NamedColor> {
-        TODO("Not yet implemented")
-    }
+    private val listeners = mutableSetOf<ColorListener>()
+
+    override fun getAvailableColors(): List<NamedColor> = AVAILABLE_COLORS
 
     override fun getById(id: Long): NamedColor {
-        TODO("Not yet implemented")
+        return AVAILABLE_COLORS.first {it.id == id}
     }
 
     override fun addListener(listener: ColorListener) {
-        TODO("Not yet implemented")
+        listeners +=listener
+        listener(currentColor)
     }
 
     override fun removeListener(listener: ColorListener) {
-        TODO("Not yet implemented")
+        listeners -= listener
     }
 
     companion object{
