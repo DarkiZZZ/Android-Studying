@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MVVMSavedStateTest</string>
+    <string name="reset_description">60dp to 60dp, this button is used for changing colors</string>
 </resources>
