@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.mvvmsavedstatetest.databinding.FragmentMainBinding
-import kotlin.random.Random
 
 class MainFragment: Fragment() {
 
     private lateinit var binding: FragmentMainBinding
+    private val viewModel by viewModels<MainFragmentViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,22 +22,15 @@ class MainFragment: Fragment() {
     ): View {
         binding = FragmentMainBinding.inflate(layoutInflater, container,false)
 
-        createAndRenderSquares()
-        binding.generateColorImageView.setOnClickListener { createAndRenderSquares() }
+        viewModel.squares.observe(viewLifecycleOwner){
+            renderSquares(it)
+        }
+        binding.generateColorImageView.setOnClickListener { viewModel.generateSquares() }
 
         return binding.root
     }
 
-    private fun createAndRenderSquares(){
-        renderSquares(createSquares())
-    }
 
-    private fun createSquares() : Squares {
-        return Squares(
-            size = Random.nextInt(5, 11),
-            colorProducer = {-Random.nextInt(0xFFFFFF)}
-        )
-    }
 
     private fun renderSquares(squares: Squares) = with(binding) {
         colorsContainer.removeAllViews()
