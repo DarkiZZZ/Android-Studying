@@ -5,8 +5,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.*
+import com.example.basedframemvvm.views.HasScreenTitle
+import com.example.basedframemvvm.views.base.BaseFragment
+import com.example.basedframemvvm.views.base.currentcolor.CurrentColorFragment
 
 class MainActivity : AppCompatActivity() {
 
