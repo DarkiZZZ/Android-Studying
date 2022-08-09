@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BasedFrameMVVM</string>
+    <string name="change_color">Change color</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="selected">Selected</string>
 </resources>
