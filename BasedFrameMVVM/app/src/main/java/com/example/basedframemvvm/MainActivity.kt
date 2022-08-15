@@ -2,30 +2,41 @@ package com.example.basedframemvvm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider.*
-import com.example.basedframemvvm.views.HasScreenTitle
-import com.example.basedframemvvm.views.base.BaseFragment
-import com.example.basedframemvvm.views.base.currentcolor.CurrentColorFragment
+import com.example.basedframemvvm.views.currentcolor.CurrentColorFragment
+import core.ActivityScopeViewModel
+import core.navigator.IntermediateNavigator
+import core.navigator.StackFragmentNavigator
+import core.uiactions.AndroidUiActions
+import core.utils.viewModelCreator
 
 class MainActivity : AppCompatActivity() {
 
-    private val activityViewModel by viewModels<MainViewModel> { AndroidViewModelFactory(application) }
+    private lateinit var navigator: StackFragmentNavigator
+
+    private val activityViewModel by viewModelCreator<ActivityScopeViewModel>{
+        ActivityScopeViewModel(
+            uiActions = AndroidUiActions(applicationContext),
+            navigator = IntermediateNavigator()
+        )
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null){
-            activityViewModel.launchFragment(
-                activity = this,
-                screen = CurrentColorFragment.Screen(),
-                addToBackStack = false
-            )
-        }
-        supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentCallbacks, false)
+        navigator = StackFragmentNavigator(
+            activity = this,
+            containerId = R.id.fragmentContainer,
+            initialScreenCreator = {CurrentColorFragment.Screen()}
+        )
+        navigator.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        navigator.onDestroy()
+        super.onDestroy()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -35,50 +46,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        activityViewModel.whenActivityActive.resource = this
+        activityViewModel.navigator.setTarget(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-        activityViewModel.whenActivityActive.resource = null
+        activityViewModel.navigator.setTarget(null)
     }
 
-    override fun onDestroy() {
-        supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentCallbacks)
-        super.onDestroy()
 
-    }
 
-    fun notifyScreenUpdates(){
-        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
 
-        if (supportFragmentManager.backStackEntryCount > 0){
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-        else{
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        }
-
-        if (fragment is HasScreenTitle && fragment.getScreenTitle() != null){
-            supportActionBar?.title = fragment.getScreenTitle()
-        }
-        else{
-            supportActionBar?.title = "Based MVVM Frame App"
-        }
-
-        val result = activityViewModel.result.value?.getValue() ?: return
-        if (fragment is BaseFragment){
-            fragment.viewModel.onResult(result)
-        }
-    }
-
-    private val fragmentCallbacks = object : FragmentManager.FragmentLifecycleCallbacks(){
-        override fun onFragmentCreated(
-            fm: FragmentManager,
-            f: Fragment,
-            savedInstanceState: Bundle?
-        ) {
-            notifyScreenUpdates()
-        }
-    }
 }
