@@ -8,8 +8,9 @@ import core.navigator.IntermediateNavigator
 import core.navigator.StackFragmentNavigator
 import core.uiactions.AndroidUiActions
 import core.utils.viewModelCreator
+import core.views.FragmentsHolder
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentsHolder {
 
     private lateinit var navigator: StackFragmentNavigator
 
@@ -54,7 +55,13 @@ class MainActivity : AppCompatActivity() {
         activityViewModel.navigator.setTarget(null)
     }
 
+    override fun notifyScreenUpdates() {
+        navigator.notifyScreenUpdates()
+    }
 
+    override fun getActivityScopeViewModel(): ActivityScopeViewModel {
+        return activityViewModel
+    }
 
 
 }
