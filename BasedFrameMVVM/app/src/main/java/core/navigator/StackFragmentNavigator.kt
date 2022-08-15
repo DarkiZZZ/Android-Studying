@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.basedframemvvm.R
-import com.example.basedframemvvm.views.currentcolor.CurrentColorFragment
 import core.ARG_SCREEN
 import core.utils.Event
 import core.views.BaseFragment
@@ -17,6 +15,7 @@ import core.views.HasScreenTitle
 class StackFragmentNavigator(
     private val activity: AppCompatActivity,
     @IdRes private val containerId: Int,
+    private val defaultTitle: String,
     private val initialScreenCreator: () -> BaseScreen
 ): Navigator {
 
@@ -80,7 +79,7 @@ class StackFragmentNavigator(
             activity.supportActionBar?.title = fragment.getScreenTitle()
         }
         else{
-            activity.supportActionBar?.title = activity.getString(R.string.app_name)
+            activity.supportActionBar?.title = defaultTitle
         }
     }
 
