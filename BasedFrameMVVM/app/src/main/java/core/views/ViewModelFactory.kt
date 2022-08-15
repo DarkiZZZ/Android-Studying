@@ -6,9 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.basedframemvvm.ARG_SCREEN
 import com.example.basedframemvvm.App
-import com.example.basedframemvvm.MainViewModel
+import core.ARG_SCREEN
 import java.lang.reflect.Constructor
 
 inline fun <reified VM : ViewModel> BaseFragment.screenViewModel() = viewModels<VM> {
@@ -19,10 +18,10 @@ inline fun <reified VM : ViewModel> BaseFragment.screenViewModel() = viewModels<
     val provider = ViewModelProvider(requireActivity(),
         ViewModelProvider.AndroidViewModelFactory(application)
     )
-    val mainViewModel = provider[MainViewModel::class.java]
+    val activityScopeViewModel = (requireActivity() as FragmentsHolder).getActivityScopeViewModel()
 
 
-    val dependencies = listOf(screen, mainViewModel) + application.models
+    val dependencies = listOf(screen, activityScopeViewModel) + application.models
 
 
     ViewModelFactory(dependencies, this)
