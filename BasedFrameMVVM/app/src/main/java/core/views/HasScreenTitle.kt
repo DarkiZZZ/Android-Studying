@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.views
+package core.views
 
 interface HasScreenTitle {
 

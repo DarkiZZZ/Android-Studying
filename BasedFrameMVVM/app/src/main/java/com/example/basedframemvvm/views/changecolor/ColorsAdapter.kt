@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.views.base.changecolor
+package com.example.basedframemvvm.views.changecolor
 
 import android.view.LayoutInflater
 import android.view.View

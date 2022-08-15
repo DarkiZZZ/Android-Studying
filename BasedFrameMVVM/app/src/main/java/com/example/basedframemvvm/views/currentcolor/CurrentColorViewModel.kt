@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.views.base.currentcolor
+package com.example.basedframemvvm.views.currentcolor
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,10 +6,10 @@ import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorListener
 import com.example.basedframemvvm.model.colors.ColorsRepository
 import com.example.basedframemvvm.model.colors.NamedColor
-import com.example.basedframemvvm.views.Navigator
-import com.example.basedframemvvm.views.UiActions
-import com.example.basedframemvvm.views.base.BaseViewModel
-import com.example.basedframemvvm.views.base.changecolor.ChangeColorFragment
+import core.navigator.Navigator
+import core.uiactions.UiActions
+import core.views.BaseViewModel
+import com.example.basedframemvvm.views.changecolor.ChangeColorFragment
 
 class CurrentColorViewModel(
     private val navigator: Navigator,

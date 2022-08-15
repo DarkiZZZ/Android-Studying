@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.views.base
+package core.views
 
 import androidx.fragment.app.Fragment
 import com.example.basedframemvvm.MainActivity

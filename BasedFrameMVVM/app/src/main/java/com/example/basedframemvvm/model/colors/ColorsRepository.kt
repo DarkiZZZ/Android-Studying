@@ -1,6 +1,6 @@
 package com.example.basedframemvvm.model.colors
 
-import com.example.basedframemvvm.model.Repository
+import core.model.Repository
 
 typealias ColorListener = (NamedColor) -> Unit
 

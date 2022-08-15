@@ -1,14 +1,13 @@
-package com.example.basedframemvvm.views.base.currentcolor
+package com.example.basedframemvvm.views.currentcolor
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.basedframemvvm.databinding.FragmentCurrentColorBinding
-import com.example.basedframemvvm.views.base.BaseFragment
-import com.example.basedframemvvm.views.base.BaseScreen
-import com.example.basedframemvvm.views.base.BaseViewModel
-import com.example.basedframemvvm.views.base.screenViewModel
+import core.views.BaseFragment
+import core.views.BaseScreen
+import core.views.screenViewModel
 
 class CurrentColorFragment : BaseFragment() {
 

@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.views.base.changecolor
+package com.example.basedframemvvm.views.changecolor
 
 import com.example.basedframemvvm.model.colors.NamedColor
 

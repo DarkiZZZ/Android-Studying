@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.utils
+package core.utils
 
 class Event<T>(private val value: T) {
 

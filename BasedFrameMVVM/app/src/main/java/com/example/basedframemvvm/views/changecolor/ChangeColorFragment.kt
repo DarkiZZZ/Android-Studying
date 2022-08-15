@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.views.base.changecolor
+package com.example.basedframemvvm.views.changecolor
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.databinding.FragmentChangeColorBinding
-import com.example.basedframemvvm.views.HasScreenTitle
-import com.example.basedframemvvm.views.base.BaseFragment
-import com.example.basedframemvvm.views.base.BaseScreen
-import com.example.basedframemvvm.views.base.screenViewModel
+import core.views.HasScreenTitle
+import core.views.BaseFragment
+import core.views.BaseScreen
+import core.views.screenViewModel
 
 class ChangeColorFragment : BaseFragment(), HasScreenTitle {
 
