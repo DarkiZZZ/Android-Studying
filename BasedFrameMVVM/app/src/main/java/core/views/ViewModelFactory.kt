@@ -1,27 +1,26 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package core.views
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.basedframemvvm.App
 import core.ARG_SCREEN
+import core.BaseApplication
 import java.lang.reflect.Constructor
 
 inline fun <reified VM : ViewModel> BaseFragment.screenViewModel() = viewModels<VM> {
-    val application = requireActivity().application as App
+    val application = requireActivity().application as BaseApplication
     val screen = requireArguments().getSerializable(ARG_SCREEN) as BaseScreen
 
 
-    val provider = ViewModelProvider(requireActivity(),
-        ViewModelProvider.AndroidViewModelFactory(application)
-    )
+
     val activityScopeViewModel = (requireActivity() as FragmentsHolder).getActivityScopeViewModel()
 
 
-    val dependencies = listOf(screen, activityScopeViewModel) + application.models
+    val dependencies = listOf(screen, activityScopeViewModel) + application.repositories
 
 
     ViewModelFactory(dependencies, this)
