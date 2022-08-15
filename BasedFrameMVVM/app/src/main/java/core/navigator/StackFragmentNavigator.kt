@@ -1,6 +1,7 @@
 package core.navigator
 
 import android.os.Bundle
+import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -16,6 +17,7 @@ class StackFragmentNavigator(
     private val activity: AppCompatActivity,
     @IdRes private val containerId: Int,
     private val defaultTitle: String,
+    private val animations: Animations,
     private val initialScreenCreator: () -> BaseScreen
 ): Navigator {
 
@@ -56,17 +58,17 @@ class StackFragmentNavigator(
         if (addToBackStack) transaction.addToBackStack(null)
         transaction
         .setCustomAnimations(
-        R.anim.enter,
-        R.anim.exit,
-        R.anim.pop_enter,
-        R.anim.pop_exit
+        animations.animEnter,
+        animations.animExit,
+        animations.animPopEnter,
+        animations.animPopExit
         )
         .replace(containerId,fragment)
             .commit()
     }
 
     fun notifyScreenUpdates(){
-        val fragment = activity.supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+        val fragment = activity.supportFragmentManager.findFragmentById(containerId)
 
         if (activity.supportFragmentManager.backStackEntryCount > 0){
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -100,4 +102,11 @@ class StackFragmentNavigator(
             publishResults(fragment)
         }
     }
+
+    class Animations(
+        @AnimRes val animEnter: Int,
+        @AnimRes val animExit: Int,
+        @AnimRes val animPopEnter: Int,
+        @AnimRes val animPopExit: Int
+    )
 }
