@@ -37,7 +37,7 @@ class StackFragmentNavigator(
     fun onCreate(savedInstanceState: Bundle?){
         if (savedInstanceState == null){
             launchFragment(
-                screen = CurrentColorFragment.Screen(),
+                screen = initialScreenCreator(),
                 addToBackStack = false
             )
         }
@@ -62,7 +62,7 @@ class StackFragmentNavigator(
         R.anim.pop_enter,
         R.anim.pop_exit
         )
-        .replace(R.id.fragmentContainer,fragment)
+        .replace(containerId,fragment)
             .commit()
     }
 
