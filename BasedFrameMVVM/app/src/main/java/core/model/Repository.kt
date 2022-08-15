@@ -1,4 +1,4 @@
-package com.example.basedframemvvm.model
+package core.model
 
 /*
 This interface is based for all Repositories in App

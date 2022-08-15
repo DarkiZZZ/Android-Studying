@@ -1,6 +1,6 @@
-package com.example.basedframemvvm.views
+package core.navigator
 
-import com.example.basedframemvvm.views.base.BaseScreen
+import core.views.BaseScreen
 
 interface Navigator {
 
