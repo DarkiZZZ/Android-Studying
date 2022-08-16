@@ -33,6 +33,7 @@ class ChangeColorFragment : BaseFragment(), HasScreenTitle {
         val binding = FragmentChangeColorBinding.inflate(inflater, container, false)
 
         val adapter = ColorsAdapter(viewModel)
+
         setupLayoutManager(binding, adapter)
 
         binding.saveButton.setOnClickListener { viewModel.onSavePressed() }

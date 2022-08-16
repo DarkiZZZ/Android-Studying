@@ -47,6 +47,7 @@ class ColorsAdapter(
     ) : RecyclerView.ViewHolder(binding.root)
 
 
+
     interface Listener {
         /**
          * Called when user chooses the specified color
