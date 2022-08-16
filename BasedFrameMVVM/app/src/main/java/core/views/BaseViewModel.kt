@@ -1,12 +1,8 @@
 package core.views
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import core.utils.Event
 
-typealias LiveEvent<T> = LiveData<Event<T>>
-typealias MutableLiveEvent<T> = MutableLiveData<Event<T>>
+import androidx.lifecycle.ViewModel
+
 
 open class BaseViewModel : ViewModel() {
 
