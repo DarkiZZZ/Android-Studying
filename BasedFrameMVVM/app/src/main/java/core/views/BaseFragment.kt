@@ -17,13 +17,13 @@ abstract class BaseFragment : Fragment() {
         (requireActivity() as FragmentsHolder).notifyScreenUpdates()
     }
 
-    fun <T> renderResult(root: View, result: Result<T>,
+    fun <T> renderResult(root: ViewGroup, result: Result<T>,
                          onPending: () -> Unit,
                          onError: (Exception) -> Unit,
                          onSuccess: (T) -> Unit){
-        (root as ViewGroup).children.forEach { it.visibility = View.GONE }
+        root.children.forEach { it.visibility = View.GONE }
         when(result){
-            is SuccessResult -> onSuccess(result.data as T)
+            is SuccessResult -> onSuccess(result.data)
             is ErrorResult -> onError(result.exception)
             is PendingResult -> onPending()
         }
