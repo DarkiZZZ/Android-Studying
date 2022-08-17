@@ -25,28 +25,33 @@ class CurrentColorFragment : BaseFragment() {
         val resultBinding = PartResultBinding.bind(binding.root)
 
         viewModel.currentColor.observe(viewLifecycleOwner) { result ->
-            when(result){
+            renderResult(
+                root = binding.root,
+                result = result,
+                onSuccess = {binding.colorContainer.visibility = View.VISIBLE
+                    binding.changeColorButton.visibility = View.VISIBLE
+                    binding.colorView.setBackgroundColor(it.value) },
+                onError = {resultBinding.errorContainer.visibility = View.VISIBLE},
+                onPending = {resultBinding.progressBar.visibility = View.VISIBLE}
+            )
+            /*when(result){
                 is PendingResult ->{
-                    resultBinding.progressBar.visibility = View.VISIBLE
+
                     resultBinding.errorContainer.visibility = View.GONE
                     binding.colorContainer.visibility = View.GONE
                     binding.changeColorButton.visibility = View.GONE
                 }
                 is ErrorResult ->{
                     resultBinding.progressBar.visibility = View.GONE
-                    resultBinding.errorContainer.visibility = View.VISIBLE
                     binding.colorContainer.visibility = View.GONE
                     binding.changeColorButton.visibility = View.GONE
                 }
                 is SuccessResult ->{
                     resultBinding.progressBar.visibility = View.GONE
                     resultBinding.errorContainer.visibility = View.GONE
-                    binding.colorContainer.visibility = View.VISIBLE
-                    binding.changeColorButton.visibility = View.VISIBLE
 
-                    binding.colorView.setBackgroundColor(result.data.value)
                 }
-            }
+            }*/
         }
 
         binding.changeColorButton.setOnClickListener {
