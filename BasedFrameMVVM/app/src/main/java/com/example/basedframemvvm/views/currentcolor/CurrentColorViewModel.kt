@@ -1,7 +1,5 @@
 package com.example.basedframemvvm.views.currentcolor
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorListener
 import com.example.basedframemvvm.model.colors.ColorsRepository
@@ -10,6 +8,8 @@ import core.navigator.Navigator
 import core.uiactions.UiActions
 import core.views.BaseViewModel
 import com.example.basedframemvvm.views.changecolor.ChangeColorFragment
+import core.views.LiveResult
+import core.views.MutableLiveResult
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
@@ -17,8 +17,8 @@ class CurrentColorViewModel(
     private val colorsRepository: ColorsRepository
 ) : BaseViewModel() {
 
-    private val _currentColor = MutableLiveData<NamedColor>()
-    val currentColor: LiveData<NamedColor> = _currentColor
+    private val _currentColor = MutableLiveResult<NamedColor>()
+    val currentColor: LiveResult<NamedColor> = _currentColor
 
     private val colorListener: ColorListener = {
         _currentColor.postValue(it)
