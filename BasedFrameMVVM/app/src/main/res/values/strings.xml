@@ -17,4 +17,6 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="selected">Selected</string>
+    <string name="try_again_message">Error! Try again later.</string>
+    <string name="try_again">Try again</string>
 </resources>
