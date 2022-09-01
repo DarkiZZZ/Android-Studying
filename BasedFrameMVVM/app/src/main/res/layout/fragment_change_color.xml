@@ -40,7 +40,7 @@
     <include layout="@layout/part_result"/>
 
     <ProgressBar
-        android:id="@+id/changeProgressBar"
+        android:id="@+id/saveProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
