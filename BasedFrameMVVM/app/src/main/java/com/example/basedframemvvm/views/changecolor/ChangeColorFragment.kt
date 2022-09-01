@@ -8,6 +8,7 @@ import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.databinding.FragmentChangeColorBinding
+import com.example.basedframemvvm.views.onTryAgain
 import com.example.basedframemvvm.views.renderSimpleResult
 import core.views.HasScreenTitle
 import core.views.BaseFragment
@@ -48,6 +49,10 @@ class ChangeColorFragment : BaseFragment(), HasScreenTitle {
         viewModel.screenTitle.observe(viewLifecycleOwner) {
             // if screen title is changed -> need to notify activity about updates
             notifyScreenUpdates()
+        }
+
+        onTryAgain(binding.root){
+            viewModel.tryAgain()
         }
 
         return binding.root
