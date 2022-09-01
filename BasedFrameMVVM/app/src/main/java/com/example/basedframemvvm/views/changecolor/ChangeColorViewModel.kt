@@ -8,12 +8,15 @@ import core.navigator.Navigator
 import core.uiactions.UiActions
 import core.views.BaseViewModel
 import com.example.basedframemvvm.views.changecolor.ChangeColorFragment.*
+import core.model.ErrorResult
+import core.model.PendingResult
 import core.model.SuccessResult
 import core.views.LiveResult
 import core.views.MediatorLiveResult
 import core.views.MutableLiveResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeoutException
 
 class ChangeColorViewModel(
     screen: Screen,
@@ -45,7 +48,8 @@ class ChangeColorViewModel(
     init {
         viewModelScope.launch {
             delay(2000) // <-- faking Async work
-            _availableColors.value = SuccessResult(colorsRepository.getAvailableColors()) // <-- hardcoding to get list of colors(Success)
+            //_availableColors.value = SuccessResult(colorsRepository.getAvailableColors()) // <-- hardcoding to get list of colors(Success)
+            _availableColors.value = ErrorResult(TimeoutException()) // <-- hardcoding to get Error after Pending
         }
 
         // initializing MediatorLiveData
@@ -62,6 +66,14 @@ class ChangeColorViewModel(
         val currentColor = colorsRepository.getById(currentColorId)
         colorsRepository.currentColor = currentColor
         navigator.goBack(result = currentColor)
+    }
+
+    fun tryAgain(){
+        viewModelScope.launch {
+            _availableColors.postValue(PendingResult())
+            delay(2000)
+            _availableColors.postValue(SuccessResult(colorsRepository.getAvailableColors()))
+        }
     }
 
     fun onCancelPressed() {
