@@ -5,7 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_selected.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17291666666666666" />
-        <entry key="app/src/main/res/layout/fragment_change_color.xml" value="0.171875" />
+        <entry key="app/src/main/res/layout/fragment_change_color.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_current_color.xml" value="0.17291666666666666" />
         <entry key="app/src/main/res/layout/item_color.xml" value="0.171875" />
         <entry key="app/src/main/res/layout/part_result.xml" value="0.17291666666666666" />
