@@ -2,6 +2,7 @@ package com.example.basedframemvvm.views
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.children
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.databinding.PartResultBinding
@@ -31,4 +32,8 @@ fun <T> BaseFragment.renderSimpleResult(
             onSuccess(successData)
         }
     )
+}
+
+fun BaseFragment.onTryAgain(root: View, onTryAgainPressed: () -> Unit){
+    root.findViewById<Button>(R.id.tryAgainButton).setOnClickListener { onTryAgainPressed() }
 }
