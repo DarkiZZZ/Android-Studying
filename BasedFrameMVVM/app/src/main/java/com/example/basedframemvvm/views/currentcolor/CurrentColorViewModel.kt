@@ -9,6 +9,7 @@ import core.navigator.Navigator
 import core.uiactions.UiActions
 import core.views.BaseViewModel
 import com.example.basedframemvvm.views.changecolor.ChangeColorFragment
+import core.model.ErrorResult
 import core.model.PendingResult
 import core.model.SuccessResult
 import core.model.takeSuccess
@@ -16,6 +17,7 @@ import core.views.LiveResult
 import core.views.MutableLiveResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.RuntimeException
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
@@ -27,7 +29,8 @@ class CurrentColorViewModel(
     val currentColor: LiveResult<NamedColor> = _currentColor
 
     private val colorListener: ColorListener = {
-        _currentColor.postValue(SuccessResult(it))
+        _currentColor.postValue(SuccessResult(it)) // <-- hardcoding to get initial Success result every launch(with Error on 44 line -
+                                                    // on the second time
     }
 
     // --- example of listening results via model layer
@@ -35,7 +38,8 @@ class CurrentColorViewModel(
     init {
         viewModelScope.launch {
             delay(2000)
-            colorsRepository.addListener(colorListener)
+                //colorsRepository.addListener(colorListener)
+            _currentColor.postValue(ErrorResult(RuntimeException())) // hardcoding to fail Pending & test tryAgain container
         }
     }
 
@@ -62,4 +66,13 @@ class CurrentColorViewModel(
         navigator.launch(screen)
     }
 
+    fun tryAgain(){
+        viewModelScope.launch {
+            _currentColor.postValue(PendingResult()) // <-- hardcoding to test Pending after clicking on TryAgain button
+            delay(2000)
+            colorsRepository.addListener(colorListener)
+        }
+    }
+
 }
+
