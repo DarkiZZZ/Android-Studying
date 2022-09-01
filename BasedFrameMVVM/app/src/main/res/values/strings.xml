@@ -20,4 +20,5 @@
     <string name="selected">Selected</string>
     <string name="try_again_message">Error! Try again later.</string>
     <string name="try_again">Try again</string>
+    <string name="error_message">Error! Can not save this color. Try Again!</string>
 </resources>
