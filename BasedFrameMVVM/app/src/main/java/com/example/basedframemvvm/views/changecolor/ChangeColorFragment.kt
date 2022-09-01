@@ -41,9 +41,14 @@ class ChangeColorFragment : BaseFragment(), HasScreenTitle {
         binding.saveButton.setOnClickListener { viewModel.onSavePressed() }
         binding.cancelButton.setOnClickListener { viewModel.onCancelPressed() }
 
-        viewModel.colorsList.observe(viewLifecycleOwner) { result ->
-            renderSimpleResult(binding.root, result){
-                adapter.items = it
+        viewModel.viewState.observe(viewLifecycleOwner) { result ->
+            renderSimpleResult(binding.root, result){ viewState ->
+                adapter.items = viewState.colorsList
+                binding.saveButton.visibility = if (viewState.showSaveButton) View.VISIBLE else View.INVISIBLE
+
+                binding.cancelButton.visibility = if (viewState.showCancelButton) View.VISIBLE else View.INVISIBLE
+
+                binding.saveProgressBar.visibility = if (viewState.showSaveProgressBar) View.VISIBLE else View.GONE
             }
         }
         viewModel.screenTitle.observe(viewLifecycleOwner) {
