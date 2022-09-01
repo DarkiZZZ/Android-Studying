@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.basedframemvvm.databinding.FragmentCurrentColorBinding
+import com.example.basedframemvvm.views.onTryAgain
 import com.example.basedframemvvm.views.renderSimpleResult
 import core.views.BaseFragment
 import core.views.BaseScreen
@@ -31,6 +32,10 @@ class CurrentColorFragment : BaseFragment() {
 
         binding.changeColorButton.setOnClickListener {
             viewModel.changeColor()
+        }
+
+        onTryAgain(binding.root){
+            viewModel.tryAgain()
         }
 
         return binding.root
