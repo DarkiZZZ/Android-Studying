@@ -12,7 +12,7 @@ interface ColorsRepository: Repository {
 
     fun setCurrentColor(color: NamedColor): Task<Unit> // Set current color as current/
 
-    fun getAvailableColors(): List<NamedColor> // Get list of all available color that may be chosen by user.
+    fun getAvailableColors(): Task<List<NamedColor>> // Get list of all available color that may be chosen by user.
 
     fun getById(id: Long) : Task<NamedColor> // Get the color content by its ID
 
