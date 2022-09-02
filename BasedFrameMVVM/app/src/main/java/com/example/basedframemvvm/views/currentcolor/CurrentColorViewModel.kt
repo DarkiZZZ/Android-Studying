@@ -1,6 +1,5 @@
 package com.example.basedframemvvm.views.currentcolor
 
-import androidx.lifecycle.viewModelScope
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorListener
 import com.example.basedframemvvm.model.colors.ColorsRepository
@@ -9,15 +8,11 @@ import core.navigator.Navigator
 import core.uiactions.UiActions
 import core.views.BaseViewModel
 import com.example.basedframemvvm.views.changecolor.ChangeColorFragment
-import core.model.ErrorResult
 import core.model.PendingResult
 import core.model.SuccessResult
 import core.model.takeSuccess
 import core.views.LiveResult
 import core.views.MutableLiveResult
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.lang.RuntimeException
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
@@ -36,10 +31,8 @@ class CurrentColorViewModel(
     // --- example of listening results via model layer
 
     init {
-        viewModelScope.launch {
-            delay(2000)
-                colorsRepository.addListener(colorListener)
-        }
+        colorsRepository.addListener(colorListener)
+        load()
     }
 
     override fun onCleared() {
@@ -66,11 +59,11 @@ class CurrentColorViewModel(
     }
 
     fun tryAgain(){
-        viewModelScope.launch {
-            _currentColor.postValue(PendingResult()) // <-- hardcoding to test Pending after clicking on TryAgain button
-            delay(2000)
-            colorsRepository.addListener(colorListener)
-        }
+        load()
+    }
+
+    private fun load(){
+        colorsRepository.getCurrentColor().into(_currentColor)
     }
 
 }
