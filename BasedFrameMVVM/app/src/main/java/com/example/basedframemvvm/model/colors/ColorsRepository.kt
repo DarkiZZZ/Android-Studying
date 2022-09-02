@@ -7,13 +7,15 @@ typealias ColorListener = (NamedColor) -> Unit
 
 interface ColorsRepository: Repository {
 
-    var currentColor: NamedColor
+    fun getCurrentColor(): Task<NamedColor> // Get current color/
 
-    fun getAvailableColors(): List<NamedColor>
+    fun setCurrentColor(color: NamedColor): Task<Unit> // Set current color as current/
 
-    fun getById(id: Long) : NamedColor
+    fun getAvailableColors(): List<NamedColor> // Get list of all available color that may be chosen by user.
 
-    fun addListener(listener: ColorListener)
+    fun getById(id: Long) : Task<NamedColor> // Get the color content by its ID
+
+    fun addListener(listener: ColorListener) // Listener is triggered immediately with current value when calling this method
 
     fun removeListener(listener: ColorListener)
 }
