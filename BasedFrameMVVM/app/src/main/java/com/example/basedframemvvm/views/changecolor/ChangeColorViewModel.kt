@@ -13,6 +13,7 @@ import core.model.FinalResult
 import core.model.PendingResult
 import core.model.SuccessResult
 import core.model.tasks.TasksFactory
+import core.model.tasks.dispatchers.Dispatcher
 import core.views.LiveResult
 import core.views.MediatorLiveResult
 import core.views.MutableLiveResult
@@ -24,8 +25,9 @@ class ChangeColorViewModel(
     private val uiActions: UiActions,
     private val colorsRepository: ColorsRepository,
     private val tasksFactory: TasksFactory,
-    savedStateHandle: SavedStateHandle
-) : BaseViewModel(), ColorsAdapter.Listener {
+    savedStateHandle: SavedStateHandle,
+    dispatcher: Dispatcher
+) : BaseViewModel(dispatcher), ColorsAdapter.Listener {
 
     // input sources
     private val _availableColors = MutableLiveResult<List<NamedColor>>(PendingResult())

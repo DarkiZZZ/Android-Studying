@@ -9,12 +9,15 @@ import core.model.PendingResult
 import core.model.Result
 import core.model.tasks.Task
 import core.model.tasks.TaskListener
+import core.model.tasks.dispatchers.Dispatcher
 
 typealias LiveResult<T> = LiveData<Result<T>>
 typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
 typealias MediatorLiveResult<T> = MediatorLiveData<Result<T>>
 
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel(
+    private val dispatcher: Dispatcher
+) : ViewModel() {
 
     private val tasks = mutableSetOf<Task<*>>()
 
@@ -30,7 +33,7 @@ open class BaseViewModel : ViewModel() {
 
     fun <T> Task<T>.safeEnqueue(listener: TaskListener<T>? = null){
         tasks.add(this)
-        this.enqueue {
+        this.enqueue(dispatcher) {
             tasks.remove(this)
             listener?.invoke(it)
         }

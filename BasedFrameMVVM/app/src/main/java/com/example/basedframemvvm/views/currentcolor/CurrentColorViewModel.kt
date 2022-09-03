@@ -11,14 +11,16 @@ import com.example.basedframemvvm.views.changecolor.ChangeColorFragment
 import core.model.PendingResult
 import core.model.SuccessResult
 import core.model.takeSuccess
+import core.model.tasks.dispatchers.Dispatcher
 import core.views.LiveResult
 import core.views.MutableLiveResult
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
     private val uiActions: UiActions,
-    private val colorsRepository: ColorsRepository
-) : BaseViewModel() {
+    private val colorsRepository: ColorsRepository,
+    dispatcher: Dispatcher
+) : BaseViewModel(dispatcher) {
 
     private val _currentColor = MutableLiveResult<NamedColor>(PendingResult())
     val currentColor: LiveResult<NamedColor> = _currentColor
