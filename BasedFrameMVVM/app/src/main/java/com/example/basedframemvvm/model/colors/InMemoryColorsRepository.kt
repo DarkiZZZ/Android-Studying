@@ -3,11 +3,13 @@ package com.example.basedframemvvm.model.colors
 import android.graphics.Color
 import core.model.tasks.Task
 import core.model.tasks.TasksFactory
+import core.model.tasks.ThreadUtils
 
 //TODO --> Normal implementation
 
 class InMemoryColorsRepository(
-    private val tasksFactory: TasksFactory
+    private val tasksFactory: TasksFactory,
+    private val threadUtils: ThreadUtils
 ): ColorsRepository {
 
 
@@ -16,12 +18,12 @@ class InMemoryColorsRepository(
     private val listeners = mutableSetOf<ColorListener>()
 
     override fun getCurrentColor(): Task<NamedColor> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         return@async currentColor
     }
 
     override fun setCurrentColor(color: NamedColor): Task<Unit> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         if (currentColor != color){
             currentColor = color
             listeners.forEach { it(color) }
@@ -30,12 +32,12 @@ class InMemoryColorsRepository(
     }
 
     override fun getAvailableColors(): Task<List<NamedColor>> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         return@async AVAILABLE_COLORS
     }
 
     override fun getById(id: Long): Task<NamedColor> = tasksFactory.async {
-        Thread.sleep(1000)
+        threadUtils.sleep(1000)
         return@async AVAILABLE_COLORS.first {it.id == id}
     }
 
