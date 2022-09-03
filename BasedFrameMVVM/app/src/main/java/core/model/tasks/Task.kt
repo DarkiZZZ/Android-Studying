@@ -1,6 +1,7 @@
 package core.model.tasks
 
 import core.model.FinalResult
+import core.model.tasks.dispatchers.Dispatcher
 
 typealias TaskListener<T> = (FinalResult<T>) -> Unit
 
@@ -10,7 +11,7 @@ interface Task<T> {
 
     fun cancel()
 
-    fun enqueue(listener: TaskListener<T>)
+    fun enqueue(dispatcher: Dispatcher, listener: TaskListener<T>)
 
     //Listeners are called only in main thread
 }
