@@ -20,7 +20,7 @@ inline fun <reified VM : ViewModel> BaseFragment.screenViewModel() = viewModels<
     val activityScopeViewModel = (requireActivity() as FragmentsHolder).getActivityScopeViewModel()
 
 
-    val dependencies = listOf(screen, activityScopeViewModel) + application.repositories
+    val dependencies = listOf(screen, activityScopeViewModel) + application.singletonScopeDependencies
 
 
     ViewModelFactory(dependencies, this)

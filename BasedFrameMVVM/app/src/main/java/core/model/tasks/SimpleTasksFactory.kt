@@ -5,6 +5,7 @@ import android.os.Looper
 import core.model.ErrorResult
 import core.model.FinalResult
 import core.model.SuccessResult
+import core.model.tasks.dispatchers.Dispatcher
 
 private val handler = Handler(Looper.getMainLooper())
 
@@ -29,7 +30,7 @@ class SimpleTasksFactory: TasksFactory {
             thread = null
         }
 
-        override fun enqueue(listener: TaskListener<T>) {
+        override fun enqueue(dispatcher: Dispatcher, listener: TaskListener<T>) {
             thread = Thread{
                 try {
                     val data = body()
