@@ -50,6 +50,13 @@ class StackFragmentNavigator(
         activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentCallbacks)
     }
 
+    fun onBackPressed(){
+        val fragment = getCurrentFragment()
+        if (fragment is BaseFragment){
+            fragment.viewModel.onBackPressed()
+        }
+    }
+
     fun launchFragment(screen: BaseScreen, addToBackStack: Boolean = true) {
         val fragment = screen.javaClass.enclosingClass.newInstance() as Fragment
         fragment.arguments = bundleOf(ARG_SCREEN to screen)
@@ -68,7 +75,7 @@ class StackFragmentNavigator(
     }
 
     fun notifyScreenUpdates(){
-        val fragment = activity.supportFragmentManager.findFragmentById(containerId)
+        val fragment = getCurrentFragment()
 
         if (activity.supportFragmentManager.backStackEntryCount > 0){
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -83,6 +90,10 @@ class StackFragmentNavigator(
         else{
             activity.supportActionBar?.title = defaultTitle
         }
+    }
+
+    private fun getCurrentFragment(): Fragment?{
+        return activity.supportFragmentManager.findFragmentById(containerId)
     }
 
     private fun publishResults(fragment: Fragment){
