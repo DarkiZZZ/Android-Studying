@@ -5,11 +5,11 @@ import com.example.basedframemvvm.model.colors.InMemoryColorsRepository
 import core.BaseApplication
 import core.model.tasks.ThreadUtils
 import core.model.tasks.dispatchers.MainThreadDispatcher
-import core.model.tasks.factories.SimpleTasksFactory
+import core.model.tasks.factories.ThreadTasksFactory
 
 class App : Application(), BaseApplication {
 
-    private val tasksFactory = SimpleTasksFactory()
+    private val tasksFactory = ThreadTasksFactory()
     private val threadUtils = ThreadUtils.Default()
     private val dispatcher = MainThreadDispatcher()
 
