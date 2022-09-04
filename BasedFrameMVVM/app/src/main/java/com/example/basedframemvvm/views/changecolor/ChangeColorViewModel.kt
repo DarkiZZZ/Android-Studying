@@ -12,8 +12,8 @@ import core.model.ErrorResult
 import core.model.FinalResult
 import core.model.PendingResult
 import core.model.SuccessResult
-import core.model.tasks.TasksFactory
 import core.model.tasks.dispatchers.Dispatcher
+import core.model.tasks.factories.TasksFactory
 import core.views.LiveResult
 import core.views.MediatorLiveResult
 import core.views.MutableLiveResult

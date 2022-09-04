@@ -4,6 +4,7 @@ import core.model.ErrorResult
 import core.model.FinalResult
 import core.model.SuccessResult
 import core.model.tasks.dispatchers.Dispatcher
+import core.model.tasks.factories.TaskBody
 import core.utils.delegates.Await
 
 abstract class AbstractTask<T>: Task<T> {

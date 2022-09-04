@@ -1,4 +1,6 @@
-package core.model.tasks
+package core.model.tasks.factories
+
+import core.model.tasks.Task
 
 typealias TaskBody<T> = () -> T
 

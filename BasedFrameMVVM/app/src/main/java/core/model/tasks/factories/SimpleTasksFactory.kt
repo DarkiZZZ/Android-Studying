@@ -1,10 +1,12 @@
-package core.model.tasks
+package core.model.tasks.factories
 
 import android.os.Handler
 import android.os.Looper
 import core.model.ErrorResult
 import core.model.FinalResult
 import core.model.SuccessResult
+import core.model.tasks.Task
+import core.model.tasks.TaskListener
 import core.model.tasks.dispatchers.Dispatcher
 
 private val handler = Handler(Looper.getMainLooper())

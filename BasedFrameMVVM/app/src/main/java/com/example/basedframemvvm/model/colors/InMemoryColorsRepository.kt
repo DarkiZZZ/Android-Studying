@@ -2,8 +2,8 @@ package com.example.basedframemvvm.model.colors
 
 import android.graphics.Color
 import core.model.tasks.Task
-import core.model.tasks.TasksFactory
 import core.model.tasks.ThreadUtils
+import core.model.tasks.factories.TasksFactory
 
 //TODO --> Normal implementation
 
