@@ -1,8 +1,8 @@
 package core
 
 import androidx.lifecycle.ViewModel
-import core.navigator.IntermediateNavigator
-import core.navigator.Navigator
+import core.sideeffects.navigator.IntermediateNavigator
+import core.sideeffects.navigator.Navigator
 import core.uiactions.UiActions
 
 const val ARG_SCREEN = "ARG_SCREEN"

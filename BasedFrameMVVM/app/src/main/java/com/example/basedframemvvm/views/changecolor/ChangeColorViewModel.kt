@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorsRepository
 import com.example.basedframemvvm.model.colors.NamedColor
-import core.navigator.Navigator
+import core.sideeffects.navigator.Navigator
 import core.uiactions.UiActions
 import core.views.BaseViewModel
 import com.example.basedframemvvm.views.changecolor.ChangeColorFragment.*

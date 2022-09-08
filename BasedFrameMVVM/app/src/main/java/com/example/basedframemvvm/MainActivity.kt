@@ -4,8 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.basedframemvvm.views.currentcolor.CurrentColorFragment
 import core.ActivityScopeViewModel
-import core.navigator.IntermediateNavigator
-import core.navigator.StackFragmentNavigator
+import core.sideeffects.navigator.IntermediateNavigator
+import core.sideeffects.navigator.StackFragmentNavigator
 import core.uiactions.AndroidUiActions
 import core.utils.viewModelCreator
 import core.views.FragmentsHolder

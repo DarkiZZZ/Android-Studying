@@ -1,4 +1,4 @@
-package core.navigator
+package core.sideeffects.navigator
 
 import core.utils.ResourceActions
 import core.views.BaseScreen

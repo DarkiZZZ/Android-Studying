@@ -22,4 +22,9 @@
     <string name="try_again">Try again</string>
     <string name="error_message">Error! Can not save this color. Try Again!</string>
     <string name="error_message_2">Error! Cannot save, try again!</string>
+    <string name="permissions_granted_message">Congrats! Permission has been granted</string>
+    <string name="permissions_denied_message">Oops, permission denied!</string>
+    <string name="positive_button">OK</string>
+    <string name="message_permission">Permission has been already granted</string>
+    <string name="title_permission">Permissions</string>
 </resources>
