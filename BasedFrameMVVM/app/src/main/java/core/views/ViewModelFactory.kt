@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import core.ARG_SCREEN
 import core.BaseApplication
+import core.views.activity.ActivityDelegateHolder
 import java.lang.reflect.Constructor
 
 inline fun <reified VM : ViewModel> BaseFragment.screenViewModel() = viewModels<VM> {
@@ -17,10 +18,10 @@ inline fun <reified VM : ViewModel> BaseFragment.screenViewModel() = viewModels<
 
 
 
-    val activityScopeViewModel = (requireActivity() as FragmentsHolder).getActivityScopeViewModel()
+    val activityScopeViewModel = (requireActivity() as ActivityDelegateHolder).delegate.getActivityScopeViewModel()
 
 
-    val dependencies = listOf(screen, activityScopeViewModel) + application.singletonScopeDependencies
+    val dependencies = listOf(screen) +  activityScopeViewModel.sideEffectMediators + application.singletonScopeDependencies
 
 
     ViewModelFactory(dependencies, this)

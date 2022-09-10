@@ -1,24 +1,37 @@
 package com.example.basedframemvvm.views.currentcolor
 
+import android.Manifest.*
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorListener
 import com.example.basedframemvvm.model.colors.ColorsRepository
 import com.example.basedframemvvm.model.colors.NamedColor
-import core.navigator.Navigator
-import core.uiactions.UiActions
+import core.sideeffects.navigator.Navigator
 import core.views.BaseViewModel
 import com.example.basedframemvvm.views.changecolor.ChangeColorFragment
 import core.model.PendingResult
 import core.model.SuccessResult
 import core.model.takeSuccess
 import core.model.tasks.dispatchers.Dispatcher
+import core.model.tasks.factories.TasksFactory
+import core.sideeffects.dialogs.Dialogs
+import core.sideeffects.dialogs.plugin.DialogConfig
+import core.sideeffects.intents.Intents
+import core.sideeffects.permissions.Permissions
+import core.sideeffects.permissions.plugin.PermissionStatus
+import core.sideeffects.resources.Resources
+import core.sideeffects.toasts.Toasts
 import core.views.LiveResult
 import core.views.MutableLiveResult
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
-    private val uiActions: UiActions,
+    private val toasts: Toasts,
+    private val resources: Resources,
+    private val permissions: Permissions,
+    private val intents: Intents,
+    private val dialogs: Dialogs,
     private val colorsRepository: ColorsRepository,
+    private val tasksFactory: TasksFactory,
     dispatcher: Dispatcher
 ) : BaseViewModel(dispatcher) {
 
@@ -47,8 +60,8 @@ class CurrentColorViewModel(
     override fun onResult(result: Any) {
         super.onResult(result)
         if (result is NamedColor) {
-            val message = uiActions.getString(R.string.changed_color, result.name)
-            uiActions.toast(message)
+            val message = resources.getString(R.string.changed_color, result.name)
+            toasts.toast(message)
         }
     }
 
@@ -63,6 +76,46 @@ class CurrentColorViewModel(
     fun tryAgain(){
         load()
     }
+
+    /**
+     * Example of using side-effect plugins
+     */
+    fun requestPermission() = tasksFactory.async<Unit> {
+        val permission = permission.ACCESS_FINE_LOCATION
+        val hasPermission = permissions.hasPermissions(permission)
+        if (hasPermission) {
+            dialogs.show(createPermissionAlreadyGrantedDialog()).await()
+        } else {
+            when (permissions.requestPermission(permission).await()) {
+                PermissionStatus.GRANTED -> {
+                    toasts.toast(resources.getString(R.string.permissions_grated))
+                }
+                PermissionStatus.DENIED -> {
+                    toasts.toast(resources.getString(R.string.permissions_denied))
+                }
+                PermissionStatus.DENIED_FOREVER -> {
+                    if (dialogs.show(createAskForLaunchingAppSettingsDialog()).await()) {
+                        intents.openAppSettings()
+                    }
+                }
+            }
+        }
+    }.safeEnqueue()
+
+
+
+    private fun createPermissionAlreadyGrantedDialog() = DialogConfig(
+        title = resources.getString(R.string.dialog_permissions_title),
+        message = resources.getString(R.string.permissions_already_granted),
+        positiveButton = resources.getString(R.string.action_ok)
+    )
+
+    private fun createAskForLaunchingAppSettingsDialog() = DialogConfig(
+        title = resources.getString(R.string.dialog_permissions_title),
+        message = resources.getString(R.string.open_app_settings_message),
+        positiveButton = resources.getString(R.string.action_open),
+        negativeButton = resources.getString(R.string.action_cancel)
+    )
 
     private fun load(){
         colorsRepository.getCurrentColor().into(_currentColor)

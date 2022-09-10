@@ -8,13 +8,14 @@ import core.model.ErrorResult
 import core.model.PendingResult
 import core.model.Result
 import core.model.SuccessResult
+import core.views.activity.ActivityDelegateHolder
 
 abstract class BaseFragment : Fragment() {
 
     abstract val viewModel: BaseViewModel
 
     fun notifyScreenUpdates(){
-        (requireActivity() as FragmentsHolder).notifyScreenUpdates()
+        (requireActivity() as ActivityDelegateHolder).delegate.notifyScreenUpdates()
     }
 
     fun <T> renderResult(root: ViewGroup, result: Result<T>,
