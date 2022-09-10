@@ -15,6 +15,11 @@ import core.model.tasks.dispatchers.Dispatcher
 import core.model.tasks.factories.TasksFactory
 import core.sideeffects.dialogs.Dialogs
 import core.sideeffects.dialogs.plugin.DialogConfig
+import core.sideeffects.intents.Intents
+import core.sideeffects.permissions.Permissions
+import core.sideeffects.permissions.plugin.PermissionStatus
+import core.sideeffects.resources.Resources
+import core.sideeffects.toasts.Toasts
 import core.views.LiveResult
 import core.views.MutableLiveResult
 
@@ -55,8 +60,8 @@ class CurrentColorViewModel(
     override fun onResult(result: Any) {
         super.onResult(result)
         if (result is NamedColor) {
-            val message = uiActions.getString(R.string.changed_color, result.name)
-            uiActions.toast(message)
+            val message = resources.getString(R.string.changed_color, result.name)
+            toasts.toast(message)
         }
     }
 
@@ -71,39 +76,45 @@ class CurrentColorViewModel(
     fun tryAgain(){
         load()
     }
-    
-    fun requestPermission() = tasksFactory.async<Unit>{
+
+    /**
+     * Example of using side-effect plugins
+     */
+    fun requestPermission() = tasksFactory.async<Unit> {
         val permission = permission.ACCESS_FINE_LOCATION
         val hasPermission = permissions.hasPermissions(permission)
-        if (hasPermission){
+        if (hasPermission) {
             dialogs.show(createPermissionAlreadyGrantedDialog()).await()
-        }
-        else{
-            when(permissions.requestPermission(permission).await()){
-                
+        } else {
+            when (permissions.requestPermission(permission).await()) {
                 PermissionStatus.GRANTED -> {
-                    toasts.toast(uiActions.getString(R.string.permissions_granted_message))
+                    toasts.toast(resources.getString(R.string.permissions_grated))
                 }
                 PermissionStatus.DENIED -> {
-                    toasts.toast(uiActions.getString(R.string.permissions_denied_message))
+                    toasts.toast(resources.getString(R.string.permissions_denied))
                 }
                 PermissionStatus.DENIED_FOREVER -> {
-                    if (dialogs.show(createAskForLaunchingAppSettingsDialog()).await()){
+                    if (dialogs.show(createAskForLaunchingAppSettingsDialog()).await()) {
                         intents.openAppSettings()
                     }
                 }
             }
         }
     }.safeEnqueue()
-    
+
+
+
     private fun createPermissionAlreadyGrantedDialog() = DialogConfig(
-        title = uiActions.getString(R.string.title_permission),
-        message = uiActions.getString(R.string.message_permission),
-        positiveButton = uiActions.getString(R.string.positive_button)
+        title = resources.getString(R.string.dialog_permissions_title),
+        message = resources.getString(R.string.permissions_already_granted),
+        positiveButton = resources.getString(R.string.action_ok)
     )
 
     private fun createAskForLaunchingAppSettingsDialog() = DialogConfig(
-        
+        title = resources.getString(R.string.dialog_permissions_title),
+        message = resources.getString(R.string.open_app_settings_message),
+        positiveButton = resources.getString(R.string.action_open),
+        negativeButton = resources.getString(R.string.action_cancel)
     )
 
     private fun load(){

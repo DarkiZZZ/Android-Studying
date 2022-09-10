@@ -5,7 +5,6 @@ import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorsRepository
 import com.example.basedframemvvm.model.colors.NamedColor
 import core.sideeffects.navigator.Navigator
-import core.uiactions.UiActions
 import core.views.BaseViewModel
 import com.example.basedframemvvm.views.changecolor.ChangeColorFragment.*
 import core.model.ErrorResult
@@ -14,6 +13,8 @@ import core.model.PendingResult
 import core.model.SuccessResult
 import core.model.tasks.dispatchers.Dispatcher
 import core.model.tasks.factories.TasksFactory
+import core.sideeffects.resources.Resources
+import core.sideeffects.toasts.Toasts
 import core.views.LiveResult
 import core.views.MediatorLiveResult
 import core.views.MutableLiveResult
@@ -22,7 +23,8 @@ import java.lang.IllegalStateException
 class ChangeColorViewModel(
     screen: Screen,
     private val navigator: Navigator,
-    private val uiActions: UiActions,
+    private val toasts: Toasts,
+    private val resources: Resources,
     private val colorsRepository: ColorsRepository,
     private val tasksFactory: TasksFactory,
     savedStateHandle: SavedStateHandle,
@@ -42,10 +44,10 @@ class ChangeColorViewModel(
     val screenTitle: LiveData<String> = Transformations.map(viewState){ result ->
         if (result is SuccessResult){
             val currentColor = result.data.colorsList.first { it.selected }
-            uiActions.getString(R.string.change_color_screen_title, currentColor.namedColor.name)
+            resources.getString(R.string.change_color_screen_title, currentColor.namedColor.name)
         }
         else{
-            uiActions.getString(R.string.change_color_screen_title_default)
+            resources.getString(R.string.change_color_screen_title_default)
         }
     }
 
@@ -112,7 +114,7 @@ class ChangeColorViewModel(
         _saveInProgress.value = false
         when(result){
             is SuccessResult -> navigator.goBack(result.data)
-            is ErrorResult -> uiActions.toast(uiActions.getString(R.string.error_message_2))
+            is ErrorResult -> toasts.toast(resources.getString(R.string.error_message_2))
         }
     }
 
