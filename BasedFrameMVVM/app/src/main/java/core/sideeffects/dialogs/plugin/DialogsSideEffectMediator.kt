@@ -11,7 +11,7 @@ class DialogsSideEffectMediator : SideEffectMediator<DialogsSideEffectImpl>(), D
 
     var retainedState = RetainedState()
 
-    override fun show(dialogConfig: DialogConfig): Task<Boolean> = CallbackTask.create { emitter ->
+    override suspend fun show(dialogConfig: DialogConfig): Boolean = CallbackTask.create { emitter ->
         if (retainedState.record != null) {
             // for now allowing only 1 active dialog at a time
             emitter.emit(ErrorResult(IllegalStateException("Can't launch more than 1 dialog at a time")))
@@ -34,7 +34,7 @@ class DialogsSideEffectMediator : SideEffectMediator<DialogsSideEffectImpl>(), D
         }
 
         retainedState.record = record
-    }
+    }.suspend()
 
     class DialogRecord(
         val emitter: Emitter<Boolean>,

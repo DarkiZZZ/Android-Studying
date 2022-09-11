@@ -14,6 +14,6 @@ interface Permissions {
      * Request the specified permission.
      * See [PermissionStatus]
      */
-    fun requestPermission(permission: String): Task<PermissionStatus>
+    suspend fun requestPermission(permission: String): PermissionStatus
 
 }

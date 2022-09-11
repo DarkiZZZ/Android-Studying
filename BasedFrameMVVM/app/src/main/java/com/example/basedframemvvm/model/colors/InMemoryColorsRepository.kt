@@ -1,11 +1,8 @@
 package com.example.basedframemvvm.model.colors
 
 import android.graphics.Color
-import core.model.tasks.Task
 import core.model.tasks.ThreadUtils
 import core.model.tasks.factories.TasksFactory
-
-//TODO --> Normal implementation
 
 class InMemoryColorsRepository(
     private val tasksFactory: TasksFactory,
@@ -17,29 +14,28 @@ class InMemoryColorsRepository(
 
     private val listeners = mutableSetOf<ColorListener>()
 
-    override fun getCurrentColor(): Task<NamedColor> = tasksFactory.async {
+    override suspend fun getCurrentColor(): NamedColor = tasksFactory.async {
         threadUtils.sleep(1000)
         return@async currentColor
-    }
+    }.suspend()
 
-    override fun setCurrentColor(color: NamedColor): Task<Unit> = tasksFactory.async {
+    override suspend fun setCurrentColor(color: NamedColor): Unit = tasksFactory.async {
         threadUtils.sleep(1000)
         if (currentColor != color){
             currentColor = color
             listeners.forEach { it(color) }
         }
+    }.suspend()
 
-    }
-
-    override fun getAvailableColors(): Task<List<NamedColor>> = tasksFactory.async {
+    override suspend fun getAvailableColors(): List<NamedColor> = tasksFactory.async {
         threadUtils.sleep(1000)
         return@async AVAILABLE_COLORS
-    }
+    }.suspend()
 
-    override fun getById(id: Long): Task<NamedColor> = tasksFactory.async {
+    override suspend fun getById(id: Long): NamedColor = tasksFactory.async {
         threadUtils.sleep(1000)
         return@async AVAILABLE_COLORS.first {it.id == id}
-    }
+    }.suspend()
 
     override fun addListener(listener: ColorListener) {
         listeners +=listener
