@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import core.model.ErrorResult
 import core.model.Result
 import core.model.SuccessResult
-import core.model.tasks.Task
 import kotlinx.coroutines.launch
 
 typealias LiveResult<T> = LiveData<Result<T>>
@@ -14,7 +13,6 @@ typealias MediatorLiveResult<T> = MediatorLiveData<Result<T>>
 
 open class BaseViewModel : ViewModel() {
 
-    private val tasks = mutableSetOf<Task<*>>()
 
     override fun onCleared() {
         super.onCleared()
@@ -42,8 +40,7 @@ open class BaseViewModel : ViewModel() {
     }
 
     private fun clearTasks(){
-        tasks.forEach { it.cancel() }
-        tasks.clear()
+        //todo
     }
 
 

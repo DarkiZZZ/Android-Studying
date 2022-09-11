@@ -1,7 +1,6 @@
 package com.example.basedframemvvm.model.colors
 
 import core.model.Repository
-import core.model.tasks.Task
 
 typealias ColorListener = (NamedColor) -> Unit
 
@@ -10,7 +9,7 @@ interface ColorsRepository: Repository {
 
     suspend fun getCurrentColor(): NamedColor // Get current color/
 
-    suspend fun setCurrentColor(color: NamedColor): Unit // Set current color as current/
+    suspend fun setCurrentColor(color: NamedColor) // Set current color as current/
 
     suspend fun getAvailableColors(): List<NamedColor> // Get list of all available color that may be chosen by user.
 
