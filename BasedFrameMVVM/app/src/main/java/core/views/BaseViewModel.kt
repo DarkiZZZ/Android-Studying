@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import core.model.ErrorResult
 import core.model.Result
 import core.model.SuccessResult
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 typealias LiveResult<T> = LiveData<Result<T>>
 typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
@@ -13,10 +13,12 @@ typealias MediatorLiveResult<T> = MediatorLiveData<Result<T>>
 
 open class BaseViewModel : ViewModel() {
 
+    private val coroutineContext = SupervisorJob() + Dispatchers.Main.immediate
+    protected val viewModelScope: CoroutineScope = CoroutineScope(coroutineContext)
 
     override fun onCleared() {
         super.onCleared()
-        clearTasks()
+        clearViewModelScope()
     }
 
     open fun onResult(result: Any){
@@ -24,7 +26,7 @@ open class BaseViewModel : ViewModel() {
     }
 
     open fun onBackPressed(): Boolean{
-        clearTasks()
+        clearViewModelScope()
         return false
     }
 
@@ -39,8 +41,8 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    private fun clearTasks(){
-        //todo
+    private fun clearViewModelScope(){
+        viewModelScope.cancel()
     }
 
 

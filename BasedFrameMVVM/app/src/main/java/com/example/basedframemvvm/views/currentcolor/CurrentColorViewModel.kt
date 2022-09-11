@@ -1,7 +1,6 @@
 package com.example.basedframemvvm.views.currentcolor
 
 import android.Manifest.*
-import androidx.lifecycle.viewModelScope
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorListener
 import com.example.basedframemvvm.model.colors.ColorsRepository
