@@ -1,6 +1,6 @@
 package core.utils
 
-import core.model.tasks.dispatchers.Dispatcher
+import core.model.dispatchers.Dispatcher
 
 typealias ResourceAction<T> = (T) -> Unit
 

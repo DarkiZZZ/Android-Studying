@@ -1,7 +1,7 @@
 package core.sideeffects
 
-import core.model.tasks.dispatchers.Dispatcher
-import core.model.tasks.dispatchers.MainThreadDispatcher
+import core.model.dispatchers.Dispatcher
+import core.model.dispatchers.MainThreadDispatcher
 import core.utils.ResourceActions
 
 open class SideEffectMediator<Implementation>(

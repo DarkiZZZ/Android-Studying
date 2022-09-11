@@ -2,7 +2,7 @@ package core.sideeffects.toasts.plugin
 
 import android.content.Context
 import android.widget.Toast
-import core.model.tasks.dispatchers.MainThreadDispatcher
+import core.model.dispatchers.MainThreadDispatcher
 import core.sideeffects.SideEffectMediator
 import core.sideeffects.toasts.Toasts
 
