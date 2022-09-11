@@ -1,4 +1,4 @@
-package core.model.tasks.dispatchers
+package core.model.dispatchers
 
 import android.os.Handler
 import android.os.Looper

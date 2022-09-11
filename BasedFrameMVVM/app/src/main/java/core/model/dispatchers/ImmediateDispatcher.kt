@@ -1,4 +1,4 @@
-package core.model.tasks.dispatchers
+package core.model.dispatchers
 
 class ImmediateDispatcher: Dispatcher {
 

@@ -1,6 +1,5 @@
-package core.model.tasks.callback
+package core.model
 
-import core.model.FinalResult
 
 typealias CancelListener = () -> Unit
 
@@ -13,10 +12,7 @@ interface Emitter<T> {
      */
     fun emit(finalResult: FinalResult<T>)
 
-    /**
-     * Assign optional cancel listener. This listener is executed when the associated task
-     * has been cancelled by [Task.cancel] call.
-     */
+
     fun setCancelListener(cancelListener: CancelListener)
 
     companion object {
