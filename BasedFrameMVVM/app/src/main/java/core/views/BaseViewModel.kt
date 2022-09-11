@@ -1,23 +1,18 @@
 package core.views
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import core.model.PendingResult
+import androidx.lifecycle.*
+import core.model.ErrorResult
 import core.model.Result
+import core.model.SuccessResult
 import core.model.tasks.Task
-import core.model.tasks.TaskListener
-import core.model.tasks.dispatchers.Dispatcher
+import kotlinx.coroutines.launch
 
 typealias LiveResult<T> = LiveData<Result<T>>
 typealias MutableLiveResult<T> = MutableLiveData<Result<T>>
 typealias MediatorLiveResult<T> = MediatorLiveData<Result<T>>
 
-open class BaseViewModel(
-    private val dispatcher: Dispatcher
-) : ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     private val tasks = mutableSetOf<Task<*>>()
 
@@ -35,18 +30,14 @@ open class BaseViewModel(
         return false
     }
 
-    fun <T> Task<T>.safeEnqueue(listener: TaskListener<T>? = null){
-        tasks.add(this)
-        this.enqueue(dispatcher) {
-            tasks.remove(this)
-            listener?.invoke(it)
-        }
-    }
-
-    fun <T> Task<T>.into(liveResult: MutableLiveResult<T>){
-        liveResult.value = PendingResult()
-        this.safeEnqueue{
-            liveResult.value = it
+    fun <T> into(liveResult: MutableLiveResult<T>, block: suspend () -> T){
+        viewModelScope.launch {
+            try {
+                liveResult.postValue(SuccessResult(block()))
+            }
+            catch (e: Exception){
+                liveResult.postValue(ErrorResult(e))
+            }
         }
     }
 

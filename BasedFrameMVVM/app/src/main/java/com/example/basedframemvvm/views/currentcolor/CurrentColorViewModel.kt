@@ -1,6 +1,7 @@
 package com.example.basedframemvvm.views.currentcolor
 
 import android.Manifest.*
+import androidx.lifecycle.viewModelScope
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.model.colors.ColorListener
 import com.example.basedframemvvm.model.colors.ColorsRepository
@@ -11,8 +12,6 @@ import com.example.basedframemvvm.views.changecolor.ChangeColorFragment
 import core.model.PendingResult
 import core.model.SuccessResult
 import core.model.takeSuccess
-import core.model.tasks.dispatchers.Dispatcher
-import core.model.tasks.factories.TasksFactory
 import core.sideeffects.dialogs.Dialogs
 import core.sideeffects.dialogs.plugin.DialogConfig
 import core.sideeffects.intents.Intents
@@ -22,6 +21,7 @@ import core.sideeffects.resources.Resources
 import core.sideeffects.toasts.Toasts
 import core.views.LiveResult
 import core.views.MutableLiveResult
+import kotlinx.coroutines.launch
 
 class CurrentColorViewModel(
     private val navigator: Navigator,
@@ -30,10 +30,8 @@ class CurrentColorViewModel(
     private val permissions: Permissions,
     private val intents: Intents,
     private val dialogs: Dialogs,
-    private val colorsRepository: ColorsRepository,
-    private val tasksFactory: TasksFactory,
-    dispatcher: Dispatcher
-) : BaseViewModel(dispatcher) {
+    private val colorsRepository: ColorsRepository
+) : BaseViewModel() {
 
     private val _currentColor = MutableLiveResult<NamedColor>(PendingResult())
     val currentColor: LiveResult<NamedColor> = _currentColor
@@ -80,13 +78,13 @@ class CurrentColorViewModel(
     /**
      * Example of using side-effect plugins
      */
-    fun requestPermission() = tasksFactory.async<Unit> {
+    fun requestPermission() = viewModelScope.launch {
         val permission = permission.ACCESS_FINE_LOCATION
         val hasPermission = permissions.hasPermissions(permission)
         if (hasPermission) {
-            dialogs.show(createPermissionAlreadyGrantedDialog()).await()
+            dialogs.show(createPermissionAlreadyGrantedDialog())
         } else {
-            when (permissions.requestPermission(permission).await()) {
+            when (permissions.requestPermission(permission)) {
                 PermissionStatus.GRANTED -> {
                     toasts.toast(resources.getString(R.string.permissions_grated))
                 }
@@ -94,13 +92,13 @@ class CurrentColorViewModel(
                     toasts.toast(resources.getString(R.string.permissions_denied))
                 }
                 PermissionStatus.DENIED_FOREVER -> {
-                    if (dialogs.show(createAskForLaunchingAppSettingsDialog()).await()) {
+                    if (dialogs.show(createAskForLaunchingAppSettingsDialog())) {
                         intents.openAppSettings()
                     }
                 }
             }
         }
-    }.safeEnqueue()
+    }
 
 
 
@@ -117,8 +115,8 @@ class CurrentColorViewModel(
         negativeButton = resources.getString(R.string.action_cancel)
     )
 
-    private fun load(){
-        colorsRepository.getCurrentColor().into(_currentColor)
+    private fun load() = into(_currentColor){
+        return@into colorsRepository.getCurrentColor()
     }
 
 }
