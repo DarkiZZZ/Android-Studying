@@ -1,6 +1,5 @@
 package core.sideeffects.permissions
 
-import core.model.tasks.Task
 import core.sideeffects.permissions.plugin.PermissionStatus
 
 interface Permissions {
