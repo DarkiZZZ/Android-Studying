@@ -1,21 +1,25 @@
 package com.example.basedframemvvm.model.colors
 
 import android.graphics.Color
+import core.model.coroutines.IoDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
-class InMemoryColorsRepository: ColorsRepository {
+class InMemoryColorsRepository(
+    private val ioDispatcher: IoDispatcher
+): ColorsRepository {
 
 
     private var currentColor: NamedColor = AVAILABLE_COLORS[0]
 
     private val listeners = mutableSetOf<ColorListener>()
 
-    override suspend fun getCurrentColor(): NamedColor {
+    override suspend fun getCurrentColor(): NamedColor = withContext(ioDispatcher.value) {
         delay(1000)
-        return currentColor
+        return@withContext currentColor
     }
 
-    override suspend fun setCurrentColor(color: NamedColor) {
+    override suspend fun setCurrentColor(color: NamedColor) = withContext(ioDispatcher.value) {
         delay(1000)
         if (currentColor != color){
             currentColor = color
@@ -23,14 +27,14 @@ class InMemoryColorsRepository: ColorsRepository {
         }
     }
 
-    override suspend fun getAvailableColors(): List<NamedColor> {
+    override suspend fun getAvailableColors(): List<NamedColor> = withContext(ioDispatcher.value){
         delay(1000)
-        return AVAILABLE_COLORS
+        return@withContext AVAILABLE_COLORS
     }
 
-    override suspend fun getById(id: Long): NamedColor {
+    override suspend fun getById(id: Long): NamedColor  = withContext(ioDispatcher.value){
         delay(1000)
-        return AVAILABLE_COLORS.first {it.id == id}
+        return@withContext AVAILABLE_COLORS.first {it.id == id}
     }
 
     override fun addListener(listener: ColorListener) {
