@@ -20,6 +20,8 @@ import core.sideeffects.resources.Resources
 import core.sideeffects.toasts.Toasts
 import core.views.LiveResult
 import core.views.MutableLiveResult
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class CurrentColorViewModel(
@@ -35,21 +37,17 @@ class CurrentColorViewModel(
     private val _currentColor = MutableLiveResult<NamedColor>(PendingResult())
     val currentColor: LiveResult<NamedColor> = _currentColor
 
-    private val colorListener: ColorListener = {
-        _currentColor.postValue(SuccessResult(it)) // <-- hardcoding to get initial Success result every launch(with Error on 44 line -
-                                                    // on the second time
-    }
+
 
     // --- example of listening results via model layer
 
     init {
-        colorsRepository.addListener(colorListener)
-        load()
-    }
+        viewModelScope.launch { colorsRepository.listenToCurrentColor().collect{
+            _currentColor.postValue(SuccessResult(it))
+            }
+        }
 
-    override fun onCleared() {
-        super.onCleared()
-        colorsRepository.removeListener(colorListener)
+        load()
     }
 
     // --- example of listening results directly from the screen
