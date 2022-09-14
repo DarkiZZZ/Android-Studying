@@ -2,8 +2,10 @@ package com.example.basedframemvvm.model.colors
 
 import android.graphics.Color
 import core.model.coroutines.IoDispatcher
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.*
 
 class InMemoryColorsRepository(
     private val ioDispatcher: IoDispatcher
@@ -14,18 +16,37 @@ class InMemoryColorsRepository(
 
     private val listeners = mutableSetOf<ColorListener>()
 
+    override fun listenToCurrentColor(): Flow<NamedColor> = callbackFlow {
+        val listener: ColorListener = {
+            trySend(it)
+        }
+        listeners.add(listener)
+
+        awaitClose {
+            listeners.remove(listener)
+        }
+    }.buffer(Channel.CONFLATED)
+
     override suspend fun getCurrentColor(): NamedColor = withContext(ioDispatcher.value) {
         delay(1000)
         return@withContext currentColor
     }
 
-    override suspend fun setCurrentColor(color: NamedColor) = withContext(ioDispatcher.value) {
-        delay(1000)
+    override suspend fun setCurrentColor(color: NamedColor): Flow<Int> = flow {
         if (currentColor != color){
+            var progress = 0
+            while (progress < 100){
+                progress += 5
+                delay(100)
+                emit(progress)
+            }
             currentColor = color
             listeners.forEach { it(color) }
         }
-    }
+        else{
+            emit(100)
+        }
+    }.flowOn(ioDispatcher.value)
 
     override suspend fun getAvailableColors(): List<NamedColor> = withContext(ioDispatcher.value){
         delay(1000)
@@ -35,14 +56,6 @@ class InMemoryColorsRepository(
     override suspend fun getById(id: Long): NamedColor  = withContext(ioDispatcher.value){
         delay(1000)
         return@withContext AVAILABLE_COLORS.first {it.id == id}
-    }
-
-    override fun addListener(listener: ColorListener) {
-        listeners +=listener
-    }
-
-    override fun removeListener(listener: ColorListener) {
-        listeners -= listener
     }
 
     companion object{
