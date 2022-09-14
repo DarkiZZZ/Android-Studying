@@ -39,5 +39,5 @@
     <string name="permissions_grated">Congratulations! Permission has been granted</string>
     <string name="permissions_denied">Oops, permissions denied!</string>
 
-    <string name="percentage_value">%1$d$$</string>
+    <string name="percentage_value">%1$d%%</string>
 </resources>
