@@ -36,8 +36,8 @@ class InMemoryColorsRepository(
         if (currentColor != color){
             var progress = 0
             while (progress < 100){
-                progress += 5
-                delay(100)
+                progress += 1
+                delay(25)
                 emit(progress)
             }
             currentColor = color
@@ -54,7 +54,7 @@ class InMemoryColorsRepository(
     }
 
     override suspend fun getById(id: Long): NamedColor  = withContext(ioDispatcher.value){
-        delay(1000)
+        delay(200)
         return@withContext AVAILABLE_COLORS.first {it.id == id}
     }
 
