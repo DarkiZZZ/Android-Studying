@@ -3,8 +3,7 @@ package com.example.basedframemvvm.model.colors
 import android.graphics.Color
 import core.model.coroutines.IoDispatcher
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
 class InMemoryColorsRepository(
@@ -14,18 +13,13 @@ class InMemoryColorsRepository(
 
     private var currentColor: NamedColor = AVAILABLE_COLORS[0]
 
-    private val listeners = mutableSetOf<ColorListener>()
+    private val currentColorFlow = MutableSharedFlow<NamedColor>(
+        0,
+        1,
+        BufferOverflow.DROP_OLDEST
+    )
 
-    override fun listenToCurrentColor(): Flow<NamedColor> = callbackFlow {
-        val listener: ColorListener = {
-            trySend(it)
-        }
-        listeners.add(listener)
-
-        awaitClose {
-            listeners.remove(listener)
-        }
-    }.buffer(Channel.CONFLATED)
+    override fun listenToCurrentColor(): Flow<NamedColor> = currentColorFlow
 
     override suspend fun getCurrentColor(): NamedColor = withContext(ioDispatcher.value) {
         delay(1000)
@@ -41,7 +35,7 @@ class InMemoryColorsRepository(
                 emit(progress)
             }
             currentColor = color
-            listeners.forEach { it(color) }
+            currentColorFlow.emit(color)
         }
         else{
             emit(100)
