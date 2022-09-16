@@ -8,7 +8,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import core.ARG_SCREEN
-import core.BaseApplication
 import core.views.activity.ActivityDelegateHolder
 import java.lang.reflect.Constructor
 

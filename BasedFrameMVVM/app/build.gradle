@@ -33,6 +33,7 @@ android {
     viewBinding{
         enabled = true
     }
+    namespace 'com.example.basedframemvvm'
 }
 
 dependencies {
