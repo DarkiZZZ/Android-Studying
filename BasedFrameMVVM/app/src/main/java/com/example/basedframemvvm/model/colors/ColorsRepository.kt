@@ -1,19 +1,20 @@
 package com.example.basedframemvvm.model.colors
 
 import core.model.Repository
+import kotlinx.coroutines.flow.Flow
 
 typealias ColorListener = (NamedColor) -> Unit
 
 
 interface ColorsRepository: Repository {
 
-    var currentColor: NamedColor
+    suspend fun getCurrentColor(): NamedColor // Get current color/
 
-    fun getAvailableColors(): List<NamedColor>
+    suspend fun setCurrentColor(color: NamedColor): Flow<Int> // Set current color as current/
 
-    fun getById(id: Long) : NamedColor
+    suspend fun getAvailableColors(): List<NamedColor> // Get list of all available color that may be chosen by user.
 
-    fun addListener(listener: ColorListener)
+    suspend fun getById(id: Long) : NamedColor // Get the color content by its ID
 
-    fun removeListener(listener: ColorListener)
+    fun listenToCurrentColor(): Flow<NamedColor>
 }

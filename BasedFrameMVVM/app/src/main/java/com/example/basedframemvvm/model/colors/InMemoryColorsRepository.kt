@@ -1,33 +1,55 @@
 package com.example.basedframemvvm.model.colors
 
 import android.graphics.Color
+import core.model.coroutines.IoDispatcher
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 
-class InMemoryColorsRepository: ColorsRepository {
+class InMemoryColorsRepository(
+    private val ioDispatcher: IoDispatcher
+): ColorsRepository {
 
 
-    override var currentColor: NamedColor = AVAILABLE_COLORS[0]
-        set(value) {
-            if(field != value){
-                field = value
-                listeners.forEach { it(value) }
+    private var currentColor: NamedColor = AVAILABLE_COLORS[0]
+
+    private val currentColorFlow = MutableSharedFlow<NamedColor>(
+        0,
+        1,
+        BufferOverflow.DROP_OLDEST
+    )
+
+    override fun listenToCurrentColor(): Flow<NamedColor> = currentColorFlow
+
+    override suspend fun getCurrentColor(): NamedColor = withContext(ioDispatcher.value) {
+        delay(1000)
+        return@withContext currentColor
+    }
+
+    override suspend fun setCurrentColor(color: NamedColor): Flow<Int> = flow {
+        if (currentColor != color){
+            var progress = 0
+            while (progress < 100){
+                progress += 1
+                delay(25)
+                emit(progress)
             }
+            currentColor = color
+            currentColorFlow.emit(color)
         }
+        else{
+            emit(100)
+        }
+    }.flowOn(ioDispatcher.value)
 
-    private val listeners = mutableSetOf<ColorListener>()
-
-    override fun getAvailableColors(): List<NamedColor> = AVAILABLE_COLORS
-
-    override fun getById(id: Long): NamedColor {
-        return AVAILABLE_COLORS.first {it.id == id}
+    override suspend fun getAvailableColors(): List<NamedColor> = withContext(ioDispatcher.value){
+        delay(1000)
+        return@withContext AVAILABLE_COLORS
     }
 
-    override fun addListener(listener: ColorListener) {
-        listeners +=listener
-        listener(currentColor)
-    }
-
-    override fun removeListener(listener: ColorListener) {
-        listeners -= listener
+    override suspend fun getById(id: Long): NamedColor  = withContext(ioDispatcher.value){
+        delay(200)
+        return@withContext AVAILABLE_COLORS.first {it.id == id}
     }
 
     companion object{

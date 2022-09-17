@@ -1,25 +1,28 @@
-package core.navigator
+package core.sideeffects.navigator.plugin
 
 import android.os.Bundle
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import core.ARG_SCREEN
+import core.sideeffects.SideEffectImplementation
+import core.sideeffects.navigator.Navigator
 import core.utils.Event
 import core.views.BaseFragment
 import core.views.BaseScreen
 import core.views.HasScreenTitle
 
 class StackFragmentNavigator(
-    private val activity: AppCompatActivity,
     @IdRes private val containerId: Int,
     private val defaultTitle: String,
     private val animations: Animations,
     private val initialScreenCreator: () -> BaseScreen
-): Navigator {
+): SideEffectImplementation(), Navigator, LifecycleObserver {
 
     override fun launch(screen: BaseScreen){
         launchFragment(screen)
@@ -29,32 +32,43 @@ class StackFragmentNavigator(
         if (result != null) {
             this.result = Event(result)
         }
-        activity.onBackPressed()
+        requireActivity().onBackPressed()
     }
 
 
     private var result : Event<Any>? = null
 
-    fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?){
+        requireActivity().lifecycle.addObserver(this)
         if (savedInstanceState == null){
             launchFragment(
                 screen = initialScreenCreator(),
                 addToBackStack = false
             )
         }
-        activity.supportFragmentManager.
+        requireActivity().supportFragmentManager.
             registerFragmentLifecycleCallbacks(fragmentCallbacks, false)
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy(){
-        activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentCallbacks)
+        requireActivity().supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentCallbacks)
+    }
+
+    override fun onBackPressed(): Boolean{
+        val fragment = getCurrentFragment()
+        return if (fragment is BaseFragment){
+            fragment.viewModel.onBackPressed()
+        } else{
+            false
+        }
     }
 
     fun launchFragment(screen: BaseScreen, addToBackStack: Boolean = true) {
         val fragment = screen.javaClass.enclosingClass.newInstance() as Fragment
         fragment.arguments = bundleOf(ARG_SCREEN to screen)
 
-        val transaction = activity.supportFragmentManager.beginTransaction()
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
         if (addToBackStack) transaction.addToBackStack(null)
         transaction
         .setCustomAnimations(
@@ -67,22 +81,31 @@ class StackFragmentNavigator(
             .commit()
     }
 
-    fun notifyScreenUpdates(){
-        val fragment = activity.supportFragmentManager.findFragmentById(containerId)
+    override fun onSupportNavigateUp(): Boolean {
+        requireActivity().onBackPressed()
+        return true
+    }
 
-        if (activity.supportFragmentManager.backStackEntryCount > 0){
-            activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    override fun onRequestUpdates(){
+        val fragment = getCurrentFragment()
+
+        if (requireActivity().supportFragmentManager.backStackEntryCount > 0){
+            requireActivity().supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         else{
-            activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            requireActivity().supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }
 
         if (fragment is HasScreenTitle && fragment.getScreenTitle() != null){
-            activity.supportActionBar?.title = fragment.getScreenTitle()
+            requireActivity().supportActionBar?.title = fragment.getScreenTitle()
         }
         else{
-            activity.supportActionBar?.title = defaultTitle
+            requireActivity().supportActionBar?.title = defaultTitle
         }
+    }
+
+    private fun getCurrentFragment(): Fragment?{
+        return requireActivity().supportFragmentManager.findFragmentById(containerId)
     }
 
     private fun publishResults(fragment: Fragment){
@@ -98,7 +121,7 @@ class StackFragmentNavigator(
             fragment: Fragment,
             savedInstanceState: Bundle?
         ) {
-            notifyScreenUpdates()
+            onRequestUpdates()
             publishResults(fragment)
         }
     }

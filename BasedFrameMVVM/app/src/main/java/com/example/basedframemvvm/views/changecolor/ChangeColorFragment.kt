@@ -8,11 +8,13 @@ import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.basedframemvvm.R
 import com.example.basedframemvvm.databinding.FragmentChangeColorBinding
+import com.example.basedframemvvm.views.collectFlow
+import com.example.basedframemvvm.views.onTryAgain
+import com.example.basedframemvvm.views.renderSimpleResult
 import core.views.HasScreenTitle
 import core.views.BaseFragment
 import core.views.BaseScreen
 import core.views.screenViewModel
-
 class ChangeColorFragment : BaseFragment(), HasScreenTitle {
 
     /**
@@ -39,12 +41,27 @@ class ChangeColorFragment : BaseFragment(), HasScreenTitle {
         binding.saveButton.setOnClickListener { viewModel.onSavePressed() }
         binding.cancelButton.setOnClickListener { viewModel.onCancelPressed() }
 
-        viewModel.colorsList.observe(viewLifecycleOwner) {
-            adapter.items = it
+        collectFlow(viewModel.viewState){ result ->
+            renderSimpleResult(binding.root, result){ viewState ->
+                adapter.items = viewState.colorsList
+                binding.saveButton.visibility = if (viewState.showSaveButton) View.VISIBLE else View.INVISIBLE
+
+                binding.cancelButton.visibility = if (viewState.showCancelButton) View.VISIBLE else View.INVISIBLE
+
+                binding.saveProgressGroup.visibility = if (viewState.showSaveProgressBar) View.VISIBLE else View.GONE
+                binding.saveProgressBar.progress = viewState.saveProgressPercentage
+                binding.savingPercentageTextView.text = viewState.saveProgressPercentageMessage
+            }
+
         }
+
         viewModel.screenTitle.observe(viewLifecycleOwner) {
             // if screen title is changed -> need to notify activity about updates
             notifyScreenUpdates()
+        }
+
+        onTryAgain(binding.root){
+            viewModel.tryAgain()
         }
 
         return binding.root
@@ -52,10 +69,10 @@ class ChangeColorFragment : BaseFragment(), HasScreenTitle {
 
     private fun setupLayoutManager(binding: FragmentChangeColorBinding, adapter: ColorsAdapter) {
         // waiting for list width
-        binding.colorsRecyclerView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 binding.colorsRecyclerView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val width = binding.colorsRecyclerView.width
+                val width = binding.root.width
                 val itemWidth = resources.getDimensionPixelSize(R.dimen.item_width)
                 val columns = width / itemWidth
                 binding.colorsRecyclerView.adapter = adapter
