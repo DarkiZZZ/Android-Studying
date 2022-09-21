@@ -4,4 +4,13 @@
     <string name="request_camera_permission_text">Request CAMERA permission</string>
     <string name="request_permissions_two">Request RECORD_AUDIO permissions</string>
     <string name="request_permissions_three">Request COARSE_LOCATION, FINE_LOCATION  permissions</string>
+    <string name="permission_denied_forever_message">Permissions are denied forever</string>
+    <string name="permission_denied_message">Permission denied.</string>
+    <string name="fine_location_permission_granted_message">FINE LOCATION Permission GRANTED.</string>
+    <string name="coarse_location_permission_granted_message">COARSE LOCATION Permission GRANTED.</string>
+    <string name="permission_granted">Permission granted</string>
+
+    <string name="camera_permission_granted">Camera permission GRANTED</string>
+    <string name="audio_permission_granted">Audio permission GRANTED</string>
+    <string name="location_permission_granted">Location permission GRANTED</string>
 </resources>
