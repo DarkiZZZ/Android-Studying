@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PermissionsTest</string>
+    <string name="request_button_text">Request</string>
+    <string name="request_camera_permission_text">Request CAMERA permission</string>
+    <string name="request_permissions_two">Request RECORD_AUDIO permissions</string>
+    <string name="request_permissions_three">Request COARSE_LOCATION, FINE_LOCATION  permissions</string>
 </resources>
