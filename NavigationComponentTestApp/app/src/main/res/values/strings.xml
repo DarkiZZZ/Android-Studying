@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Navigation Component Test App</string>
+    <string name="green_box">Green box</string>
+    <string name="yellow_box">Yellow box</string>
+    <string name="this_is_a_box">This is a box</string>
+    <string name="go_back">Go back</string>
+    <string name="generate_number">Generate number</string>
+    <string name="open_secret">Open Secret</string>
+    <string name="this_is_a_secret_place">This is a secret place.</string>
+    <string name="close_the_whole_box">Close the whole box</string>
 </resources>
