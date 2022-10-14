@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
@@ -37,10 +38,12 @@ class RootFragment : Fragment(R.layout.fragment_root) {
 
         // launch BoxFragment with arguments and additional options
 
-        val direction = RootFragmentDirections.actionRootFragmentToBoxFragment(color, colorName)
+        //val direction = RootFragmentDirections.actionRootFragmentToBoxFragment(color, colorName)
 
         findNavController().navigate(
-            direction,
+            //direction,
+            R.id.action_rootFragment_to_boxFragment,
+            bundleOf(BoxFragment.ARG_COLOR to color, BoxFragment.ARG_COLOR_NAME to colorName),
             // optional additional options, example of simple animation:
             navOptions {
                 anim {
