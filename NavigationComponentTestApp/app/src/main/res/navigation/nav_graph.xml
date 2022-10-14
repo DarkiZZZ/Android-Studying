@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/rootFragment"
         android:name="com.example.navigationcomponenttestapp.RootFragment"
-        android:label="fragment_root"
+        android:label="Root"
         tools:layout="@layout/fragment_root" >
         <action
             android:id="@+id/action_rootFragment_to_boxFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/boxFragment"
         android:name="com.example.navigationcomponenttestapp.BoxFragment"
-        android:label="fragment_box"
+        android:label="{colorName} Box"
         tools:layout="@layout/fragment_box" >
         <action
             android:id="@+id/action_boxFragment_to_secretFragment"
@@ -34,6 +34,6 @@
     <fragment
         android:id="@+id/secretFragment"
         android:name="com.example.navigationcomponenttestapp.SecretFragment"
-        android:label="fragment_secret"
+        android:label="Secret"
         tools:layout="@layout/fragment_secret" />
 </navigation>
