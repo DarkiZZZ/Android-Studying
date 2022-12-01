@@ -1,4 +1,4 @@
-package com.example.sqliteapptest
+package ru.msokolov.roomapptest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
