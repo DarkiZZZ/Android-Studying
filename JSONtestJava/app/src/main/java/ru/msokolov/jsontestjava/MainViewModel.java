@@ -7,83 +7,65 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private static final String BASE_URL = "https://dog.ceo/api/breeds/image/random";
-    private static final String TAG = "MAIN_VIEW_MODEL";
-    private static final String KEY_MESSAGE = "message";
-    private static final String KEY_STATUS = "status";
+    private static final String TAG = "MainViewModel";
 
-    private MutableLiveData<DogImage> _dogImage = new MutableLiveData<>();
+    private MutableLiveData<DogImage> dogImage = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isError = new MutableLiveData<>();
+
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public MainViewModel(@NonNull Application application) {
         super(application);
     }
 
-
-    public LiveData<DogImage> getDogImage() {
-        return _dogImage;
+    public LiveData<Boolean> getIsLoading() {
+        return isLoading;
     }
 
-    public void loadImage(){
-        Disposable disposable = rxLoadImage()
+    public LiveData<Boolean> getIsError() {
+        return isError;
+    }
+
+    public LiveData<DogImage> getDogImage() {
+        return dogImage;
+    }
+
+    public void loadDogImage() {
+        Disposable disposable = loadDogImageRx()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(
+                        disposable1 -> {
+                    isError.setValue(false);
+                    isLoading.setValue(true);
+                })
+                .doAfterTerminate(
+                        () -> isLoading.setValue(false))
+                .doOnError(
+                        throwable -> isError.setValue(true))
                 .subscribe(
-                        (Consumer<DogImage>) image ->
-                                _dogImage.setValue(image),
+                        image -> dogImage.setValue(image),
+                        throwable -> Log.d(TAG, "Error: " + throwable.getMessage()));
 
-                        (Consumer<Throwable>) throwable ->
-                                Log.d(TAG, "Error is " + throwable.getMessage()));
         compositeDisposable.add(disposable);
     }
 
-    private Single<DogImage> rxLoadImage(){
-        return Single.fromCallable(() -> {
-            URL url = new URL(BASE_URL);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = urlConnection.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-            StringBuilder data = new StringBuilder();
-            String result;
-            do{
-                result = bufferedReader.readLine();
-                if (result != null){
-                    data.append(result);
-                }
-            }
-            while (result != null);
-
-            JSONObject jsonObject = new JSONObject(data.toString());
-            String message = jsonObject.getString(KEY_MESSAGE);
-            String status = jsonObject.getString(KEY_STATUS);
-            return new DogImage(
-                    message,
-                    status);
-        });
+    private Single<DogImage> loadDogImageRx() {
+        return ApiFactory.getApiService().loadDogImage();
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        compositeDisposable.clear();
+        compositeDisposable.dispose();
     }
 }
