@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JSON test Java</string>
+    <string name="next_image">Next image</string>
 </resources>
