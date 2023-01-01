@@ -1,4 +1,4 @@
-package ru.msokolov.movieaggregator
+package ru.msokolov.movieaggregator.retrofit.entities
 
 import com.google.gson.annotations.SerializedName
 

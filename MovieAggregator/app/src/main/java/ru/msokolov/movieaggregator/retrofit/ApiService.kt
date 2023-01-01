@@ -1,7 +1,8 @@
-package ru.msokolov.movieaggregator
+package ru.msokolov.movieaggregator.retrofit
 
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
+import ru.msokolov.movieaggregator.retrofit.entities.ApiResponse
 
 interface ApiService {
 
