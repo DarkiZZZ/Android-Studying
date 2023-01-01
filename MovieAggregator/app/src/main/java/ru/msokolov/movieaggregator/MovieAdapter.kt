@@ -35,7 +35,12 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             Glide.with(binding.root)
                 .load(movie.poster.url)
                 .into(binding.movieImage)
-            binding.ratingTextView.text = movie.rating.kp
+
+            val rating = movie.rating.kp
+            binding.ratingTextView.text = rating.toString().dropLast(2)
+
+            val ratingBackground = getRatingBackground(rating, binding.root.context)
+            binding.ratingTextView.background = ratingBackground
         }
     }
 }
