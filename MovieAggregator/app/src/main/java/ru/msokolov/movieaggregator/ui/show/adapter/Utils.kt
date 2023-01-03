@@ -1,4 +1,4 @@
-package ru.msokolov.movieaggregator.adapter
+package ru.msokolov.movieaggregator.ui.show.adapter
 
 import android.content.Context
 import android.graphics.drawable.Drawable

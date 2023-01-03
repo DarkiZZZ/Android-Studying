@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import ru.msokolov.movieaggregator.adapter.MovieAdapter
+import ru.msokolov.movieaggregator.ui.show.adapter.MovieAdapter
 import ru.msokolov.movieaggregator.databinding.ActivityMainBinding
 
 
