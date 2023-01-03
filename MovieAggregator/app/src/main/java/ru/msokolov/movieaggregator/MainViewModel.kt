@@ -26,8 +26,9 @@ class MainViewModel: ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { apiResponse ->
+                    _movies.value = apiResponse.movies
                     page++
-                    _movies.value = apiResponse.movies },
+                },
                 { error -> Log.d(TAG, error.toString()) }
             )
         compositeDisposable.add(disposable)
