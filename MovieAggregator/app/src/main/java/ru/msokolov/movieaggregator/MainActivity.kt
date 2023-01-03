@@ -12,7 +12,7 @@ import ru.msokolov.movieaggregator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels<MainViewModel>()
+    private val mainViewModel: MainViewModel by viewModels()
 
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var binding: ActivityMainBinding

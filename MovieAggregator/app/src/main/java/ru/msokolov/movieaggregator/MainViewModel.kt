@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.msokolov.movieaggregator.retrofit.ApiFactory
 import ru.msokolov.movieaggregator.retrofit.entities.Movie
 
-class MainViewModel public constructor() : ViewModel() {
+class MainViewModel: ViewModel() {
 
     private var _movies: MutableLiveData<List<Movie>> = MutableLiveData()
     val movies: LiveData<List<Movie>> = _movies
