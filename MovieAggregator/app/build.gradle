@@ -41,6 +41,7 @@ dependencies {
     def room_version = "2.4.3"
     def retrofit_version = "2.9.0"
     def glide_version = "4.14.2"
+    def nav_version = "2.5.3"
 
     //noinspection GradleDependency
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -74,4 +75,8 @@ dependencies {
     //KTX android
     implementation 'androidx.fragment:fragment-ktx:1.5.5'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    //Navigation component
+    implementation ("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation ("androidx.navigation:navigation-ui-ktx:$nav_version")
 }
