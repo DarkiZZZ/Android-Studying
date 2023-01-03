@@ -10,6 +10,7 @@ import ru.msokolov.movieaggregator.retrofit.entities.Movie
 class MovieAdapter()
     : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
+    var onItemClickListener: ((Movie) -> Unit)? = null
 
     var isLoadingMovies = false
     private var newMovies = mutableListOf<Movie>()
@@ -51,6 +52,7 @@ class MovieAdapter()
 
     inner class MovieViewHolder(private var binding: MovieItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(movie: Movie) {
             Glide.with(binding.root)
                 .load(movie.poster.url)
@@ -61,6 +63,12 @@ class MovieAdapter()
 
             binding.ratingTextView.text = rating
             binding.ratingTextView.background = ratingBackground
+        }
+
+        init {
+            binding.movieImage.setOnClickListener {
+                onItemClickListener?.invoke(newMovies[adapterPosition])
+            }
         }
     }
 

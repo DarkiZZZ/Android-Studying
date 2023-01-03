@@ -1,5 +1,6 @@
 package ru.msokolov.movieaggregator
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -43,10 +44,15 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity, 2)
         movieAdapter = MovieAdapter()
         binding.recyclerView.adapter = movieAdapter
-        movieAdapter.onReachEndListener = object : MovieAdapter.OnReachEndListener{
+        movieAdapter.onReachEndListener = object : MovieAdapter.OnReachEndListener {
             override fun onReachEnd() {
                 mainViewModel.loadMovies()
             }
+        }
+        movieAdapter.onItemClickListener = { movie ->
+            val intent = Intent(this@MainActivity, MovieDetailActivity::class.java)
+            intent.putExtra(Constants.VALUE_KEY, movie)
+            startActivity(intent)
         }
     }
 }
