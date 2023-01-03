@@ -1,6 +1,7 @@
 package ru.msokolov.movieaggregator.retrofit.entities
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Movie(
     @SerializedName("id")
@@ -20,4 +21,4 @@ data class Movie(
 
     @SerializedName("rating")
     var rating: Rating
-)
+) : Serializable
