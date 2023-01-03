@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         initAdapter()
 
-        mainViewModel.loadMovies()
         mainViewModel.movies.observe(this, Observer { movies ->
             movieAdapter.isLoadingMovies = true
             movieAdapter.setMovieList(movies.toMutableList())
