@@ -17,6 +17,7 @@
             android:id="@+id/movieImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="250dp"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_background"
             android:adjustViewBounds="true"
