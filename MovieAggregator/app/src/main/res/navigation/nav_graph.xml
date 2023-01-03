@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/showFragment"
         android:name="ru.msokolov.movieaggregator.ui.show.ShowFragment"
-        android:label="fragment_show"
+        android:label="Movie List"
         tools:layout="@layout/fragment_show" >
         <action
             android:id="@+id/action_showFragment_to_detailsFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="ru.msokolov.movieaggregator.ui.details.DetailsFragment"
-        android:label="fragment_details"
+        android:label="Details"
         tools:layout="@layout/fragment_details" >
         <action
             android:id="@+id/action_detailsFragment_to_showFragment"

@@ -52,7 +52,8 @@ class ShowViewModel : ViewModel() {
         compositeDisposable.clear()
     }
 
-    companion object{
+
+    companion object {
         private const val TAG = "MainViewModel_TAG"
     }
 

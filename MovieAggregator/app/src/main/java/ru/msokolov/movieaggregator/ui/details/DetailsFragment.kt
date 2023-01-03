@@ -1,32 +1,39 @@
 package ru.msokolov.movieaggregator.ui.details
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.msokolov.movieaggregator.R
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import ru.msokolov.movieaggregator.databinding.FragmentDetailsBinding
 
 class DetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DetailsFragment()
-    }
-
-    private lateinit var viewModel: DetailsViewModel
+    private val detailsViewModel: DetailsViewModel by viewModels()
+    private lateinit var binding: FragmentDetailsBinding
+    private val args by navArgs<DetailsFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_details, container, false)
-    }
+    ): View {
+        binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        // TODO: Use the ViewModel
+        val movie = args.movie
+
+        Glide.with(this)
+            .load(movie.poster.url)
+            .into(binding.posterImageView)
+        binding.apply {
+            titleTextView.text = movie.name
+            yearTextView.text = movie.year.toString()
+            descTextView.text = movie.description
+        }
+
+        return binding.root
     }
 
 }
