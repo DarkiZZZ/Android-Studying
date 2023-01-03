@@ -1,5 +1,6 @@
 package ru.msokolov.movieaggregator.ui.show.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +8,7 @@ import com.bumptech.glide.Glide
 import ru.msokolov.movieaggregator.databinding.MovieItemBinding
 import ru.msokolov.movieaggregator.retrofit.entities.Movie
 
-class MovieAdapter()
+class MovieAdapter
     : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     var onItemClickListener: ((Movie) -> Unit)? = null
@@ -18,6 +19,7 @@ class MovieAdapter()
 
     var onReachEndListener: OnReachEndListener? = null
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setMovieList(movies: MutableList<Movie>){
         if (isLoadingMovies){
             if (oldMovies.isEmpty()){

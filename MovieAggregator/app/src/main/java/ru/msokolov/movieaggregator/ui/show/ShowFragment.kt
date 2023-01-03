@@ -1,32 +1,60 @@
 package ru.msokolov.movieaggregator.ui.show
 
-import androidx.lifecycle.ViewModelProvider
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.msokolov.movieaggregator.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import ru.msokolov.movieaggregator.databinding.FragmentShowBinding
+import ru.msokolov.movieaggregator.ui.show.adapter.MovieAdapter
 
 class ShowFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ShowFragment()
-    }
+    private val showViewModel: ShowViewModel by viewModels()
+    private lateinit var movieAdapter: MovieAdapter
+    private lateinit var binding: FragmentShowBinding
 
-    private lateinit var viewModel: ShowViewModel
-
+    @SuppressLint("FragmentLiveDataObserve")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_show, container, false)
+    ): View {
+        binding = FragmentShowBinding.inflate(inflater, container,false)
+        initAdapter()
+
+        showViewModel.movies.observe(this, Observer { movies ->
+            movieAdapter.isLoadingMovies = true
+            movieAdapter.setMovieList(movies.toMutableList())
+        })
+        showViewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading){
+                binding.progressBar.visibility = View.VISIBLE
+            } else{
+                binding.progressBar.visibility = View.GONE
+            }
+        })
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ShowViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun initAdapter(){
+        binding.recyclerView.layoutManager = GridLayoutManager(
+            requireContext(), 2)
+        movieAdapter = MovieAdapter()
+        binding.recyclerView.adapter = movieAdapter
+        movieAdapter.onReachEndListener = object : MovieAdapter.OnReachEndListener {
+            override fun onReachEnd() {
+                showViewModel.loadMovies()
+            }
+        }
+        movieAdapter.onItemClickListener = { movie ->
+            /*val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra(Constants.VALUE_KEY, movie)
+            startActivity(intent)*/
+        }
     }
 
 }
