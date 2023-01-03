@@ -42,7 +42,7 @@ class MovieAdapter()
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(newMovies[position])
-        if (position == newMovies.size - 2 && onReachEndListener != null){
+        if (position == newMovies.size - 4 && onReachEndListener != null){
             onReachEndListener!!.onReachEnd()
         }
     }

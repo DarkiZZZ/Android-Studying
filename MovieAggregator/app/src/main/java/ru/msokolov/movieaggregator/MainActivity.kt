@@ -1,6 +1,7 @@
 package ru.msokolov.movieaggregator
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -27,6 +28,13 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.movies.observe(this, Observer { movies ->
             movieAdapter.isLoadingMovies = true
             movieAdapter.setMovieList(movies.toMutableList())
+        })
+        mainViewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading){
+                binding.progressBar.visibility = View.VISIBLE
+            } else{
+                binding.progressBar.visibility = View.GONE
+            }
         })
     }
 
