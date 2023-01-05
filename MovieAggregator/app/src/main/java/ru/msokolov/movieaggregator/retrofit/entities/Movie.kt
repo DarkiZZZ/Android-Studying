@@ -1,6 +1,7 @@
 package ru.msokolov.movieaggregator.retrofit.entities
 
 import com.google.gson.annotations.SerializedName
+import ru.msokolov.movieaggregator.room.entities.MovieEntity
 import java.io.Serializable
 
 data class Movie(
@@ -21,4 +22,16 @@ data class Movie(
 
     @SerializedName("rating")
     var rating: Rating
-) : Serializable
+) : Serializable {
+
+    fun toMovieEntity() : MovieEntity {
+        return MovieEntity(
+            id = this.id,
+            name = this.name,
+            description = this.description,
+            year = this.year,
+            poster = this.poster.toPosterEntity(),
+            rating = this.rating.toRatingEntity()
+        )
+    }
+}

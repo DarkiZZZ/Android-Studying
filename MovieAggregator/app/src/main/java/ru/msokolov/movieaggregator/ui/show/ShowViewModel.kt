@@ -10,8 +10,11 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.msokolov.movieaggregator.retrofit.ApiFactory
 import ru.msokolov.movieaggregator.retrofit.entities.Movie
+import ru.msokolov.movieaggregator.room.MovieRepository
 
-class ShowViewModel : ViewModel() {
+class ShowViewModel(
+    private val movieRepository: MovieRepository
+) : ViewModel() {
 
     private var _movies: MutableLiveData<List<Movie>> = MutableLiveData()
     val movies: LiveData<List<Movie>> = _movies

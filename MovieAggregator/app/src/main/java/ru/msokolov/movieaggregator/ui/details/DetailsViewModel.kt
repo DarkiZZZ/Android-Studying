@@ -11,8 +11,11 @@ import ru.msokolov.movieaggregator.retrofit.ApiFactory
 import ru.msokolov.movieaggregator.retrofit.entities.Movie
 import ru.msokolov.movieaggregator.retrofit.entities.Review
 import ru.msokolov.movieaggregator.retrofit.entities.Trailer
+import ru.msokolov.movieaggregator.room.MovieRepository
 
-class DetailsViewModel : ViewModel() {
+class DetailsViewModel(
+    private val movieRepository: MovieRepository
+) : ViewModel() {
 
     private var _trailers: MutableLiveData<List<Trailer>> = MutableLiveData()
     val trailers: LiveData<List<Trailer>> = _trailers
