@@ -61,7 +61,20 @@
             tools:text="Description"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerViewReviews"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:listitem="@layout/review_item"
+            tools:itemCount="3"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descTextView"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTrailers"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             tools:listitem="@layout/trailer_item"
@@ -70,7 +83,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/descTextView"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewReviews"
             app:layout_constraintEnd_toEndOf="parent"/>
 
 

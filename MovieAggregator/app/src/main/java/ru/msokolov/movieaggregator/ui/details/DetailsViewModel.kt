@@ -46,7 +46,6 @@ class DetailsViewModel : ViewModel() {
             }
             .subscribe({ reviews ->
                 _reviews.value = reviews
-                Log.d(TAG, reviews.toString())
             }, { error ->
                 Log.d(TAG, error.toString())
             })

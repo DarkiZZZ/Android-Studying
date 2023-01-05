@@ -1,4 +1,4 @@
-package ru.msokolov.movieaggregator.ui.details.adapter
+package ru.msokolov.movieaggregator.ui.details.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
