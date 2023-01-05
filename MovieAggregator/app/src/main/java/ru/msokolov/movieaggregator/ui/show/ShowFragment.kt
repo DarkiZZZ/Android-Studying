@@ -1,6 +1,5 @@
 package ru.msokolov.movieaggregator.ui.show
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,7 +18,6 @@ class ShowFragment : Fragment() {
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var binding: FragmentShowBinding
 
-    @SuppressLint("FragmentLiveDataObserve")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,11 +25,11 @@ class ShowFragment : Fragment() {
         binding = FragmentShowBinding.inflate(inflater, container,false)
         initAdapter()
 
-        showViewModel.movies.observe(this, Observer { movies ->
+        showViewModel.movies.observe(requireActivity(), Observer { movies ->
             movieAdapter.isLoadingMovies = true
             movieAdapter.setMovieList(movies.toMutableList())
         })
-        showViewModel.isLoading.observe(this, Observer { isLoading ->
+        showViewModel.isLoading.observe(requireActivity(), Observer { isLoading ->
             if (isLoading){
                 binding.progressBar.visibility = View.VISIBLE
             } else{

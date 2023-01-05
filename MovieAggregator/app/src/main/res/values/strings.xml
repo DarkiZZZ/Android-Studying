@@ -2,4 +2,5 @@
     <string name="app_name">Movie Aggregator</string>
     <string name="image_description">Image of movie</string>
     <string name="text_rating_example">8.0</string>
+    <string name="trailer_icon_description">Image start video</string>
 </resources>

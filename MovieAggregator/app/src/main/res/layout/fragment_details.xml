@@ -60,6 +60,19 @@
             android:textSize="16sp"
             tools:text="Description"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:listitem="@layout/trailer_item"
+            tools:itemCount="3"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descTextView"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
