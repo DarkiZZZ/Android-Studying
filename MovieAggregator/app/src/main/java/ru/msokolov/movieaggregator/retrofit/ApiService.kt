@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.msokolov.movieaggregator.retrofit.entities.ApiMovieResponse
+import ru.msokolov.movieaggregator.retrofit.entities.ApiReviewResponse
 import ru.msokolov.movieaggregator.retrofit.entities.ApiTrailersResponse
 
 interface ApiService {
@@ -13,4 +14,7 @@ interface ApiService {
 
     @GET("movie?token=BCT6RGP-C3DMMCP-KE0PJ6K-VGYEQ7K&field=id")
     fun loadTrailers(@Query("search")id: Int): Single<ApiTrailersResponse>
+
+    @GET("review?token=BCT6RGP-C3DMMCP-KE0PJ6K-VGYEQ7K&field=movieId")
+    fun loadReviews(@Query("search") id: Int): Single<ApiReviewResponse>
 }

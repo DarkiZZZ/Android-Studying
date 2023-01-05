@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import ru.msokolov.movieaggregator.databinding.FragmentDetailsBinding
+import ru.msokolov.movieaggregator.retrofit.entities.Movie
 import ru.msokolov.movieaggregator.ui.details.adapter.TrailerAdapter
 
 class DetailsFragment : Fragment() {
@@ -21,30 +22,34 @@ class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private val args by navArgs<DetailsFragmentArgs>()
     private lateinit var trailerAdapter: TrailerAdapter
+    private lateinit var currentMovie: Movie
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        currentMovie = args.movie
+        detailsViewModel.loadTrailers(currentMovie)
+        detailsViewModel.loadReviews(currentMovie)
+
+        detailsViewModel.trailers.observe(requireActivity(), Observer { trailers ->
+            trailerAdapter.trailersList = trailers
+        })
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
-
-        val movie = args.movie
-        detailsViewModel.loadTrailers(movie)
-
-        detailsViewModel.trailers.observe(requireActivity(), Observer { trailers ->
-            trailerAdapter.trailersList = trailers
-        })
-
         initAdapter()
 
         Glide.with(this)
-            .load(movie.poster.url)
+            .load(currentMovie.poster.url)
             .into(binding.posterImageView)
 
         binding.apply {
-            titleTextView.text = movie.name
-            yearTextView.text = movie.year.toString()
-            descTextView.text = movie.description
+            titleTextView.text = currentMovie.name
+            yearTextView.text = currentMovie.year.toString()
+            descTextView.text = currentMovie.description
         }
         return binding.root
     }

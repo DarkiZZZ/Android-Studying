@@ -9,12 +9,16 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.msokolov.movieaggregator.retrofit.ApiFactory
 import ru.msokolov.movieaggregator.retrofit.entities.Movie
+import ru.msokolov.movieaggregator.retrofit.entities.Review
 import ru.msokolov.movieaggregator.retrofit.entities.Trailer
 
 class DetailsViewModel : ViewModel() {
 
     private var _trailers: MutableLiveData<List<Trailer>> = MutableLiveData()
     val trailers: LiveData<List<Trailer>> = _trailers
+
+    private var _reviews: MutableLiveData<List<Review>> = MutableLiveData()
+    val reviews: LiveData<List<Review>> = _reviews
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -27,6 +31,22 @@ class DetailsViewModel : ViewModel() {
             }
             .subscribe({ trailers ->
                 _trailers.value = trailers
+            }, { error ->
+                Log.d(TAG, error.toString())
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    fun loadReviews(movie: Movie){
+        val disposable = ApiFactory.apiService.loadReviews(movie.id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { apiResponse ->
+                return@map apiResponse.reviewList
+            }
+            .subscribe({ reviews ->
+                _reviews.value = reviews
+                Log.d(TAG, reviews.toString())
             }, { error ->
                 Log.d(TAG, error.toString())
             })
