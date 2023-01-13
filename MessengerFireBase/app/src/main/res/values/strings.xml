@@ -9,4 +9,12 @@
     <string name="forgot_password_text">Forgot password?</string>
     <string name="register_text">Register</string>
     <string name="icon_description">Icon of label</string>
+    <string name="reset_password_text">Reset password</string>
+    <string name="registration_text">Registration</string>
+    <string name="sign_up_text">Sign Up</string>
+    <string name="email_hint_new">Email</string>
+    <string name="password_hint_new">Password</string>
+    <string name="first_name_hint_new">First name</string>
+    <string name="last_name_hint_new">Last name</string>
+    <string name="age_hint_new">How old are you?</string>
 </resources>
