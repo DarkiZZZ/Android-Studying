@@ -17,4 +17,5 @@
     <string name="first_name_hint_new">First name</string>
     <string name="last_name_hint_new">Last name</string>
     <string name="age_hint_new">How old are you?</string>
+    <string name="logout">Logout</string>
 </resources>

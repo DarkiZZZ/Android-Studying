@@ -1,4 +1,4 @@
-package ru.msokolov.messengerfirebase
+package ru.msokolov.messengerfirebase.forgotpass
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
