@@ -34,7 +34,7 @@ class UserListViewModel: ViewModel() {
 
                 val usersFromDB = arrayListOf<User>()
                 for (dataSnapshot in snapshot.children){
-                    val user = dataSnapshot.getValue(User::class.java) ?: return
+                    val user = dataSnapshot.getValue(User::class.java)?: return
                     if (user.id != currentUser.uid){
                         usersFromDB.add(user)
                     }
