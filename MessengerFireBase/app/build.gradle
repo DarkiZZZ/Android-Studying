@@ -59,6 +59,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
 
     //Firebase Database
-    implementation('com.google.firebase:firebase-database')
+    implementation 'com.google.firebase:firebase-database-ktx'
 
 }
