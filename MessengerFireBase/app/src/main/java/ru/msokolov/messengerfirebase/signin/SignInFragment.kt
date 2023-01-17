@@ -60,6 +60,11 @@ class SignInFragment : Fragment() {
         binding.signInButton.setOnClickListener {
             val email = binding.emailEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
+            if (email.isBlank() || password.isBlank()){
+                Toast.makeText(requireContext(), "Please, fill all fields!", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
             viewModel.login(email, password)
         }
     }

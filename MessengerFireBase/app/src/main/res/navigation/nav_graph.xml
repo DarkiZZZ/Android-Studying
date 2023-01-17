@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/signInFragment"
         android:name="ru.msokolov.messengerfirebase.signin.SignInFragment"
-        android:label="fragment_sign_in"
+        android:label="Sign In"
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
@@ -35,7 +35,7 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="ru.msokolov.messengerfirebase.forgotpass.ForgotPasswordFragment"
-        android:label="fragment_forgot_password"
+        android:label="Reset your password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
             android:id="@+id/action_forgotPasswordFragment_to_signInFragment"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="ru.msokolov.messengerfirebase.register.RegisterFragment"
-        android:label="fragment_register"
+        android:label="Registration"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_signInFragment"
@@ -79,7 +79,7 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="ru.msokolov.messengerfirebase.userlist.UserListFragment"
-        android:label="fragment_user_list"
+        android:label="Users List"
         tools:layout="@layout/fragment_user_list" >
         <action
             android:id="@+id/action_userListFragment_to_signInFragment"
@@ -92,7 +92,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="ru.msokolov.messengerfirebase.splash.SplashFragment"
-        android:label="fragment_splash"
+        android:label="Loading..."
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_signInFragment"

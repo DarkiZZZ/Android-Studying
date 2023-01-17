@@ -3,8 +3,10 @@ package ru.msokolov.messengerfirebase.userlist
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ru.msokolov.messengerfirebase.R
@@ -19,8 +21,9 @@ class UserListAdapter
     private var users = arrayListOf<User>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setUserList(users: ArrayList<User>){
-       users.addAll(users)
+    fun setUserList(usersList: ArrayList<User>){
+       users = usersList
+        Log.d(TAG, users.toString())
         notifyDataSetChanged()
     }
 
@@ -63,5 +66,9 @@ class UserListAdapter
                 onItemClickListener?.invoke(users[adapterPosition])
             }
         }
+    }
+
+    companion object{
+        private const val TAG = "UserListAdapterTAG"
     }
 }

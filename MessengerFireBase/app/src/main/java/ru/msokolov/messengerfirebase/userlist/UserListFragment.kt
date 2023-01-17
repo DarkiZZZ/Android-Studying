@@ -1,6 +1,7 @@
 package ru.msokolov.messengerfirebase.userlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -8,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.msokolov.messengerfirebase.R
-import ru.msokolov.messengerfirebase.User
 import ru.msokolov.messengerfirebase.databinding.FragmentUserListBinding
 
 class UserListFragment : Fragment() {
@@ -22,8 +22,8 @@ class UserListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserListBinding.inflate(layoutInflater, container, false)
-        initAdapter()
         viewModel.getUsersFromFireBaseDB()
+        initAdapter()
         observeViewModel()
         setHasOptionsMenu(true)
         return binding.root
@@ -54,11 +54,24 @@ class UserListFragment : Fragment() {
     }
 
     private fun observeViewModel(){
+        viewModel.isDataLoading.observe(viewLifecycleOwner){ isDataLoading ->
+            if (isDataLoading){
+                binding.progressBar.visibility = View.VISIBLE
+            }
+            else{
+                binding.progressBar.visibility = View.GONE
+            }
+        }
         viewModel.error.observe(viewLifecycleOwner){ errorMessage ->
             Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
         }
         viewModel.usersListFirebaseDB.observe(viewLifecycleOwner){ users ->
-            userListAdapter.setUserList(users as ArrayList<User>)
+            Log.d(TAG, users.toString())
+            userListAdapter.setUserList(users)
         }
+    }
+
+    companion object{
+        private const val TAG = "UserListFragmentTAG"
     }
 }

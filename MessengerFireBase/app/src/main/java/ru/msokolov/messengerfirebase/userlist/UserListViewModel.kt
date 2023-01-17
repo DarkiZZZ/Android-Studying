@@ -1,5 +1,6 @@
 package ru.msokolov.messengerfirebase.userlist
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,10 +19,14 @@ class UserListViewModel: ViewModel() {
     private val database = Firebase.database
     private val usersDBRef = database.getReference("Users")
 
-    private var _usersListFirebaseDB: MutableLiveData<List<User>> = MutableLiveData()
-    val usersListFirebaseDB: LiveData<List<User>> = _usersListFirebaseDB
+    private var _usersListFirebaseDB: MutableLiveData<ArrayList<User>> = MutableLiveData()
+    val usersListFirebaseDB: LiveData<ArrayList<User>> = _usersListFirebaseDB
+
     private var _error: MutableLiveData<String> = MutableLiveData()
     val error: LiveData<String> = _error
+
+    private var _isDataLoading:MutableLiveData<Boolean> = MutableLiveData(true)
+    val isDataLoading: LiveData<Boolean> = _isDataLoading
 
     fun logout(){
         auth.signOut()
@@ -30,6 +35,7 @@ class UserListViewModel: ViewModel() {
     fun getUsersFromFireBaseDB(){
         usersDBRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                _isDataLoading.value = true
                 val currentUser = auth.currentUser ?: return
 
                 val usersFromDB = arrayListOf<User>()
@@ -40,11 +46,18 @@ class UserListViewModel: ViewModel() {
                     }
                 }
                 _usersListFirebaseDB.value = usersFromDB
+                Log.d(TAG, usersFromDB.toString())
+                _isDataLoading.value = false
             }
 
             override fun onCancelled(error: DatabaseError) {
                 _error.value = error.message
+                _isDataLoading.value = false
             }
         })
+    }
+
+    companion object{
+        private const val TAG = "UserListVMTAG"
     }
 }
