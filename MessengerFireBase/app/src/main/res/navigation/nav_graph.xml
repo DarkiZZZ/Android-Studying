@@ -88,6 +88,9 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left"/>
+        <action
+            android:id="@+id/action_userListFragment_to_messagesFragment"
+            app:destination="@id/messagesFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -112,5 +115,14 @@
             app:popExitAnim="@anim/to_left"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="ru.msokolov.messengerfirebase.messages.MessagesFragment"
+        tools:layout="@layout/fragment_messages" >
+        <argument
+            android:name="user"
+            app:argType="ru.msokolov.messengerfirebase.User"
+            app:nullable="true" />
     </fragment>
 </navigation>

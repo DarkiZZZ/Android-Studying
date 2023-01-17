@@ -18,4 +18,10 @@
     <string name="last_name_hint_new">Last name</string>
     <string name="age_hint_new">How old are you?</string>
     <string name="logout">Logout</string>
+    <string name="message_text_test">Text0 text1 text2 text3 text4 text5 text6 text7 text8
+    text9 text10 text11 text12 text13 text14 text15 text16 text17 text18 text19 text20 </string>
+    <string name="your_message_text">Your message:</string>
+
+    <string name="online">Online</string>
+    <string name="Offline">Offline</string>
 </resources>
