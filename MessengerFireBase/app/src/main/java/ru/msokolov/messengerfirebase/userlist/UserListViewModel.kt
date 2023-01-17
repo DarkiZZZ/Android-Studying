@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import ru.msokolov.messengerfirebase.User
+import ru.msokolov.messengerfirebase.entities.User
 
 class UserListViewModel: ViewModel() {
 
@@ -55,6 +55,12 @@ class UserListViewModel: ViewModel() {
                 _isDataLoading.value = false
             }
         })
+    }
+
+
+
+    fun getCurrentUserId(): String{
+        return auth.currentUser!!.uid
     }
 
     companion object{

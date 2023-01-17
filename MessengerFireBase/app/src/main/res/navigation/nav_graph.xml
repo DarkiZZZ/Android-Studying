@@ -121,8 +121,10 @@
         android:name="ru.msokolov.messengerfirebase.messages.MessagesFragment"
         tools:layout="@layout/fragment_messages" >
         <argument
-            android:name="user"
-            app:argType="ru.msokolov.messengerfirebase.User"
-            app:nullable="true" />
+            android:name="otherUser"
+            app:argType="ru.msokolov.messengerfirebase.entities.User" />
+        <argument
+            android:name="currentUserId"
+            app:argType="string" />
     </fragment>
 </navigation>

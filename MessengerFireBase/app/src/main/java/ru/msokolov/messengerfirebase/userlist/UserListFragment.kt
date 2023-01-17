@@ -48,9 +48,9 @@ class UserListFragment : Fragment() {
         userListAdapter = UserListAdapter()
         binding.recyclerView.adapter = userListAdapter
 
-        userListAdapter.onItemClickListener = { user ->
+        userListAdapter.onItemClickListener = { otherUser ->
             val direction = UserListFragmentDirections
-                .actionUserListFragmentToMessagesFragment(user)
+                .actionUserListFragmentToMessagesFragment(otherUser, viewModel.getCurrentUserId())
             findNavController().navigate(direction)
         }
     }

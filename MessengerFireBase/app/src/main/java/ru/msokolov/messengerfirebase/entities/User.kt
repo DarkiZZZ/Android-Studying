@@ -1,4 +1,4 @@
-package ru.msokolov.messengerfirebase
+package ru.msokolov.messengerfirebase.entities
 
 import java.io.Serializable
 
