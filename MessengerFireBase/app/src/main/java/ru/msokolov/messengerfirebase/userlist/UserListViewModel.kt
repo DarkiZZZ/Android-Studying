@@ -32,6 +32,13 @@ class UserListViewModel: ViewModel() {
         auth.signOut()
     }
 
+    fun setIsUserOnline(isOnline: Boolean){
+        usersDBRef
+            .child(getCurrentUserId())
+            .child("online")
+            .setValue(isOnline)
+    }
+
     fun getUsersFromFireBaseDB(){
         usersDBRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

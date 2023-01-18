@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import ru.msokolov.messengerfirebase.entities.Message
 import ru.msokolov.messengerfirebase.entities.User
@@ -26,6 +27,9 @@ class MessagesViewModel(
 
     private var _otherUser: MutableLiveData<User> = MutableLiveData()
     val otherUser: LiveData<User> = _otherUser
+
+    private var _isUserOnLine: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isUserOnline: LiveData<Boolean> = _isUserOnLine
 
     private var _error: MutableLiveData<String> = MutableLiveData()
     val error: LiveData<String> = _error
@@ -65,6 +69,15 @@ class MessagesViewModel(
             }
     }
 
+    fun setIsUserOnline(isOnline: Boolean){
+        usersDBRef
+            .child(currentUserId)
+            .child("online")
+            .setValue(isOnline)
+    }
+
+
+
     init {
         messagesDBRef.child(currentUserId).child(otherUserId)
             .addValueEventListener(object : ValueEventListener{
@@ -74,13 +87,35 @@ class MessagesViewModel(
                         val message = dataSnapshot.getValue(Message::class.java)
                         if (message != null){
                             messagesList.add(message)
+                            _areMessagesLoading.value = false
                         }
                     }
                     _messagesList.value = messagesList
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.d(TAG, error.message)
+                }
+
+            })
+
+        usersDBRef
+            .child(otherUserId)
+            .child("online")
+            .addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val isOnline = snapshot.getValue(Boolean::class.java)
+                    if (isOnline != null){
+                        when(isOnline){
+                            true -> _isUserOnLine.value = true
+
+                            else -> _isUserOnLine.value = false
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d(TAG, error.message)
                 }
 
             })

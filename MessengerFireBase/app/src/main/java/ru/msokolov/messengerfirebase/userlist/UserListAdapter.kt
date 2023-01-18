@@ -51,7 +51,7 @@ class UserListAdapter
 
         private fun isOnline(user: User, context: Context): Drawable{
             val backgroundId: Int =
-            if (user.isOnline){
+            if (user.online){
                 R.drawable.circle_green
             }
             else{

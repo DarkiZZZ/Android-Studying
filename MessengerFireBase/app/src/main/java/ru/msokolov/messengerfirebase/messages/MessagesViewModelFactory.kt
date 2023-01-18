@@ -13,7 +13,7 @@ class MessagesViewModelFactory(
         }
         throw IllegalStateException("Unknown ViewModel Class in VM Factory")*/
 
-        return modelClass.getConstructor(String::class.java)
+        return modelClass.getConstructor(String::class.java, String::class.java)
             .newInstance(currentUserId, otherUserId)
     }
 }

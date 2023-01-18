@@ -8,7 +8,7 @@ data class User(
     var firstName: String,
     var lastName: String,
     var age: Int,
-    var isOnline: Boolean
+    var online: Boolean
 ): Serializable{
     public constructor() : this(
         "",

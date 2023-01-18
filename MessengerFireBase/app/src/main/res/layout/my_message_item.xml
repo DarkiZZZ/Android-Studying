@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/my_message_background"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         android:maxWidth="250dp"
         tools:text="@string/message_text_test"/>

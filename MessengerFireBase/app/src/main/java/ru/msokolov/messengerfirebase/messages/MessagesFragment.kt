@@ -1,17 +1,22 @@
 package ru.msokolov.messengerfirebase.messages
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.msokolov.messengerfirebase.MainActivity
+import ru.msokolov.messengerfirebase.R
 import ru.msokolov.messengerfirebase.entities.User
 import ru.msokolov.messengerfirebase.databinding.FragmentMessagesBinding
+import ru.msokolov.messengerfirebase.entities.Message
+
 class MessagesFragment: Fragment() {
 
     private lateinit var binding: FragmentMessagesBinding
@@ -40,7 +45,31 @@ class MessagesFragment: Fragment() {
         observeViewModel()
         initAdapter()
         (requireActivity() as MainActivity).supportActionBar?.title = getTitleFromUser(args.otherUser)
+        binding.sendImageView.setOnClickListener {
+            val text = binding.messageEditText.text.toString().trim()
+            if (text.isBlank()){
+                return@setOnClickListener
+            }
+            else {
+                val message = Message(
+                    text,
+                    args.currentUserId,
+                    args.otherUser.id
+                )
+                viewModel.sendMessage(message)
+            }
+        }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.setIsUserOnline(isOnline = true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.setIsUserOnline(isOnline = false)
     }
 
     private fun initAdapter(){
@@ -74,5 +103,26 @@ class MessagesFragment: Fragment() {
         viewModel.messagesList.observe(viewLifecycleOwner){ messagesList ->
             messagesAdapter.setMessagesList(messagesList)
         }
+        viewModel.isUserOnline.observe(viewLifecycleOwner){ isOnline ->
+            Log.d(TAG, isOnline.toString())
+            if (isOnline){
+                binding.apply {
+                    isOnlineTextView.text = resources.getString(R.string.online)
+                    isOnlineView.background = ContextCompat
+                        .getDrawable(requireContext(),R.drawable.circle_green)
+                }
+            }
+            else{
+                binding.apply {
+                    isOnlineTextView.text = resources.getString(R.string.offline)
+                    isOnlineView.background = ContextCompat
+                        .getDrawable(requireContext(),R.drawable.circle_red)
+                }
+            }
+        }
+    }
+
+    companion object{
+        private const val TAG = "MessagesFragmentTAG"
     }
 }

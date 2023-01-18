@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,6 +28,16 @@ class UserListFragment : Fragment() {
         observeViewModel()
         setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.setIsUserOnline(isOnline = true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.setIsUserOnline(isOnline = false)
     }
 
     @Deprecated("Deprecated in Java")

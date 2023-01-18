@@ -15,6 +15,7 @@
         android:background="@drawable/other_message_background"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
         android:maxWidth="250dp"
         tools:text="@string/message_text_test"/>
 
