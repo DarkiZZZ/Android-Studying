@@ -38,7 +38,7 @@ class RegisterViewModel : ViewModel(){
                     firstName = firstName,
                     lastName = lastName,
                     age = age,
-                    online = false
+                    online = true
                 )
                 usersDBRef.child(id).setValue(userToDB)
                 //

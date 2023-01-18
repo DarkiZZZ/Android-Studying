@@ -30,6 +30,7 @@ class UserListViewModel: ViewModel() {
 
     fun logout(){
         auth.signOut()
+        setIsUserOnline(false)
     }
 
     fun setIsUserOnline(isOnline: Boolean){
