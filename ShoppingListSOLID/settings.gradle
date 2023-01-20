@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Shopping List SOLID"
 include ':app'
+include ':domain'
+include ':data'
