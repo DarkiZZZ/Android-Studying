@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SOLID example</string>
+    <string name="hint_put_data">Put your data here:</string>
+    <string name="show_data">show data</string>
+    <string name="put_data">put data</string>
+    <string name="no_data">No data here</string>
 </resources>
