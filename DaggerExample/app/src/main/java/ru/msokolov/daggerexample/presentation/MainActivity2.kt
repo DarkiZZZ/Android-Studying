@@ -13,8 +13,6 @@ class MainActivity2 : AppCompatActivity() {
     private val binding by lazy {
         Activity2MainBinding.inflate(layoutInflater)
     }
-
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -27,6 +25,8 @@ class MainActivity2 : AppCompatActivity() {
 
     private val component by lazy{
         (application as ExampleApplication).component
+            .activityComponentFactory()
+            .create("MY_ID_2")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
