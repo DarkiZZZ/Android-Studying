@@ -2,10 +2,7 @@ package ru.msokolov.daggerexample.di
 
 import dagger.Binds
 import dagger.Module
-import ru.msokolov.daggerexample.data.datasource.ExampleLocalDataSource
-import ru.msokolov.daggerexample.data.datasource.ExampleLocalDataSourceImpl
-import ru.msokolov.daggerexample.data.datasource.ExampleRemoteDataSource
-import ru.msokolov.daggerexample.data.datasource.ExampleRemoteDataSourceImpl
+import ru.msokolov.daggerexample.data.datasource.*
 
 @Module
 interface DataModule {
@@ -14,7 +11,13 @@ interface DataModule {
     @Binds
     fun bindLocalDataSource(impl: ExampleLocalDataSourceImpl): ExampleLocalDataSource
 
+    @ProdQualifier
     @ApplicationScope
     @Binds
     fun bindRemoteDataSource(impl: ExampleRemoteDataSourceImpl): ExampleRemoteDataSource
+
+    @TestQualifier
+    @ApplicationScope
+    @Binds
+    fun bindTestRemoteDataSource(impl: TestRemoteDataSourceImpl): ExampleRemoteDataSource
 }
