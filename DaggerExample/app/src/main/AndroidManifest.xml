@@ -26,6 +26,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name="ru.msokolov.daggerexample.presentation.MainActivity2" />
     </application>
 
 </manifest>

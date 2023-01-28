@@ -1,18 +1,17 @@
 package ru.msokolov.daggerexample.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ru.msokolov.daggerexample.ExampleApplication
-import ru.msokolov.daggerexample.databinding.ActivityMainBinding
+import ru.msokolov.daggerexample.databinding.Activity2MainBinding
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
 
     private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+        Activity2MainBinding.inflate(layoutInflater)
     }
 
 
@@ -39,11 +38,6 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, viewModel.toString())
         Log.d(TAG, viewModel2.toString())
 
-        binding.textView.setOnClickListener {
-            Intent(this, MainActivity2::class.java).apply {
-                startActivity(this)
-            }
-        }
     }
 
     companion object{
