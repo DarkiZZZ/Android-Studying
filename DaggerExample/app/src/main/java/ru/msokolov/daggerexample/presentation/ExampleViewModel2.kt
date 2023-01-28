@@ -12,3 +12,4 @@ class ExampleViewModel2 @Inject constructor(
         repository.method()
     }
 }
+

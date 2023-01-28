@@ -1,6 +1,7 @@
 package ru.msokolov.daggerexample.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ru.msokolov.daggerexample.ExampleApplication
@@ -34,5 +35,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel.method()
         viewModel2.method()
+        Log.d(TAG, viewModel.toString())
+        Log.d(TAG, viewModel2.toString())
+    }
+
+    companion object{
+        private const val TAG = "ViewModelTest"
     }
 }
