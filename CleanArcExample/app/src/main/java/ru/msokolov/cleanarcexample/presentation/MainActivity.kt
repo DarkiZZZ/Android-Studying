@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import ru.msokolov.cleanarcexample.R
 import ru.msokolov.cleanarcexample.data.repository.UserRepositoryImpl
 import ru.msokolov.cleanarcexample.databinding.ActivityMainBinding
+import ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam
+import ru.msokolov.cleanarcexample.domain.models.UserName
 import ru.msokolov.cleanarcexample.presentation.State.*
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +38,10 @@ class MainActivity : AppCompatActivity() {
                 viewModel.getName()
             }
             saveDataButton.setOnClickListener {
-                viewModel.saveName()
+                val name = SaveUserNameParam(
+                    name = binding.putDataEditText.text.toString()
+                )
+                viewModel.saveName(name)
             }
         }
     }
@@ -50,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                         updateUI(null)
                     }
                     is Result -> {
-                        updateUI(mapName(state))
+                        updateUI(mapName(state.userName))
                     }
                     is Error -> {
                         toast(getString(R.string.error_toast))
@@ -72,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun mapName(state: Result): String {
-        return "${state.userName.firstName} ${state.userName.lastName}"
+    private fun mapName(userName: UserName): String {
+        return "${userName.firstName} ${userName.lastName}"
     }
 }
