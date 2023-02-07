@@ -4,4 +4,6 @@
     <string name="get_user_data_text">Get user data</string>
     <string name="put_data_hint">Put your data here:</string>
     <string name="save_data_text">Save user data</string>
+    <string name="success_toast">Data saved successfully!</string>
+    <string name="error_toast">Data saved with Error!</string>
 </resources>

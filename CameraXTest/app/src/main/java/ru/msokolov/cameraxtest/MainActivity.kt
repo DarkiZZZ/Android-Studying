@@ -1,4 +1,4 @@
-package ru.msokolov.cleanarcexample
+package ru.msokolov.cameraxtest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

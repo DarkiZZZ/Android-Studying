@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace 'ru.msokolov.cleanarcexample'
-    compileSdk 33
+    namespace 'ru.msokolov.cameraxtest'
+    compileSdk 32
 
     defaultConfig {
-        applicationId "ru.msokolov.cleanarcexample"
+        applicationId "ru.msokolov.cameraxtest"
         minSdk 23
-        targetSdk 33
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
@@ -28,10 +28,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '11'
-    }
-    viewBinding{
-        enabled = true
+        jvmTarget = '1.8'
     }
 }
 
@@ -44,5 +41,4 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
 }
