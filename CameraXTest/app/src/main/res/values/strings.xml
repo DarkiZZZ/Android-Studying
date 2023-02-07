@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CameraXTest</string>
+    <string name="save_button">Save</string>
 </resources>
