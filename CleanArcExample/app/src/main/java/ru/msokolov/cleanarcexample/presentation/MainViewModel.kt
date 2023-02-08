@@ -9,12 +9,13 @@ import ru.msokolov.cleanarcexample.domain.usecase.GetUserNameUseCase
 import ru.msokolov.cleanarcexample.domain.usecase.SaveUserNameUseCase
 import ru.msokolov.cleanarcexample.presentation.State.*
 
-class MainViewModel(private val userRepository: ru.msokolov.cleanarcexample.domain.repository.UserRepository) : ViewModel() {
+class MainViewModel(private val userRepository: UserRepository) :
+    ViewModel() {
 
     private val getNameUseCase =
-        ru.msokolov.cleanarcexample.domain.usecase.GetUserNameUseCase(userRepository)
+        GetUserNameUseCase(userRepository)
     private val saveNameUseCase =
-        ru.msokolov.cleanarcexample.domain.usecase.SaveUserNameUseCase(userRepository)
+        SaveUserNameUseCase(userRepository)
 
     private val _state: MutableLiveData<State> = MutableLiveData()
     val state: LiveData<State> = _state
@@ -23,7 +24,7 @@ class MainViewModel(private val userRepository: ru.msokolov.cleanarcexample.doma
         _state.value = Result(getNameUseCase())
     }
 
-    fun saveName(saveParam: ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam) {
+    fun saveName(saveParam: SaveUserNameParam) {
         if (saveNameUseCase(saveParam)) {
             _state.value = Success
         } else {
