@@ -18,12 +18,8 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val userRepository by lazy(LazyThreadSafetyMode.NONE) {
-        UserRepositoryImpl(SharedPrefUserStorageImpl(this))
-    }
-
     private val mainViewModelFactory by lazy(LazyThreadSafetyMode.NONE) {
-        MainViewModelFactory(userRepository)
+        MainViewModelFactory(this)
     }
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {

@@ -4,18 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam
-import ru.msokolov.cleanarcexample.domain.repository.UserRepository
 import ru.msokolov.cleanarcexample.domain.usecase.GetUserNameUseCase
 import ru.msokolov.cleanarcexample.domain.usecase.SaveUserNameUseCase
 import ru.msokolov.cleanarcexample.presentation.State.*
 
-class MainViewModel(private val userRepository: UserRepository) :
-    ViewModel() {
-
-    private val getNameUseCase =
-        GetUserNameUseCase(userRepository)
-    private val saveNameUseCase =
-        SaveUserNameUseCase(userRepository)
+class MainViewModel(
+    private val getNameUseCase: GetUserNameUseCase, private val saveNameUseCase: SaveUserNameUseCase
+) : ViewModel() {
 
     private val _state: MutableLiveData<State> = MutableLiveData()
     val state: LiveData<State> = _state
