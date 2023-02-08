@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val userRepository by lazy {
-        UserRepositoryImpl(this)
+        ru.msokolov.cleanarcexample.data.repository.UserRepositoryImpl(this)
     }
 
     private val mainViewModelFactory by lazy {
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.getName()
             }
             saveDataButton.setOnClickListener {
-                val name = SaveUserNameParam(
+                val name = ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam(
                     name = binding.putDataEditText.text.toString()
                 )
                 viewModel.saveName(name)
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun mapName(userName: UserName): String {
+    private fun mapName(userName: ru.msokolov.cleanarcexample.domain.models.UserName): String {
         return "${userName.firstName} ${userName.lastName}"
     }
 }
