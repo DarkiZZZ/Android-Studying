@@ -10,10 +10,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.koin.android.ext.android.inject
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityScope
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.qualifier.named
+import org.koin.core.scope.Scope
 import ru.msokolov.koincomposeexample.ui.theme.KoinComposeExampleTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), AndroidScopeComponent {
 
     //private val api by inject<MyApi>()
 
@@ -33,6 +38,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override val scope: Scope by activityScope()
+    private val hello by inject<String>(named("hello"))
+    private val bye by inject<String>(named("bye"))
 }
 
 @Composable
