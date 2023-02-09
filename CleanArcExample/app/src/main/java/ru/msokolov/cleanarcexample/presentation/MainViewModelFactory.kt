@@ -8,6 +8,9 @@ import ru.msokolov.cleanarcexample.data.storage.sharedPrefs.SharedPrefUserStorag
 import ru.msokolov.cleanarcexample.domain.usecase.GetUserNameUseCase
 import ru.msokolov.cleanarcexample.domain.usecase.SaveUserNameUseCase
 
+
+//deprecated
+/*
 class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
 
@@ -29,4 +32,4 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
         }
         throw RuntimeException("Unknown view model class $modelClass")
     }
-}
+}*/
