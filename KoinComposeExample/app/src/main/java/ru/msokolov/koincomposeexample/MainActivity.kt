@@ -10,14 +10,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.msokolov.koincomposeexample.ui.theme.KoinComposeExampleTheme
 
 class MainActivity : ComponentActivity() {
+
+    //private val api by inject<MyApi>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             KoinComposeExampleTheme {
-                // A surface container using the 'background' color from the theme
+
+                val viewModel = getViewModel<MainViewModel>()
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
