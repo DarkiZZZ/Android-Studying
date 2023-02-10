@@ -12,13 +12,17 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
 
     private val userRepository by lazy(LazyThreadSafetyMode.NONE) {
-        UserRepositoryImpl(SharedPrefUserStorageImpl(context = context))
+        ru.msokolov.cleanarcexample.data.repository.UserRepositoryImpl(
+            ru.msokolov.cleanarcexample.data.storage.sharedPrefs.SharedPrefUserStorageImpl(
+                context = context
+            )
+        )
     }
     private val getNameUseCase by lazy {
-        GetUserNameUseCase(userRepository = userRepository)
+        ru.msokolov.cleanarcexample.domain.usecase.GetUserNameUseCase(userRepository = userRepository)
     }
     private val saveNameUseCase by lazy {
-        SaveUserNameUseCase(userRepository = userRepository)
+        ru.msokolov.cleanarcexample.domain.usecase.SaveUserNameUseCase(userRepository = userRepository)
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
