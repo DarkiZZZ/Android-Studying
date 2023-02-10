@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 rootProject.name = "CleanArcExample"
 include ':app'
 include ':data'
-include ':domain'
