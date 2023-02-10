@@ -7,18 +7,18 @@ import ru.msokolov.cleanarcexample.domain.models.UserName
 import ru.msokolov.cleanarcexample.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val userStorage: UserStorage) :
-    ru.msokolov.cleanarcexample.domain.repository.UserRepository {
+    UserRepository {
 
 
 
-    override fun saveName(saveParam: ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam): Boolean {
+    override fun saveName(saveParam: SaveUserNameParam): Boolean {
         val user = User(firstName = saveParam.name, lastName = "")
         return userStorage.save(user)
     }
 
-    override fun getName(): ru.msokolov.cleanarcexample.domain.models.UserName {
+    override fun getName(): UserName {
         val user = userStorage.get()
-        return ru.msokolov.cleanarcexample.domain.models.UserName(
+        return UserName(
             firstName = user.firstName,
             lastName = user.lastName
         )

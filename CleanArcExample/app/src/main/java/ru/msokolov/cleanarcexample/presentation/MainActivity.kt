@@ -5,12 +5,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ru.msokolov.cleanarcexample.R
-import ru.msokolov.cleanarcexample.data.repository.UserRepositoryImpl
-import ru.msokolov.cleanarcexample.data.storage.sharedPrefs.SharedPrefUserStorageImpl
+import ru.msokolov.cleanarcexample.app.MyApplication
 import ru.msokolov.cleanarcexample.databinding.ActivityMainBinding
 import ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam
 import ru.msokolov.cleanarcexample.domain.models.UserName
 import ru.msokolov.cleanarcexample.presentation.State.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,15 +18,15 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val mainViewModelFactory by lazy(LazyThreadSafetyMode.NONE) {
-        MainViewModelFactory(this)
-    }
+    @Inject
+    lateinit var mainViewModelFactory: MainViewModelFactory
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         observeViewModel()
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.getName()
             }
             saveDataButton.setOnClickListener {
-                val name = ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam(
+                val name = SaveUserNameParam(
                     name = binding.putDataEditText.text.toString()
                 )
                 viewModel.saveName(name)
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun mapName(userName: ru.msokolov.cleanarcexample.domain.models.UserName): String {
+    private fun mapName(userName: UserName): String {
         return "${userName.firstName} ${userName.lastName}"
     }
 }
