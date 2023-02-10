@@ -9,7 +9,7 @@ import ru.msokolov.cleanarcexample.domain.usecase.SaveUserNameUseCase
 import ru.msokolov.cleanarcexample.presentation.State.*
 
 class MainViewModel(
-    private val getNameUseCase: GetUserNameUseCase, private val saveNameUseCase: SaveUserNameUseCase
+    val getNameUseCase: GetUserNameUseCase, val saveNameUseCase: SaveUserNameUseCase
 ) : ViewModel() {
 
     private val _state: MutableLiveData<State> = MutableLiveData()
