@@ -2,8 +2,11 @@ package ru.msokolov.cleanarcexample.presentation
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import ru.msokolov.cleanarcexample.R
 import ru.msokolov.cleanarcexample.data.repository.UserRepositoryImpl
 import ru.msokolov.cleanarcexample.data.storage.sharedPrefs.SharedPrefUserStorageImpl
@@ -12,19 +15,15 @@ import ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam
 import ru.msokolov.cleanarcexample.domain.models.UserName
 import ru.msokolov.cleanarcexample.presentation.State.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val mainViewModelFactory by lazy(LazyThreadSafetyMode.NONE) {
-        MainViewModelFactory(this)
-    }
 
-    private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
-    }
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
