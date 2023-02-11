@@ -3,12 +3,15 @@ package ru.msokolov.cleanarcexample.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.msokolov.cleanarcexample.domain.models.SaveUserNameParam
 import ru.msokolov.cleanarcexample.domain.usecase.GetUserNameUseCase
 import ru.msokolov.cleanarcexample.domain.usecase.SaveUserNameUseCase
 import ru.msokolov.cleanarcexample.presentation.State.*
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val getNameUseCase: GetUserNameUseCase, private val saveNameUseCase: SaveUserNameUseCase
 ) : ViewModel() {
 
