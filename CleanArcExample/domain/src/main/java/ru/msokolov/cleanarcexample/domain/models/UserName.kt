@@ -1,6 +1,6 @@
 package ru.msokolov.cleanarcexample.domain.models
 
-class UserName(
+data class UserName(
     val firstName: String,
     val lastName: String
 )
